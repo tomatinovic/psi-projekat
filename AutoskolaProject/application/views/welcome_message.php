@@ -178,12 +178,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
   <div class = "login_class">
-    <form name="loginform" method="post" class = "text_style">
+      <?php if(isset($msg)){
+       echo "<font color='red'>$msg</font><br>";} ?>
+      <form name="loginform" method="post" class = "text_style" action="<?php echo site_url('welcome/login') ?>">
         <label class="title"> Prijava </label><br/><br/><br/>
         Korisnicko ime:<br/><br/>
-        <input type="text" name="korime" style="border-radius: 5px" /><br/><br/>
+        <input type="text" name="username" value="<?php echo set_value('username') ?>" /><br/><br/>
         Lozinka:<br/><br/>
-        <input type="password" name="lozinka"  style="border-radius: 5px" /><br/><br/> 
+        <input type="password" name="password"/><br/><br/> 
  
         <a href ="#" id = "forgot_pass"> Zaboravili ste lozinku? </a><br/><br/>
   
