@@ -276,6 +276,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             document.getElementById("kontakt_slika").style.display = "block"; 
       }; 
   </script>
+  
+  
+  
   <script>
        document.getElementById("forgot_pass").onclick = function() { 
          document.getElementById("myForm").style.display = "block";
