@@ -15,9 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         .form-popup {
           display: none;
           position: fixed;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
+          bottom: 0;
+          right: 15px;
           border: 3px solid #f1f1f1;
           z-index: 9;
         }
@@ -30,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         
         .form-container-reg {
-            max-width: 100%;
+            max-width: 700px;
             padding: 10px;
             background-color: lightgray;
         }
@@ -38,12 +37,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         /* Full-width input fields */
         .form-container input[type=text], .form-container input[type=password] {
           width: 100%;
-          height: 10px;
           padding: 15px;
           margin: 5px 0 22px 0;
           border: none;
           background: #f1f1f1;
-          border-radius: 5px;
         }
 
         /* When the inputs get focus, do something */
@@ -78,12 +75,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         /* Full-width input fields */
         .form-container-reg input[type=text], .form-container-reg input[type=password] {
           width: 100%;
-          height: 10px;
           padding: 15px;
           margin: 5px 0 22px 0;
           border: none;
           background: #f1f1f1;
-          border-radius: 5px;
         }
 
         /* When the inputs get focus, do something */
@@ -178,12 +173,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
   <div class = "login_class">
-    <form name="loginform" method="post" class = "text_style">
+       <?php if(isset($msg)){
+       echo "<font color='red'>$msg</font><br>";} ?>
+      <form name="loginform" method="post" class = "text_style" action="<?php echo site_url('welcome/login') ?>">
         <label class="title"> Prijava </label><br/><br/><br/>
         Korisnicko ime:<br/><br/>
-        <input type="text" name="korime" style="border-radius: 5px" /><br/><br/>
+        <input type="text" name="username" value="<?php echo set_value('username') ?>" /><br/><br/>
         Lozinka:<br/><br/>
-        <input type="password" name="lozinka"  style="border-radius: 5px" /><br/><br/> 
+        <input type="password" name="password"/><br/><br/> 
  
         <a href ="#" id = "forgot_pass"> Zaboravili ste lozinku? </a><br/><br/>
   
@@ -215,33 +212,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   
   <div class="form-popup" id="myFormReg">
   <form action="" class="form-container-reg">
-      <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Registracija </i></p>
-      <table>
-          <tr>
-              <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text" placeholder="Unesite ime" name="ime" required> </td>
-             <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input type="text" placeholder="Unesite prezime" name="prez" required> </td><br/>
-          </tr>
-          <tr>
-            <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input type="text" placeholder="Unesite telefon" name="tel" required> </td>
-            <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input type="text" placeholder="Unesite adresu" name="adr" required> </td><br/>
-          </tr>
-          <tr>
-            <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbg" required> </td>
-            <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input type="text" placeholder="Unesite email" name="email" required> </td><br/>
-          </tr>
-          <tr>
-            <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input type="text" placeholder="Unesite korisničko ime" name="korime" required> </td>
-            <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input type="password" placeholder="Unesite lozinku" name="loz" required> </td><br/>
-          </tr>
-      </table>
+      <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Registracija </i></p><br/>
+              <label style="font-family: Arial; font-size: 14px"> Ime: </label>
+                  <input type="text" placeholder="Unesite ime" name="korime" required>
+
+              <label style="font-family:Arial; font-size: 14px"> Email: </label><br/>
+                  <input type="text" placeholder="Unesite email" name="email" required>
+
     <button type="submit" class="btn"> Potvrdi </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
   </form>
