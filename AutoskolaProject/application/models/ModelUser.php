@@ -19,6 +19,12 @@ class ModelUser extends CI_Model {
         //$query->result_array();
         return $query;
     }
+    
+    public function checkUsernameExists($username){
+        $query = $this->db->get_where('users', array('username' => $username));
+        if ($query->num_rows() >= 1) {return TRUE;}
+        else {return FALSE;}
+    }
 
 
 //    public function dohvatiAutora($korisnicko_ime){

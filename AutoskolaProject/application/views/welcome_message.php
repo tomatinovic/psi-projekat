@@ -201,14 +201,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div style="padding-top: 150px"></div>
   
   <div class="form-popup" id="myForm">
-  <form action="" class="form-container">
+      <form action="<?php echo site_url('welcome/sendMail') ?>" class="form-container" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Zaboravljena lozinka </i></p><br/>
 
       <label style="font-family: Arial; font-size: 14px; text-align: center"> Korisničko ime: </label>
-      <input type="text" placeholder="Unesite korisničko ime" name="korime" required>
+      <input type="text" placeholder="Unesite korisničko ime" name="usernameForgot" required>
 
       <label style="font-family:Arial; font-size: 14px; text-align: center"> Email: </label>
-      <input type="text" placeholder="Unesite email" name="email" required>
+      <input type="text" placeholder="Unesite email" name="emailForgot" required>
 
     <button type="submit" class="btn"> Pošalji </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
@@ -216,32 +216,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
   
   <div class="form-popup" id="myFormReg">
-  <form action="" class="form-container-reg">
+      <form action="<?php echo site_url('welcome/register') ?>" class="form-container-reg" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Registracija </i></p>
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text" placeholder="Unesite ime" name="ime" required> </td>
+              <td>  <input type="text" placeholder="Unesite ime" name="nameReg" required> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input type="text" placeholder="Unesite prezime" name="prez" required> </td><br/>
+             <td>   <input type="text" placeholder="Unesite prezime" name="surnameReg" required> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input type="text" placeholder="Unesite telefon" name="tel" required> </td>
+            <td>    <input type="text" placeholder="Unesite telefon" name="phoneReg" required> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input type="text" placeholder="Unesite adresu" name="adr" required> </td><br/>
+            <td>    <input type="text" placeholder="Unesite adresu" name="addressReg" required> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbg" required> </td>
+            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgReg" required> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input type="text" placeholder="Unesite email" name="email" required> </td><br/>
+            <td>      <input type="text" placeholder="Unesite email" name="emailReg" required> </td><br/>
           </tr>
           <tr>
             <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input type="text" placeholder="Unesite korisničko ime" name="korime" required> </td>
+            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameReg" required> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input type="password" placeholder="Unesite lozinku" name="loz" required> </td><br/>
+            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordReg" required> </td><br/>
           </tr>
       </table>
     <button type="submit" class="btn"> Potvrdi </button>
