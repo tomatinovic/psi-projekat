@@ -60,4 +60,58 @@ class Welcome extends CI_Controller {
             }
         }
         
+        public function sendMail(){
+            
+            $user = $this->input->post('usernameForgot');
+            $email = $this->input->post('emailForgot');
+            
+            if($this->modelUser->checkUsernameExists($user)){
+            
+            $this->email->from('dragfamily@gmail.com', 'Your Name');
+            $this->email->to($email);
+
+            $this->email->subject('Email Test');
+            $this->email->message('Probaaaaaaaaaaaaaaaaa');
+            $this->email->set_mailtype('html');
+
+
+            $this->email->send();}
+            else {
+                $this->changeViewWithMessage("Pogresno korisnicko ime!");
+            }
+            
+        }
+        
+        public function register(){
+            
+            $name = $this->input->post('nameReg');
+            $surname = $this->input->post('surnameReg');
+            $phone = $this->input->post('phoneReg');
+            $address = $this->input->post('addressReg');
+            $jmbg = $this->input->post('jmbgReg');
+            $email = $this->input->post('emailReg');
+            $username = $this->input->post('usernameReg');
+            $password = $this->input->post('passwordReg');
+            
+            if($this->modelUser->checkUsernameExists($username)){
+                 $this->changeViewWithMessage("Korisnicko ime zauzeto!");
+            }
+            else {
+                   $data = array(  
+                        'name'     => $name,  
+                        'surname' => $surname,
+                        'phone' => $phone,
+                        'address' => $address,
+                        'jmbg' => $jmbg, 
+                        'email' => $email,
+                        'username' => $username,
+                        'password' => $password
+                        );  
+                   
+                   $this->db->insert('users',$data);  
+                   $this->changeViewWithMessage("USPESNO!");
+                
+            }            
+        }
+        
 }
