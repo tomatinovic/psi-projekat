@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/css_file.css'); ?>">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo site_url('../public/js/javascript_file.js'); ?>"></script>
     <title> Tomatinovic AS </title>
         
@@ -14,6 +15,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         /* The popup form - hidden by default */
         .form-popup {
           display: none;
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          border: 3px solid #f1f1f1;
+          z-index: 9;
+        }
+        
+        .form-popup1 {
+          display: block;
           position: fixed;
           left: 50%;
           top: 50%;
@@ -148,9 +159,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Informacije</p>
           <span class="paragraph"><input type="button" class = "button_style" id ="button1" style = "font-weight: bold" value="Zaposleni" onclick="showText('text1', 'text2', 'text3')"/></span>
           <span class="paragraph" style="padding-left: 0px !important"><input type="button" id ="button2" class = "button_style" style = "font-weight: bold" value="Kontakt"/></span>
-          <p id = "text1" style = "display: none; font-weight: bold; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Zaposleni:  </p>
-          <p id = "text2" style = "display: none; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Luka Stefanović - već 10 godina radi kao instruktor vožnje. Veoma je dobar u radu sa ljudima i ima sve najbolje preporuke. </p>
-          <p id = "text3" style = "display: none; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Marija Radenković - već 10 godina radi kao instruktor vožnje. Veoma je dobra u radu sa ljudima i ima sve najbolje preporuke. </p>
+          <p id = "text1" style = "font-weight: bold; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Zaposleni:  </p>
+          <p id = "text2" style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Luka Stefanović - već 10 godina radi kao instruktor vožnje. Veoma je dobar u radu sa ljudima i ima sve najbolje preporuke. </p>
+          <p id = "text3" style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Marija Radenković - već 10 godina radi kao instruktor vožnje. Veoma je dobra u radu sa ljudima i ima sve najbolje preporuke. </p>
           
          
           <p class = "paragraph" id = "kontakt1" style = "font-weight: bold; display: none"> Kontakt:  </p>
@@ -178,18 +189,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
   <div class = "login_class">
-      <?php if(isset($msg)){
-       echo "<font color='red'>$msg</font><br>";} ?>
+      <?php if(isset($msg)) {
+      echo '<div class="form-popup1 form-container" id="messages">';
+      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
+      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
+      echo "</div>"; }  ?>
       <form name="loginform" method="post" class = "text_style" action="<?php echo site_url('welcome/login') ?>">
-        <label class="title"> Prijava </label><br/><br/><br/>
+        <label class="title" id = "label_prijava"> Prijava </label><br/><br/><br/>
         Korisnicko ime:<br/><br/>
-        <input type="text" name="username" value="<?php echo set_value('username') ?>" /><br/><br/>
+        <input type="text" name="username" value="<?php echo set_value('username') ?>" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')" /><br/><br/>
         Lozinka:<br/><br/>
-        <input type="password" name="password"/><br/><br/> 
+        <input type="password" name="password" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"/><br/><br/> 
  
         <a href ="#" id = "forgot_pass"> Zaboravili ste lozinku? </a><br/><br/>
   
-        <input type="submit" class = "button_style" style = "font-weight: bold" value="Prijava"/>
+        <input type="submit" id="login_button" class = "button_style" style = "font-weight: bold" value="Prijava"/>
     </form>
     <hr/>
     <form name="registrationform" method="post" class = "text_style"> 
@@ -205,10 +219,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Zaboravljena lozinka </i></p><br/>
 
       <label style="font-family: Arial; font-size: 14px; text-align: center"> Korisničko ime: </label>
-      <input type="text" placeholder="Unesite korisničko ime" name="usernameForgot" required>
+      <input type="text" placeholder="Unesite korisničko ime" name="usernameForgot" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')">
 
       <label style="font-family:Arial; font-size: 14px; text-align: center"> Email: </label>
-      <input type="text" placeholder="Unesite email" name="emailForgot" required>
+      <input type="text" placeholder="Unesite email" name="emailForgot" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')">
 
     <button type="submit" class="btn"> Pošalji </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
@@ -221,27 +235,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text" placeholder="Unesite ime" name="nameReg" required> </td>
+              <td>  <input type="text" placeholder="Unesite ime" name="nameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input type="text" placeholder="Unesite prezime" name="surnameReg" required> </td><br/>
+             <td>   <input type="text" placeholder="Unesite prezime" name="surnameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input type="text" placeholder="Unesite telefon" name="phoneReg" required> </td>
+            <td>    <input type="text" placeholder="Unesite telefon" name="phoneReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input type="text" placeholder="Unesite adresu" name="addressReg" required> </td><br/>
+            <td>    <input type="text" placeholder="Unesite adresu" name="addressReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgReg" required> </td>
+            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input type="text" placeholder="Unesite email" name="emailReg" required> </td><br/>
+            <td>      <input type="text" placeholder="Unesite email" name="emailReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameReg" required> </td>
+            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordReg" required> </td><br/>
+            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
       </table>
     <button type="submit" class="btn"> Potvrdi </button>
@@ -276,21 +290,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             document.getElementById("kontakt_slika").style.display = "block"; 
       }; 
   </script>
-  
-  
-  
-  <script>
-       document.getElementById("forgot_pass").onclick = function() { 
-         document.getElementById("myForm").style.display = "block";
+    
+<script>
+     document.getElementById("forgot_pass").onclick = function() { 
+     document.getElementById("myForm").style.display = "block";
 };
 
+document.getElementById("login_button").onclick = function() { 
+     document.getElementById("label_prijava").style.color = "blue";
+};
+
+document.getElementById("close").onclick = function() { 
+     document.getElementById("messages").style.display = "none";
+};
+    
 function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-  document.getElementById("myFormReg").style.display = "none";
+    document.getElementById("myForm").style.display = "none";
+    document.getElementById("myFormReg").style.display = "none";
 }
 
 function openFormReg() {
-     document.getElementById("myFormReg").style.display = "block";
+    document.getElementById("myFormReg").style.display = "block";
 }
 </script>
 </body>
