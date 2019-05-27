@@ -52,7 +52,9 @@ class Welcome extends CI_Controller {
                 
                 $query = $this->modelUser->getUsersByUsernameAndPass($user, $password);
                    if ($query->num_rows()==1){
-                    echo "WELCOME $user";
+                   // echo "WELCOME $user";
+                    $this->load->view('register_page');
+                      // $this->load->view('admin_page');
                 }
                 else {
                      $this->changeViewWithMessage("Netacna sifra");
