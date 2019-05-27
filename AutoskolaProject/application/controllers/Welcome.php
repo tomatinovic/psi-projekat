@@ -6,6 +6,8 @@ class Welcome extends CI_Controller {
        public function __construct() {
         parent::__construct();
         $this->load->model("modelUser");
+            require_once('C:wamp64/www/AutoskolaProject/class.smtp.php');
+            require_once('C:wamp64/www/AutoskolaProject/class.phpmailer.php');   
         
         
         //provera da li je korisnik mozda vec ulogovan
@@ -62,7 +64,8 @@ class Welcome extends CI_Controller {
         
         public function sendMail(){
             
-            $user = $this->input->post('usernameForgot');
+       
+          /*  $user = $this->input->post('usernameForgot');
             $email = $this->input->post('emailForgot');
             
             if($this->modelUser->checkUsernameExists($user)){
@@ -78,8 +81,26 @@ class Welcome extends CI_Controller {
             $this->email->send();}
             else {
                 $this->changeViewWithMessage("Pogresno korisnicko ime!");
-            }
-            
+            }*/           
+                $from  = "tacka.1995@gmail.com";
+                $namefrom = "Tacka";
+                $mail = new PHPMailer();  
+                $mail->CharSet = 'UTF-8';
+                $mail->isSMTP();   // by SMTP
+                $mail->SMTPAuth   = true;   // user and password
+                $mail->Host       = "localhost";
+                $mail->Port       = 25;
+                $mail->Username   = $from;  
+                $mail->Password   = "Volimkosarku1995";
+                $mail->SMTPSecure = "";    // options: 'ssl', 'tls' , ''  
+                $mail->setFrom($from,$namefrom);   // From (origin)
+             //   $mail->addCC($from,$namefrom);      // There is also addBCC
+                $mail->Subject  = "Proba";
+                $mail->Body = "Cao majstore!";
+                $mail->isHTML();   // Set HTML type
+              //$mail->addAttachment("attachment");  
+                $mail->addAddress("tacka.1995@gmail.com", "Tacka");
+                return $mail->send();
         }
         
         public function register(){
