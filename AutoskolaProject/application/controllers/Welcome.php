@@ -5,10 +5,7 @@ class Welcome extends CI_Controller {
 
        public function __construct() {
         parent::__construct();
-        $this->load->model("modelUser");
-            require_once('C:wamp64/www/AutoskolaProject/class.smtp.php');
-            require_once('C:wamp64/www/AutoskolaProject/class.phpmailer.php');   
-        
+        $this->load->model("modelUser");       
         
         //provera da li je korisnik mozda vec ulogovan
         /*if (($this->session->userdata('autor')) != NULL) {
@@ -49,14 +46,22 @@ class Welcome extends CI_Controller {
             if ($this->form_validation->run()){
                 $user = $this->input->post('username');
                 $password =  $this->input->post('password');
+                
+                $query = $this->modelUser->checkUsernameExists($user);
+                if ($query){
+                
                 $query = $this->modelUser->getUsersByUsernameAndPass($user, $password);
                    if ($query->num_rows()==1){
                     echo "WELCOME $user";
                 }
                 else {
-                     $this->changeViewWithMessage("Netacno korisnicko ime ili sifra");
+                     $this->changeViewWithMessage("Netacna sifra");
                 }
             }
+            else {
+                 $this->changeViewWithMessage("Neispravno korisnicko ime!");
+            }
+                }
             else {
                 $this->changeViewWithMessage("Oba polja moraju biti popunjena!");
             }
@@ -65,42 +70,49 @@ class Welcome extends CI_Controller {
         public function sendMail(){
             
        
-          /*  $user = $this->input->post('usernameForgot');
+            $user = $this->input->post('usernameForgot');
             $email = $this->input->post('emailForgot');
             
             if($this->modelUser->checkUsernameExists($user)){
+                
+                $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'smtp.gmail.com',
+                'smtp_port' => 587,
+                'smtp_crypto' => 'ssl', 
+                'mailtype' => 'text', 
+                'wordwrap' => TRUE
+                 );
+                
+                 $this->email->initialize($config);
+                
+                $this->email->from('dragfamily@gmail.com', 'Your Name');
+                $this->email->to($email);
+
+                $this->email->subject('Email Test');
+                $this->email->message('Probaaaaaaaaaaaaaaaaa');
+
+                $this->email->send();
             
-            $this->email->from('dragfamily@gmail.com', 'Your Name');
+                if($this->email->send()){
+                    $this->changeViewWithMessage("Uspesno!");
+                }
+                else{
+                    $this->changeViewWithMessage($this->email->print_debugger());
+                }
+                
+            /*$this->email->from('dragfamily@gmail.com', 'Your Name');
             $this->email->to($email);
 
             $this->email->subject('Email Test');
             $this->email->message('Probaaaaaaaaaaaaaaaaa');
             $this->email->set_mailtype('html');
 
-
-            $this->email->send();}
+            $this->email->send();*/}
             else {
                 $this->changeViewWithMessage("Pogresno korisnicko ime!");
-            }*/           
-                $from  = "tacka.1995@gmail.com";
-                $namefrom = "Tacka";
-                $mail = new PHPMailer();  
-                $mail->CharSet = 'UTF-8';
-                $mail->isSMTP();   // by SMTP
-                $mail->SMTPAuth   = true;   // user and password
-                $mail->Host       = "localhost";
-                $mail->Port       = 25;
-                $mail->Username   = $from;  
-                $mail->Password   = "Volimkosarku1995";
-                $mail->SMTPSecure = "";    // options: 'ssl', 'tls' , ''  
-                $mail->setFrom($from,$namefrom);   // From (origin)
-             //   $mail->addCC($from,$namefrom);      // There is also addBCC
-                $mail->Subject  = "Proba";
-                $mail->Body = "Cao majstore!";
-                $mail->isHTML();   // Set HTML type
-              //$mail->addAttachment("attachment");  
-                $mail->addAddress("tacka.1995@gmail.com", "Tacka");
-                return $mail->send();
+            }           
+               
         }
         
         public function register(){
