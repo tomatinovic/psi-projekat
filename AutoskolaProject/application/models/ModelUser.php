@@ -7,16 +7,14 @@
  */
 
 class ModelUser extends CI_Model {
-    public $autor;
-    
-    public function __construct() {
+  
+   
+     public function __construct() {
         parent::__construct();
-        $this->autor=NULL;
     }
     
     public function getUsersByUsernameAndPass($username, $password){
         $query = $this->db->get_where('users', array('username' => $username, 'password' => $password));
-        //$query->result_array();
         return $query;
     }
     
@@ -25,28 +23,25 @@ class ModelUser extends CI_Model {
         if ($query->num_rows() >= 1) {return TRUE;}
         else {return FALSE;}
     }
+    
+    public function getUserType($username){
+        $query = $this->db->get_where('users', array('username' => $username));
+        return $query->row();
+    }
+    
+    public function updateUser($idUser, $name, $surname, $address, $phone, $jmbg, $email, $username){
+        
+        $this->db->set('name', $name);
+        $this->db->set('surname', $surname);
+        $this->db->set('address', $address);
+        $this->db->set('phone', $phone);
+        $this->db->set('jmbg', $jmbg);
+        $this->db->set('email', $email);
+        $this->db->set('username', $username);
+        $this->db->where('idUser', $idUser);
+        $this->db->update('users'); 
+        
+    }
 
-
-//    public function dohvatiAutora($korisnicko_ime){
-//        $result=$this->db->where('korisnicko_ime',$korisnicko_ime)->get('autor');
-//        $autor=$result->row();
-//        if ($autor!=NULL) {
-//            $this->autor=$autor;
-//            return TRUE;
-//        } else {
-//            return FALSE;
-//        }
-//    }
-//    public function ispravanPassword($lozinka){
-//        if ($this->autor->lozinka == $lozinka) {
-//            return TRUE;
-//        } else {
-//            return FALSE;
-//        }
-//    }
-//    
-//    public function dohvatiAutore(){
-//        return $this->db->get('autor')->result();
-//    }
-//    
+ 
 }
