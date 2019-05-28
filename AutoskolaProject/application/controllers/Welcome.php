@@ -54,9 +54,9 @@ class Welcome extends CI_Controller {
                    if ($query->num_rows()==1){
                    // echo "WELCOME $user";
                     // $this->load->view('register_page');
-                    //  $this->load->view('admin_page');
-                    //  $this->load->view('register_confirm_page');
-                       $this->load->view('employee_page');
+                     // $this->load->view('admin_page');
+                      $this->load->view('register_confirm_page');
+                    //   $this->load->view('employee_page');
                 }
                 else {
                      $this->changeViewWithMessage("Netacna sifra");
