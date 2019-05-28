@@ -8,13 +8,10 @@ class Welcome extends CI_Controller {
         $this->load->model("modelUser");       
         
         //provera da li je korisnik mozda vec ulogovan
-        /*if (($this->session->userdata('autor')) != NULL) {
-            if ($this->session->userdata('autor')->admin == 1) {
-                redirect("Admin");
-            } else {
-                redirect("Korisnik");
-            }
-        }*/
+        //if (($this->session->userdata('user')) != NULL) {
+          //  $user = $this->session->userdata('user');
+         //   $this->changeByUserType($user->type);
+       // }
     }
 
 	public function index()
@@ -23,9 +20,7 @@ class Welcome extends CI_Controller {
 	}
         
         private function showViews($mainPart, $data){
-        //$this->load->view("sablon/header_gost.php", $data);
         $this->load->view($mainPart, $data);
-        //$this->load->view("sablon/footer.php");
     }
         
         
@@ -52,11 +47,10 @@ class Welcome extends CI_Controller {
                 
                 $query = $this->modelUser->getUsersByUsernameAndPass($user, $password);
                    if ($query->num_rows()==1){
-                   // echo "WELCOME $user";
-                    // $this->load->view('register_page');
-                     // $this->load->view('admin_page');
-                      $this->load->view('register_confirm_page');
-                    //   $this->load->view('employee_page');
+
+                       $this->session->set_userdata('userId', $query->row()->idUser);
+                       $query = $this->modelUser->getUserType($user);
+                       $this->changeByUserType($query->type);
                 }
                 else {
                      $this->changeViewWithMessage("Netacna sifra");
@@ -149,6 +143,17 @@ class Welcome extends CI_Controller {
                    $this->changeViewWithMessage("USPESNO!");
                 
             }            
+        }
+        
+        private function changeByUserType($type){
+                           switch ($type){
+                           case (0) : {redirect("Admin");break;}
+                           case (1) : {$this->load->view('register_page');break;}
+                           case (2) : {$this->load->view('register_confirm_page');break;}
+                           case (3) : {$this->load->view('employee_page');break;}
+                           
+                           default : break;
+                       }
         }
         
 }

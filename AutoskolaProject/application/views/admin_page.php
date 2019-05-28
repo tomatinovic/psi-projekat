@@ -179,27 +179,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
   <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style">
-        <label class="title"> Dobrodošao/la IME - ADMIN </label><br/><br/><br/>
-        <p id = "label1"> IME I PREZIME </p> 
-        <p id = "label2"> ULICA </p> 
-        <p id = "label3"> TELEFON </p> 
-        <p id = "label4"> JMBG </p> 
-        <p id = "label5"> EMAIL </p>
-        <p id = "label6"> KORISNIČKO IME </p>
+      <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('admin/logout')?>">
+        <label class="title"> Dobrodošao/la <?php echo $admin->name ?> - ADMIN </label><br/><br/><br/>
+        <p id = "label1"> <?php echo $admin->name.' '.$admin->surname ?> </p> 
+        <p id = "label2"> <?php echo $admin->address ?> </p> 
+        <p id = "label3"> <?php echo $admin->phone ?> </p> 
+        <p id = "label4"> <?php echo $admin->jmbg ?> </p> 
+        <p id = "label5"> <?php echo $admin->email ?> </p>
+        <p id = "label6"> <?php echo $admin->username ?> </p>
    
         <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
         <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
-        <label class="title"> Dobrodošao/la IME - ADMIN </label><br/><br/><br/>
-        <input type="text" id ="textbox1" value ="IME I PREZIME" style="margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" value = "ULICA" style="margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" value = "TELEFON" style="margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" value = "JMBG" style="margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" value = "EMAIL" style="margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="margin-bottom: 10px" />
+     <?php if(isset($msg)) {
+      echo '<div class="form-popup1 form-container" id="messages">';
+      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
+      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
+      echo "</div>"; }  ?>
+      
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('admin/updateUser')?>">    
+        <label class="title"> Dobrodošao/la <?php echo $admin->name ?> - ADMIN </label><br/><br/><br/>
+        <input type="text" name="changeNameSurname" id ="textbox1" value ="<?php echo $admin->name.' '.$admin->surname ?>" style="margin-bottom: 10px" /> 
+         <input type="text" name="changeAddress" id ="textbox2" value = "<?php echo $admin->address ?>" style="margin-bottom: 10px" /> 
+          <input type="text" name="changePhone" id ="textbox3" value = "<?php echo $admin->phone ?>" style="margin-bottom: 10px" /> 
+           <input type="text" name="changeJmbg" id ="textbox4" value = "<?php echo $admin->jmbg ?>" style="margin-bottom: 10px" /> 
+            <input type="text" name="changeEmail" id ="textbox5" value = "<?php echo $admin->email ?>" style="margin-bottom: 10px" /> 
+             <input type="text" name="changeUsername" id ="textbox6" value = "<?php echo $admin->username ?>" style="margin-bottom: 10px" />
    
         <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
