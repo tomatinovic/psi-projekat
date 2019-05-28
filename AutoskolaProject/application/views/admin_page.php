@@ -128,12 +128,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME </td>
-                  <td class = "table1"> PREZIME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Detalji" onclick="openFormDetails()"/> </td>
-              </tr>
+              <?php
+                foreach ($employees as $emp) {
+                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\" onclick=\"openFormDetails()\"/> </td>";
+                }
+              ?>
           </table><br/>
           <label class = "paragraph"> Dodaj novog zaposlenog: </label>
           <input type="button" class = "button_style" style = "font-weight: bold;" value="Dodaj" onclick="openFormReg()"/><br/><br/>
