@@ -255,7 +255,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
   <div class = "register_class">
-      <form name="student_form" method="post" class = "text_style">
+      <form name="admin_form" id ="admin_form" method="post" class = "text_style">
         <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
         <p id = "label1"> IME I PREZIME </p> 
         <p id = "label2"> ULICA </p> 
@@ -263,16 +263,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <p id = "label4"> JMBG </p> 
         <p id = "label5"> EMAIL </p>
         <p id = "label6"> KORISNIČKO IME </p>
-        <input type="text" id ="textbox1" value ="IME I PREZIME" style="display:none; margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" value = "ULICA" style="display:none; margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" value = "TELEFON" style="display:none; margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" value = "JMBG" style="display:none; margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" value = "EMAIL" style="display:none; margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="display:none; margin-bottom: 10px" />
    
         <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
-        <input type="button" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
-        <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important; display: none" value="Odustani"/>
+        <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
+    </form>
+
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
+        <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
+        <input type="text" id ="textbox1" value ="IME I PREZIME" style="margin-bottom: 10px" /> 
+         <input type="text" id ="textbox2" value = "ULICA" style="margin-bottom: 10px" /> 
+          <input type="text" id ="textbox3" value = "TELEFON" style="margin-bottom: 10px" /> 
+           <input type="text" id ="textbox4" value = "JMBG" style="margin-bottom: 10px" /> 
+            <input type="text" id ="textbox5" value = "EMAIL" style="margin-bottom: 10px" /> 
+             <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="margin-bottom: 10px" />
+   
+        <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
+        <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
     </form>
   </div> 
     
@@ -411,42 +417,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             document.getElementById("classes3_label").style.display = "none";
       }; 
       
-       document.getElementById("changeData").onclick = function() { 
-            document.getElementById("label1").style.display = "none";
-            document.getElementById("label2").style.display = "none";
-            document.getElementById("label3").style.display = "none";
-            document.getElementById("label4").style.display = "none";
-            document.getElementById("label5").style.display = "none";
-            document.getElementById("label6").style.display = "none";
-            
-            document.getElementById("textbox1").style.display = "block";
-            document.getElementById("textbox2").style.display = "block";
-            document.getElementById("textbox3").style.display = "block";
-            document.getElementById("textbox4").style.display = "block";
-            document.getElementById("textbox5").style.display = "block";
-            document.getElementById("textbox6").style.display = "block";
-            
-            document.getElementById("exit_button").style.display = "block";
-            document.getElementById("logout_button").style.display = "none";           
+        document.getElementById("changeData").onclick = function() { 
+            document.getElementById("admin_form").style.display = "none";           
+            document.getElementById("admin_form1").style.display = "block";          
       };
       
        document.getElementById("exit_button").onclick = function() { 
-            document.getElementById("label1").style.display = "block";
-            document.getElementById("label2").style.display = "block";
-            document.getElementById("label3").style.display = "block";
-            document.getElementById("label4").style.display = "block";
-            document.getElementById("label5").style.display = "block";
-            document.getElementById("label6").style.display = "block";
-            
-            document.getElementById("textbox1").style.display = "none";
-            document.getElementById("textbox2").style.display = "none";
-            document.getElementById("textbox3").style.display = "none";
-            document.getElementById("textbox4").style.display = "none";
-            document.getElementById("textbox5").style.display = "none";
-            document.getElementById("textbox6").style.display = "none";
-            
-            document.getElementById("exit_button").style.display = "none";
-            document.getElementById("logout_button").style.display = "block";            
+            document.getElementById("admin_form").style.display = "block";
+            document.getElementById("admin_form1").style.display = "none";
       };
       
       function closeForm() {
