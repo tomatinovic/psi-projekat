@@ -3,18 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
        private $admin;
+       private $employees;
     
        public function __construct() {
         parent::__construct();
         $this->load->model("modelAdmin");  
-        $this->load->model("modelUser");    
+        $this->load->model("modelUser");  
+        
+        if ($this->session->userdata('userId') == NULL) redirect ("Welcome");
+        
         $idAdmin = $this->session->userdata('userId');
         $this->admin = $this->modelAdmin->getUserById($idAdmin);
+        $this->employees = $this->modelUser->getAllEmployees();
         }
         
         public function index(){
        // $data['vesti'] = $this->ModelVest->dohvatiVesti();
         $data['admin'] = $this->admin;
+        $data['employees'] = $this->employees;
         $this->load->view('admin_page', $data);  
         }
         
@@ -45,7 +51,12 @@ class Admin extends CI_Controller {
             $changeEmail = $this->input->post('changeEmail');
             $changeUsername = $this->input->post('changeUsername');
             
-            if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->admin->username ){
+            if ($changeNameSurname=="" || $changeAddress=="" || $changePhone=="" || $changeJmbg==""
+                    || $changeEmail=="" || $changeUsername==""){
+                $this->changeViewWithMessage("Sva polja moraju biti popunjena!");
+                    }
+            
+            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->admin->username ){
                 $this->changeViewWithMessage("Zauzeto korisnicko ime!");
             }
             else{
@@ -58,6 +69,10 @@ class Admin extends CI_Controller {
                 $this->index();
             }
             
+        }
+        
+        public function selectEmployee(){
+            echo 'openFormDetails()';
         }
     
         

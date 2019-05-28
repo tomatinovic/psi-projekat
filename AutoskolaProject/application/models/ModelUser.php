@@ -42,6 +42,11 @@ class ModelUser extends CI_Model {
         $this->db->update('users'); 
         
     }
+    
+    public function getAllEmployees(){
+        $query = $this->db->get_where('users', array('type' => 1));
+        return $query->result();
+    }
 
  
 }
