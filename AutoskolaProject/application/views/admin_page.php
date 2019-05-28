@@ -194,7 +194,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <input type="text" id ="textbox5" value = "EMAIL" style="display:none; margin-bottom: 10px" /> 
              <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="display:none; margin-bottom: 10px" />
    
-        <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
+        <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
         <input type="button" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important; display: none" value="Odustani"/>
     </form>
@@ -280,34 +280,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   
         
   <script>
-      
-      document.getElementById("button1").onclick = function() { 
-            document.getElementById("text1").style.display = "block";
-            document.getElementById("text2").style.display = "block"; 
-            document.getElementById("text3").style.display = "block";
-            
-            document.getElementById("kontakt1").style.display = "none"; 
-            document.getElementById("kontakt2").style.display = "none"; 
-            document.getElementById("kontakt3").style.display = "none"; 
-            document.getElementById("kontakt4").style.display = "none"; 
-            document.getElementById("kontakt5").style.display = "none";
-            document.getElementById("kontakt_slika").style.display = "none"; 
-      }; 
-      
-       document.getElementById("button2").onclick = function() { 
-            document.getElementById("text1").style.display = "none";
-            document.getElementById("text2").style.display = "none"; 
-            document.getElementById("text3").style.display = "none";
-            
-            document.getElementById("kontakt1").style.display = "block"; 
-            document.getElementById("kontakt2").style.display = "block"; 
-            document.getElementById("kontakt3").style.display = "block"; 
-            document.getElementById("kontakt4").style.display = "block"; 
-            document.getElementById("kontakt5").style.display = "block";
-            document.getElementById("kontakt_slika").style.display = "block"; 
-      }; 
-      
-       document.getElementById("changeData").onclick = function() { 
+           
+       document.getElementById("changeData1").onclick = function() { 
             document.getElementById("label1").style.display = "none";
             document.getElementById("label2").style.display = "none";
             document.getElementById("label3").style.display = "none";
