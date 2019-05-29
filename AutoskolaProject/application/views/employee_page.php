@@ -254,28 +254,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     
+     <?php if(isset($msg)) {
+      echo '<div class="form-popup1 form-container" id="messages">';
+      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
+      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
+      echo "</div>"; }  ?>
+    
   <div class = "register_class">
       <form name="admin_form" id ="admin_form" method="post" class = "text_style">
-        <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
-        <p id = "label1"> IME I PREZIME </p> 
-        <p id = "label2"> ULICA </p> 
-        <p id = "label3"> TELEFON </p> 
-        <p id = "label4"> JMBG </p> 
-        <p id = "label5"> EMAIL </p>
-        <p id = "label6"> KORISNIČKO IME </p>
+        <label class="title"> Dobrodošao/la <?php echo $employee->name ?> </label><br/><br/><br/>
+        <p id = "label1"> <?php echo $employee->name.' '.$employee->surname ?> </p> 
+        <p id = "label2"> <?php echo $employee->address ?> </p> 
+        <p id = "label3"> <?php echo $employee->phone ?> </p> 
+        <p id = "label4"> <?php echo $employee->jmbg ?> </p> 
+        <p id = "label5"> <?php echo $employee->email ?> </p>
+        <p id = "label6"> <?php echo $employee->username ?> </p>
    
         <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
         <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('employee/updateUser')?>">    
         <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
-        <input type="text" id ="textbox1" value ="IME I PREZIME" style="margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" value = "ULICA" style="margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" value = "TELEFON" style="margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" value = "JMBG" style="margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" value = "EMAIL" style="margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="margin-bottom: 10px" />
+        <input type="text" id ="textbox1" name="changeNameSurname" value ="<?php echo $employee->name.' '.$employee->surname ?>"  style="margin-bottom: 10px" /> 
+         <input type="text" id ="textbox2" name="changeAddress" value = "<?php echo $employee->address ?>" style="margin-bottom: 10px" /> 
+          <input type="text" id ="textbox3" name="changePhone" value = "<?php echo $employee->phone ?>" style="margin-bottom: 10px" /> 
+           <input type="text" id ="textbox4" name="changeJmbg" value = "<?php echo $employee->jmbg ?>" style="margin-bottom: 10px" /> 
+            <input type="text" id ="textbox5" name="changeEmail" value = "<?php echo $employee->email ?>" style="margin-bottom: 10px" /> 
+             <input type="text" id ="textbox6" name="changeUsername" value = "<?php echo $employee->username ?>" style="margin-bottom: 10px" />
    
         <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
