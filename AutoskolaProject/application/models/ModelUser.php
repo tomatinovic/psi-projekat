@@ -13,6 +13,11 @@ class ModelUser extends CI_Model {
         parent::__construct();
     }
     
+    public function getUserById($idUser){
+        $query = $this->db->get_where('users', array('idUser' => $idUser));
+        return $query->row();
+    }
+    
     public function getUsersByUsernameAndPass($username, $password){
         $query = $this->db->get_where('users', array('username' => $username, 'password' => $password));
         return $query;
@@ -45,6 +50,16 @@ class ModelUser extends CI_Model {
     
     public function getAllEmployees(){
         $query = $this->db->get_where('users', array('type' => 1));
+        return $query->result();
+    }
+    
+    public function getAllStudents(){
+        $query = $this->db->get_where('users', array('type' => 2));
+        return $query->result();
+    }
+    
+    public function getAllRegUsers(){
+        $query = $this->db->get_where('users', array('type' => 3));
         return $query->result();
     }
 

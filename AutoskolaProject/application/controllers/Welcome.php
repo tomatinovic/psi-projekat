@@ -136,7 +136,8 @@ class Welcome extends CI_Controller {
                         'jmbg' => $jmbg, 
                         'email' => $email,
                         'username' => $username,
-                        'password' => $password
+                        'password' => $password,
+                        'type' => 0
                         );  
                    
                    $this->db->insert('users',$data);  
@@ -148,7 +149,7 @@ class Welcome extends CI_Controller {
         private function changeByUserType($type){
                            switch ($type){
                            case (0) : {redirect("Admin");break;}
-                           case (1) : {$this->load->view('register_page');break;}
+                           case (1) : {redirect("Employee");break;}
                            case (2) : {$this->load->view('register_confirm_page');break;}
                            case (3) : {$this->load->view('employee_page');break;}
                            

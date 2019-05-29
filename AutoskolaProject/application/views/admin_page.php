@@ -121,19 +121,67 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div id="Zaposleni" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Svi zaposleni</p>
-          <table class = "table1">
+          <table id="empTable" class = "table1">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Ime </th>
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
+              
               <?php
                 foreach ($employees as $emp) {
                     echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\" onclick=\"openFormDetails()\"/> </td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
+                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
                 }
               ?>
+              <script>
+                var idUser;
+            function show(name, surname, address, phone, jmbg, email, username, idUsr) {
+                idUser = idUsr;
+                document.getElementById("detailsNameSurname").innerHTML = name.toString().concat(' ').concat(surname.toString());
+                document.getElementById("detailsAddress").innerHTML = address.toString();
+                document.getElementById("detailsPhone").innerHTML = phone.toString();
+                document.getElementById("detailsJmbg").innerHTML = jmbg.toString();
+                document.getElementById("detailsEmail").innerHTML = email.toString();
+                document.getElementById("detailsUsername").innerHTML = username.toString();
+        
+                $(document).ready(function () {
+                createCookie("userId", idUsr, "10");
+            });
+                openFormDetails();
+            }
+            
+            function createCookie(name, value, days) {
+            var expires;
+            if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+            } else {
+            expires = "";
+            }
+            document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+            }
+            
+            function deleteUser(){
+                //alert('Will delete '+idUser);
+                
+                 if (window.XMLHttpRequest) {
+                    objekat = new XMLHttpRequest();
+                } else {
+                    objekat = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                objekat.open("GET", "admin/deleteUser?idUser=" + idUser, true);
+                objekat.send();
+                var table = document.getElementById("Zaposleni");
+                alert(table);
+                closeForm();
+                
+            }
+        </script>
+              
           </table><br/>
           <label class = "paragraph"> Dodaj novog zaposlenog: </label>
           <input type="button" class = "button_style" style = "font-weight: bold;" value="Dodaj" onclick="openFormReg()"/><br/><br/>
@@ -150,12 +198,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME </td>
-                  <td class = "table1"> PREZIME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Detalji" onclick="openFormDetails()"/> </td>
-              </tr>
+               <?php
+                foreach ($students as $emp) {
+                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
+                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
+                }
+              ?>
           </table><br/>
         </div>
 
@@ -168,12 +217,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME </td>
-                  <td class = "table1"> PREZIME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Aktiviraj" onclick="openFormActivation()"/> </td>
-              </tr>
+              <?php
+                foreach ($regUsers as $emp) {
+                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
+                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
+                }
+              ?>
           </table><br/>
         </div>
     </div>
@@ -214,32 +264,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div style="padding-top: 300px"></div>
   
   <div class="form-popup" id="myFormRegAdmin">
-      <form action="<?php echo site_url('welcome/register') ?>" class="form-container-reg" method="post">
+      <form action="<?php echo site_url('admin/register') ?>" class="form-container-reg" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Dodavanje zaposlenog </i></p>
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text" placeholder="Unesite ime" name="nameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+              <td>  <input type="text" placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input type="text" placeholder="Unesite prezime" name="surnameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+             <td>   <input type="text" placeholder="Unesite prezime" name="surnameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input type="text" placeholder="Unesite telefon" name="phoneReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>    <input type="text" placeholder="Unesite telefon" name="phoneRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input type="text" placeholder="Unesite adresu" name="addressReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>    <input type="text" placeholder="Unesite adresu" name="addressRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input type="text" placeholder="Unesite email" name="emailReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input type="text" placeholder="Unesite email" name="emailRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordReg" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
       </table>
     <button type="submit" class="btn"> Potvrdi </button>
@@ -247,36 +297,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </form>
 </div>
   
+
 <div class="form-popup" id="myFormDetails">
       <form class="form-container-reg" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Detalji </i></p>
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime i prezime: </label> </td>
-              <td> <label style="font-family: Arial; font-size: 14px"><i> IME I PREZIME </i></label> </td>
+              <td> <label id="detailsNameSurname" style="font-family: Arial; font-size: 14px"><i> IME I PREZIME </i></label> </td>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td> <label style="font-family: Arial; font-size: 14px"><i> ADRESA </i></label> </td>
+            <td> <label id="detailsAddress" style="font-family: Arial; font-size: 14px"><i> ADRESA </i></label> </td>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td> <label style="font-family: Arial; font-size: 14px"><i> TELEFON </i></label> </td>
+            <td> <label id="detailsPhone" style="font-family: Arial; font-size: 14px"><i> TELEFON </i></label> </td>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td> <label style="font-family: Arial; font-size: 14px"><i> JMBG </i></label> </td>
+            <td> <label id="detailsJmbg" style="font-family: Arial; font-size: 14px"><i> JMBG </i></label> </td>
           </tr>
            <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td> <label style="font-family: Arial; font-size: 14px"><i> EMAIL </i></label> </td>
+            <td> <label id="detailsEmail" style="font-family: Arial; font-size: 14px"><i> EMAIL </i></label> </td>
           </tr>
            <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Korisničko ime: </label> </td>
-            <td> <label style="font-family: Arial; font-size: 14px"><i> KORISNIČKO IME </i></label> </td>
+            <td> <label id="detailsUsername" style="font-family: Arial; font-size: 14px"><i> KORISNIČKO IME </i></label> </td>
           </tr>
       </table><br/>
-    <button type="submit" class="btn"> Obriši </button>
+      <button type="button" class="btn" onclick="deleteUser('aaa')"> Obriši </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Nazad </button>
   </form>
 </div>
