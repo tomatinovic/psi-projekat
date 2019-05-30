@@ -74,7 +74,7 @@ class ModelUser extends CI_Model {
     }
     
     public function getAllTheoryClasses(){
-        $string = "SELECT users.name, users.surname, theoryclass.day, theoryclass.time".
+        $string = "SELECT users.name, users.surname, theoryclass.day, theoryclass.time, theoryclass.idTClass".
                  " FROM theoryclass".
                  " INNER JOIN users ON theoryclass.idTeacher=users.idUser";
         $query = $this->db->query($string);
@@ -88,6 +88,20 @@ class ModelUser extends CI_Model {
                  " WHERE drivinglessons.idTeacher=".$user->idUser;
         $query = $this->db->query($string);
         return $query->result();
+    }
+    public function getGroupForUser($user){
+        $query = $this->db->get_where('assignedgroup', array('idStudent' => $user->idUser));
+        return $query->row();
+    }
+    
+    public function getTheoryGroupForUser($user){
+         $groupId = $this->getGroupForUser($user); 
+         $string = "SELECT users.idUser, users.name, users.surname, theoryclass.day, theoryclass.time, theoryclass.idTClass".
+                 " FROM theoryclass".
+                 " INNER JOIN users ON theoryclass.idTeacher=users.idUser".
+                 " WHERE theoryclass.idTClass=".$groupId->idTClass;
+          $query = $this->db->query($string);
+          return $query->row();
     }
 
  
