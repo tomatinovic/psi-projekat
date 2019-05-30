@@ -62,6 +62,33 @@ class ModelUser extends CI_Model {
         $query = $this->db->get_where('users', array('type' => 3));
         return $query->result();
     }
+    
+    public function getStudentsForUser($user){
+       $query = $this->db->get_where('teaching', array('idTeacher' => $user->idUser));
+       $rows = $query->result();
+       $students = array();
+       foreach ($rows as $row){
+           array_push($students,$this->getUserById($row->idStudent));
+       }
+       return $students;
+    }
+    
+    public function getAllTheoryClasses(){
+        $string = "SELECT users.name, users.surname, theoryclass.day, theoryclass.time".
+                 " FROM theoryclass".
+                 " INNER JOIN users ON theoryclass.idTeacher=users.idUser";
+        $query = $this->db->query($string);
+        return $query->result();
+    }
+    
+    public function getDrivingLessonsForUser($user){
+        $string = "SELECT users.idUser, users.name, users.surname, drivinglessons.date, drivinglessons.time, drivinglessons.done".
+                 " FROM drivinglessons".
+                 " INNER JOIN users ON drivinglessons.idStudent=users.idUser".
+                 " WHERE drivinglessons.idTeacher=".$user->idUser;
+        $query = $this->db->query($string);
+        return $query->result();
+    }
 
  
 }

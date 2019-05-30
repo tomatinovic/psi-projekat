@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Employee extends CI_Controller {
         private $employee;
+        private $allStudents;
+        private $myStudents;
+        private $tclasses;
+        private $dlessons;
 
         public function __construct() {
         parent::__construct();
@@ -12,12 +16,20 @@ class Employee extends CI_Controller {
         
         $idEmployee = $this->session->userdata('userId');
         $this->employee = $this->modelUser->getUserById($idEmployee);
+        $this->allStudents = $this->modelUser->getAllStudents();
+        $this->myStudents = $this->modelUser->getStudentsForUser($this->employee);
+        $this->tclasses = $this->modelUser->getAllTheoryClasses();
+        $this->dlessons = $this->modelUser->getDrivingLessonsForUser($this->employee);
         }
         
         public function index(){
        // $data['vesti'] = $this->ModelVest->dohvatiVesti();
         $data['msg'] = NULL;
         $data['employee'] = $this->employee;
+        $data['allStudents'] = $this->allStudents;
+        $data['myStudents'] = $this->myStudents;
+        $data['tclasses'] = $this->tclasses;
+        $data['dlessons'] = $this->dlessons;
 
         $this->load->view('employee_page', $data);  
         }
@@ -33,6 +45,10 @@ class Employee extends CI_Controller {
             $data['msg'] = $msg;
         }
         $data['employee'] = $this->employee;
+        $data['allStudents'] = $this->allStudents;
+        $data['myStudents'] = $this->myStudents;
+        $data['tclasses'] = $this->tclasses;
+        $data['dlessons'] = $this->dlessons;
         $this->showViews('employee_page',$data); }
         
         public function logout(){
