@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 30, 2019 at 07:27 PM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Generation Time: May 30, 2019 at 08:34 PM
+-- Server version: 5.7.19
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -36,14 +36,17 @@ CREATE TABLE IF NOT EXISTS `assignedgroup` (
   PRIMARY KEY (`idAssigned`),
   KEY `asGroupTClass` (`idTClass`),
   KEY `asStudentIdUser` (`idStudent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `assignedgroup`
 --
 
 INSERT INTO `assignedgroup` (`idAssigned`, `idTClass`, `idStudent`) VALUES
-(1, 1, 3);
+(1, 1, 3),
+(2, 3, 19),
+(3, 5, 24),
+(4, 1, 23);
 
 -- --------------------------------------------------------
 
@@ -62,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `drivinglessons` (
   PRIMARY KEY (`idLesson`),
   KEY `prof-user` (`idTeacher`),
   KEY `student-user` (`idStudent`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `drivinglessons`
@@ -70,7 +73,14 @@ CREATE TABLE IF NOT EXISTS `drivinglessons` (
 
 INSERT INTO `drivinglessons` (`idLesson`, `idTeacher`, `idStudent`, `date`, `time`, `done`) VALUES
 (1, 2, 3, '11.05.2019.', '11:00', '1'),
-(2, 2, 3, '01.06.2019.', '12:00', '0');
+(2, 2, 3, '01.06.2019.', '12:00', '0'),
+(3, 17, 19, '20.06.2019.', '14:00', '0'),
+(4, 18, 24, '03.05.2019.', '08:00', '1'),
+(5, 2, 23, '15.06.2019.', '17:00', '0'),
+(6, 17, 19, '05.05.2019.', '09:00', '1'),
+(7, 18, 24, '21.06.2019.', '08:30', '0'),
+(8, 2, 23, '16.06.2019.', '16:00', '0'),
+(9, 2, 3, '10.05.2019.', '11:30', '1');
 
 -- --------------------------------------------------------
 
@@ -85,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `free` int(30) NOT NULL,
   PRIMARY KEY (`idExam`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `exam`
@@ -93,7 +103,10 @@ CREATE TABLE IF NOT EXISTS `exam` (
 
 INSERT INTO `exam` (`idExam`, `date`, `time`, `free`) VALUES
 (1, '31.05.2019.', '10:00', 30),
-(2, '07.06.2019.', '09:00', 25);
+(2, '07.06.2019.', '09:00', 25),
+(3, '11.06.2019.', '11:30', 30),
+(4, '11.06.2019.', '12:30', 25),
+(5, '20.06.2019.', '08:30', 30);
 
 -- --------------------------------------------------------
 
@@ -109,14 +122,16 @@ CREATE TABLE IF NOT EXISTS `examlist` (
   PRIMARY KEY (`idList`),
   KEY `exExamList` (`idExam`),
   KEY `exStudentUser` (`idStudent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `examlist`
 --
 
 INSERT INTO `examlist` (`idList`, `idExam`, `idStudent`) VALUES
-(1, 2, 3);
+(1, 2, 3),
+(2, 3, 19),
+(3, 5, 24);
 
 -- --------------------------------------------------------
 
@@ -132,14 +147,17 @@ CREATE TABLE IF NOT EXISTS `teaching` (
   PRIMARY KEY (`idTeaching`),
   KEY `idUseridProffesor` (`idTeacher`),
   KEY `idUseridStudent` (`idStudent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `teaching`
 --
 
 INSERT INTO `teaching` (`idTeaching`, `idTeacher`, `idStudent`) VALUES
-(1, 2, 3);
+(1, 2, 3),
+(2, 17, 19),
+(3, 18, 24),
+(4, 2, 23);
 
 -- --------------------------------------------------------
 
@@ -155,14 +173,19 @@ CREATE TABLE IF NOT EXISTS `theoryclass` (
   `time` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idTClass`),
   KEY `theoryclassIDTEACHER` (`idTeacher`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `theoryclass`
 --
 
 INSERT INTO `theoryclass` (`idTClass`, `idTeacher`, `day`, `time`) VALUES
-(1, 2, 'ponedeljak/petak', '11:30-13:30');
+(1, 2, 'ponedeljak/petak', '11:30-13:30'),
+(2, 18, 'ponedeljak/subota', '10:00-12:00'),
+(3, 17, 'ponedeljak/sreda', '08:30-10:30'),
+(4, 2, 'utorak/cetvrtak', '17:00-19:00'),
+(5, 18, 'utorak/sreda', '18:00-20:00'),
+(6, 17, 'sreda/petak', '15:30-17:30');
 
 -- --------------------------------------------------------
 
@@ -190,21 +213,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`idUser`, `name`, `surname`, `username`, `password`, `address`, `phone`, `jmbg`, `email`, `type`) VALUES
-(1, 'Tamara', 'Tomanic', 'tacka', 'tacka123', 'sal alj', '12391823019', '932098239482049', 'aaa', 0),
-(2, 'Aleksandra', 'Dragutinovic', 'saska', 'saska123', 'tt', 'uu', 'ee', 'jfghfghf', 1),
-(3, 'Darko', 'Ardalic', 'darko', 'darko123', 'ulicaa', '654605460', '0650651605', 'asdasdasd', 2),
-(4, 'Marko', 'Ardalic', 'maki', 'maki123', 'aaaa', 'bbb', '643213546876', 'dasdasdasd', 3),
-(11, 'asdasd', 'asdasd', 'asdasd', 'sdfs', 'fsdfs', 'dfsfsd', 'fsdf', 'dfgdfg', 1),
-(12, 'asdasd', 'asdasd', 'asdasd', 'sdfs', 'fsdfs', 'dfsfsd', 'fsdf', 'dfgdfg', 1),
-(17, 'asdasd', 'asdasd', 'asdasd', 'sdfs', 'fsdfs', 'dfsfsd', 'fsdf', 'dfgdfg', 1),
-(18, 'yy', 'yy', 'yy', 'yy', 'yy', 'yy', 'yy', 'yy', 0),
-(19, 'ytrr', 'rr', 'rr', 'rr', 'rr', 'rr', 'rr', 'rr', 0),
-(20, 'pp', 'pp', 'pp', 'pp', 'pp', 'pp', 'pp', 'pp', 2),
-(21, 'll', 'll', 'll', 'll', 'll', 'll', 'll', 'll', 0),
-(22, 'oo', 'oo', 'oo', 'oo', 'oo', 'oo', 'oo', 'oo', 0),
-(23, 'dfg', 'dfg', 'gfd', 'gfd', 'gfd', 'gfd', 'fg', 'dfg', 2),
-(24, 'sss', 'sss', 'sss', 'sss', 'sss', 'ss', 'ss', 'ss', 0),
-(26, 'uioui', 'uiouo', 'ouioiu', 'ouio', 'uiou', 'ouiou', 'uiou', 'oiuioui', 1);
+(1, 'Tamara', 'Tomanic', 'tacka', 'tacka123', 'Salv Alj', '12391823019', '932098239482049', 'tackaemail', 0),
+(2, 'Aleksandra', 'Dragutinovic', 'saska', 'saska123', 'Gosp Vuc', '12391823019', '0101994715003', 'saskaemail', 1),
+(3, 'Darko', 'Ardalic', 'darko', 'darko123', 'Ljub Miod', '12391823019', '0650651605', 'darkoemail', 2),
+(4, 'Marko', 'Ardalic', 'maki', 'maki123', 'Ljub Miod', '12391823019', '643213546876', 'markoemail', 3),
+(17, 'Luka', 'Popovic', 'luka', 'luka123', 'Mar Greg', '0641234567', '1107987710055', 'lukaemail', 1),
+(18, 'Dusan', 'Jankovic', 'dule', 'dule123', 'Mir Bul', '0631288873', '1905976710099', 'duleemail', 1),
+(19, 'Milica', 'Ristic', 'mica', 'mica123', 'Pat Lum', '0621133311', '2308997715007', 'micaemail', 2),
+(20, 'Janko', 'Hristic', 'janko', 'janko123', 'Drag Sre', '0610098753', '1001000710001', 'jankoemail', 3),
+(21, 'Jelica', 'Bilic', 'jeca', 'jeca123', 'Juz Bul', '0655599955', '2903999715021', 'jecaemail', 3),
+(23, 'Gordana', 'Savic', 'goca', 'goca123', 'Sev Bul', '0643211133', '0404994715044', 'jecaemail', 2),
+(24, 'Vuk', 'Glisic', 'vuk', 'vuk123', 'Maks Gor', '0638977789', '1712990710009', 'vukemail', 2);
 
 --
 -- Constraints for dumped tables
