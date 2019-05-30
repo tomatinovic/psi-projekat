@@ -50,6 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             background-color: lightgray;
         }
         
+         .form-container {
+          max-width: 300px;
+          padding: 10px;
+          background-color: lightgray;
+        }
+        
         .form-popup1 {
           display: block;
           position: fixed;
@@ -269,7 +275,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text" placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+              <td>  <input type="text"  placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
              <td>   <input type="text" placeholder="Unesite prezime" name="surnameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
@@ -372,6 +378,10 @@ function openFormDetails() {
 function openFormActivation() {
     document.getElementById("myFormActivation").style.display = "block";
 }
+
+document.getElementById("close").onclick = function() { 
+     document.getElementById("messages").style.display = "none";
+};
       
   </script>
 </body>
