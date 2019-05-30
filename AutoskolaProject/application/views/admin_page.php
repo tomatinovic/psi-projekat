@@ -181,8 +181,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
                 objekat.open("GET", "admin/deleteUser?idUser=" + idUser, true);
                 objekat.send();
-                var table = document.getElementById("Zaposleni");
-                alert(table);
+                //var table = document.getElementById("Zaposleni");
+                //alert(table);
                 closeForm();
                 
             }
@@ -333,7 +333,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <td> <label id="detailsUsername" style="font-family: Arial; font-size: 14px"><i> KORISNIČKO IME </i></label> </td>
           </tr>
       </table><br/>
-      <button type="button" class="btn" onclick="deleteUser('aaa')"> Obriši </button>
+      <button type="button" class="btn" onclick="deleteUser()"> Obriši </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Nazad </button>
   </form>
 </div>

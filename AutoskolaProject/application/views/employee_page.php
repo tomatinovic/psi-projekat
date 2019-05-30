@@ -180,12 +180,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Preuzmi </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME </td>
-                  <td class = "table1"> PREZIME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Preuzmi" /> </td>
-              </tr>
+              <?php
+                foreach ($allStudents as $std) {
+                    echo "<tr><td>".$std->idUser."</td><td>".$std->name."</td><td>".$std->surname."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Preuzmi\" /> </td>";
+                }
+              ?>
           </table><br/>
           </div>
           
@@ -197,12 +197,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Odjava </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME </td>
-                  <td class = "table1"> PREZIME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Odjava" onclick="openFormCancelStudent()" /> </td>
-              </tr>            
+              <?php
+                foreach ($myStudents as $std) {
+                    echo "<tr><td>".$std->idUser."</td><td>".$std->name."</td><td>".$std->surname."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Odjava\" onclick=\"openFormCancelStudent()\" /> </td>";
+                }
+              ?>
+                   
           </table><br/>                   
           </div>
           
@@ -214,12 +215,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Promeni </th>
               </tr>
-              <tr>
-                  <td class = "table1"> IME I PREZIME PROFESORA </td>
-                  <td class = "table1"> DANI </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Promeni" onclick="openFormChangeAppointment()" /> </td>
-              </tr>
+              <?php
+                foreach ($tclasses as $class) {
+                    echo "<tr><td>".$class->name.' '.$class->surname."</td><td>".$class->day."</td><td>".$class->time."</td>";
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Promeni\" onclick=\"openFormChangeAppointment()\" /> </td>";
+                }
+              ?>
           </table><br/>
           </div>
           
@@ -232,20 +233,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Odrađen </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME I PREZIME </td>
-                  <td class = "table1"> DATUM </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Otkaži" /> </td>
-              </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME I PREZIME </td>
-                  <td class = "table1"> DATUM </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> da </td>
-              </tr>
+              
+              <?php
+                foreach ($dlessons as $class) {
+                    echo "<tr><td>".$class->idUser."</td><td>".$class->name.' '.$class->surname."</td><td>".$class->date."</td><td>".$class->time."</td>";
+                    if ($class->done == 0){
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Promeni\" onclick=\"openFormChangeAppointment()\" /> </td>";}
+                    else {
+                    echo "<td class = \"table1\"> da </td>";    
+                    }
+                }
+              ?>
+      
           </table><br/>
           <label class = "paragraph"> Zakaži novi čas vožnje: </label>
           <input type="button" class = "button_style" style = "font-weight: bold" value="Zakaži" onclick="openFormNewAppointment()" /><br/><br/>
@@ -261,7 +260,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       echo "</div>"; }  ?>
     
   <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style">
+      <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('employee/logout')?>">
         <label class="title"> Dobrodošao/la <?php echo $employee->name ?> </label><br/><br/><br/>
         <p id = "label1"> <?php echo $employee->name.' '.$employee->surname ?> </p> 
         <p id = "label2"> <?php echo $employee->address ?> </p> 
