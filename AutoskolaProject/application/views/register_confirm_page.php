@@ -178,15 +178,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Dani </th>
                   <th class = "table1"> Vreme </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> IME I PREZIME PROFESORA </td>
-                  <td class = "table1"> DANI NASTAVE </td>
-                  <td class = "table1"> VREME NASTAVE </td>
-              </tr>
+               <?php
+                foreach ($tclasses as $class) {
+                    echo "<tr><td>".$class->idTClass."</td><td>".$class->name.' '.$class->surname."</td><td>".$class->day."</td><td>".$class->time."</td>";
+                     }
+              ?>
+            
           </table><br/>
           <label class = "paragraph"> Moja grupa: </label>
-          <label class = "paragraph" style = "padding-left: 0px !important"> Broj, Ime i Prezime profesora, Dani, Vreme </label>
+          <label class = "paragraph" style = "padding-left: 0px !important"> <?php echo $myGroup->idTClass." - ".$myGroup->name." ".$myGroup->surname.", ".$myGroup->day.", ".$myGroup->time ?> </label>
           <input type="button" class = "button_style" style = "font-weight: bold; width: 150px !important" value="Promeni grupu" onclick="openFormChangeGroup()" /><br/><br/>
           </div>
           
@@ -238,28 +238,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     
+    <?php if(isset($msg)) {
+      echo '<div class="form-popup1 form-container" id="messages">';
+      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
+      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
+      echo "</div>"; }  ?>
+    
   <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style">
-        <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
-        <p id = "label1"> IME I PREZIME </p> 
-        <p id = "label2"> ULICA </p> 
-        <p id = "label3"> TELEFON </p> 
-        <p id = "label4"> JMBG </p> 
-        <p id = "label5"> EMAIL </p>
-        <p id = "label6"> KORISNIČKO IME </p>
+      <form name="admin_form" id ="admin_form" method="post" class = "text_style"  action="<?php echo site_url('student/logout')?>">
+        <label class="title"> Dobrodošao/la <?php echo $student->name ?> </label><br/><br/><br/>
+        <p id = "label1"> <?php echo $student->name.' '.$student->surname ?> </p> 
+        <p id = "label2"> <?php echo $student->address ?> </p> 
+        <p id = "label3"> <?php echo $student->phone ?> </p> 
+        <p id = "label4"> <?php echo $student->jmbg ?> </p> 
+        <p id = "label5"> <?php echo $student->email ?> </p>
+        <p id = "label6"> <?php echo $student->username ?> </p>
    
         <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
         <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
-        <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
-        <input type="text" id ="textbox1" value ="IME I PREZIME" style="margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" value = "ULICA" style="margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" value = "TELEFON" style="margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" value = "JMBG" style="margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" value = "EMAIL" style="margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" value = "KORISNIČKO IME" style="margin-bottom: 10px" />
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('student/updateUser')?>">    
+        <label class="title"> Dobrodošao/la <?php echo $student->name ?> </label><br/><br/><br/>
+        <input type="text" id ="textbox1" name="changeNameSurname"  value ="<?php echo $student->name.' '.$student->surname ?>" style="margin-bottom: 10px" /> 
+         <input type="text" id ="textbox2" name="changeAddress" value = "<?php echo $student->address ?>" style="margin-bottom: 10px" /> 
+          <input type="text" id ="textbox3" name="changePhone" value = "<?php echo $student->phone ?>" style="margin-bottom: 10px" /> 
+           <input type="text" id ="textbox4" name="changeJmbg" value = "<?php echo $student->jmbg ?>" style="margin-bottom: 10px" /> 
+            <input type="text" id ="textbox5" name="changeEmail" value = "<?php echo $student->email ?>" style="margin-bottom: 10px" /> 
+             <input type="text" id ="textbox6" name="changeUsername" value = "<?php echo $student->username ?>" style="margin-bottom: 10px" />
    
         <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>

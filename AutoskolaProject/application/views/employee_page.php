@@ -238,7 +238,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 foreach ($dlessons as $class) {
                     echo "<tr><td>".$class->idUser."</td><td>".$class->name.' '.$class->surname."</td><td>".$class->date."</td><td>".$class->time."</td>";
                     if ($class->done == 0){
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Promeni\" onclick=\"openFormChangeAppointment()\" /> </td>";}
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Otkazi\" onclick=\"openFormChangeAppointment()\" /> </td>";}
                     else {
                     echo "<td class = \"table1\"> da </td>";    
                     }
