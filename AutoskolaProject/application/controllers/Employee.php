@@ -19,11 +19,10 @@ class Employee extends CI_Controller {
         $this->allStudents = $this->modelUser->getAllStudents();
         $this->myStudents = $this->modelUser->getStudentsForUser($this->employee);
         $this->tclasses = $this->modelUser->getAllTheoryClasses();
-        $this->dlessons = $this->modelUser->getDrivingLessonsForUser($this->employee);
+        $this->dlessons = $this->modelUser->getDrivingLessonsForTeacher($this->employee);
         }
         
         public function index(){
-       // $data['vesti'] = $this->ModelVest->dohvatiVesti();
         $data['msg'] = NULL;
         $data['employee'] = $this->employee;
         $data['allStudents'] = $this->allStudents;

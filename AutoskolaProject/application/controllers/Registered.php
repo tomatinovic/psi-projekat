@@ -1,39 +1,28 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Student extends CI_Controller {
-        private $student;
+class Registered extends CI_Controller {
+        private $user;
         private $tclasses;
-        private $myGroup;
-        private $dlessons;
-        private $allExams;
-        private $examDate;
-
+ 
         public function __construct() {
         parent::__construct();
         $this->load->model("modelUser");  
         
         if ($this->session->userdata('userId') == NULL) redirect ("Welcome");
         
-        $idStudent = $this->session->userdata('userId');
-        $this->student = $this->modelUser->getUserById($idStudent);
+        $idUser = $this->session->userdata('userId');
+        $this->user = $this->modelUser->getUserById($idUser);
         $this->tclasses = $this->modelUser->getAllTheoryClasses();
-        $this->myGroup = $this->modelUser->getTheoryGroupForUser($this->student);
-        $this->dlessons = $this->modelUser->getDrivingLessonsForStudent($this->student);
-        $this->allExams = $this->modelUser->getAllExams();
-        $this->examDate = $this->modelUser->getStudentExamDate($this->student);
+
         }
         
         public function index(){
         $data['msg'] = NULL;
-        $data['student'] = $this->student;
+        $data['user'] = $this->user;
         $data['tclasses'] = $this->tclasses;
-        $data['myGroup'] = $this->myGroup;
-        $data['dlessons'] = $this->dlessons;
-        $data['allExams'] = $this->allExams;
-        $data['examDate'] = $this->examDate;
 
-        $this->load->view('register_confirm_page', $data);  
+        $this->load->view('register_page', $data);  
         }
         
         private function showViews($mainPart, $data){
@@ -46,13 +35,10 @@ class Student extends CI_Controller {
         if ($msg) {
             $data['msg'] = $msg;
         }
-        $data['student'] = $this->student;
+        $data['user'] = $this->user;
         $data['tclasses'] = $this->tclasses;
-        $data['myGroup'] = $this->myGroup;
-        $data['dlessons'] = $this->dlessons;
-        $data['allExams'] = $this->allExams;
-        $data['examDate'] = $this->examDate;
-        $this->showViews('register_confirm_page',$data); }
+  
+        $this->showViews('register_page',$data); }
         
         public function logout(){
             $this->session->sess_destroy();
@@ -73,16 +59,16 @@ class Student extends CI_Controller {
                 $this->changeViewWithMessage("Sva polja moraju biti popunjena!");
                     }
             
-            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->student->username ){
+            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->user->username ){
                 $this->changeViewWithMessage("Zauzeto korisnicko ime!");
             }
             else{
                 $trimmedNameSurname = trim($changeNameSurname);
                 $arr = explode(' ',trim($trimmedNameSurname));
                
-                $this->modelUser->updateUser($this->student->idUser, $arr[0], $arr[1], $changeAddress,
+                $this->modelUser->updateUser($this->user->idUser, $arr[0], $arr[1], $changeAddress,
                 $changePhone, $changeJmbg, $changeEmail, $changeUsername);
-                $this->student = $this->modelUser->getUserById($this->student->idUser);
+                $this->user = $this->modelUser->getUserById($this->user->idUser);
                 $this->changeViewWithMessage("Uspesno!");
             }
             

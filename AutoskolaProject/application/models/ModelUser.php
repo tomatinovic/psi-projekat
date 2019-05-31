@@ -81,14 +81,24 @@ class ModelUser extends CI_Model {
         return $query->result();
     }
     
-    public function getDrivingLessonsForUser($user){
-        $string = "SELECT users.idUser, users.name, users.surname, drivinglessons.date, drivinglessons.time, drivinglessons.done".
+    public function getDrivingLessonsForTeacher($user){
+        $string = "SELECT users.idUser, users.name, users.surname, drivinglessons.date, drivinglessons.time, drivinglessons.done, drivinglessons.idLesson".
                  " FROM drivinglessons".
                  " INNER JOIN users ON drivinglessons.idStudent=users.idUser".
                  " WHERE drivinglessons.idTeacher=".$user->idUser;
         $query = $this->db->query($string);
         return $query->result();
     }
+    
+    public function getDrivingLessonsForStudent($user){
+        $string = "SELECT users.idUser, users.name, users.surname, drivinglessons.date, drivinglessons.time, drivinglessons.done, drivinglessons.idLesson".
+                 " FROM drivinglessons".
+                 " INNER JOIN users ON drivinglessons.idStudent=users.idUser".
+                 " WHERE drivinglessons.idStudent=".$user->idUser;
+        $query = $this->db->query($string);
+        return $query->result();
+    }
+    
     public function getGroupForUser($user){
         $query = $this->db->get_where('assignedgroup', array('idStudent' => $user->idUser));
         return $query->row();
@@ -102,6 +112,18 @@ class ModelUser extends CI_Model {
                  " WHERE theoryclass.idTClass=".$groupId->idTClass;
           $query = $this->db->query($string);
           return $query->row();
+    }
+    
+    public function getAllExams(){
+        $query = $this->db->get_where('exam');
+        return $query->result();
+    }
+    
+    public function getStudentExamDate($user){
+        $query = $this->db->get_where('examlist', array('idStudent' => $user->idUser));
+        $exam = $query->row();
+        $query = $this->db->get_where('exam', array('idExam' => $exam->idExam));
+        return $query->row();
     }
 
  

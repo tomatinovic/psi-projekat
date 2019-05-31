@@ -151,7 +151,7 @@ class Welcome extends CI_Controller {
                            case (0) : {redirect("Admin");break;}
                            case (1) : {redirect("Employee");break;}
                            case (2) : {redirect("Student");break;}
-                           case (3) : {$this->load->view('employee_page');break;}
+                           case (3) : {redirect("Registered");break;}
                            
                            default : break;
                        }
