@@ -198,18 +198,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Odrađen </th>
               </tr>
-              <tr>
-                  <td class = "table1"> 1 </td>
-                  <td class = "table1"> DATUM </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> Da </td>
-              </tr>
-              <tr>
-                  <td class = "table1"> 2 </td>
-                  <td class = "table1"> DATUM </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Otkaži" onclick = "openFormCancel()"/> </td>
-              </tr>
+              
+               <?php
+                foreach ($dlessons as $class) {
+                    echo "<tr><td>".$class->idLesson."</td><td>".$class->date."</td><td>".$class->time."</td>";
+                    if ($class->done == 0){
+                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Otkazi\" onclick=\"openFormCancel()\" /> </td>";}
+                    else {
+                    echo "<td class = \"table1\"> da </td>";    
+                    }
+                }
+              ?>
+          
           </table><br/>         
           <input type="button" class = "button_style" style = "font-weight: bold; width: 150px !important; margin-left: 20px" value="Zakaži čas" onclick="openFormAppointment()" /><br/><br/>
           </div>
@@ -217,22 +217,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div id = "classes3" style = "display:none">
           <table class = "table1">
               <tr>
-                  <th class = "table1"> Termin </th>
                   <th class = "table1"> Datum </th>
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Preostalo mesta </th>
                   <th class = "table1"> Prijava </th>
               </tr>
-              <tr>
-                  <td class = "table1"> TERMIN </td>
-                  <td class = "table1"> DATUM </td>
-                  <td class = "table1"> VREME </td>
-                  <td class = "table1"> 15 </td>
-                  <td class = "table1"> <input type="button" class ='button_style' style = "font-weight: bold;" value="Prijava" /> </td>
-              </tr>
+               <?php
+                foreach ($allExams as $exam) {
+                    echo "<tr><td>".$exam->date."</td><td>".$exam->time."</td><td>".$exam->free."</td><td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Prijava\" /></td>";
+                     }
+              ?>
           </table><br/>
           <label class = "paragraph"> Vaš odabrani termin polaganja: </label>
-          <label class = "paragraph" style = "padding-left: 0px !important"> Datum i vreme </label>
+          
+          <?php
+            if ($examDate != NULL) {
+                echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">".$examDate->date.'  '.$examDate->time."</label>";
+            }
+            else {
+                echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">Niste odabrali termin polaganja</label>";
+            }
+          
+          ?>
+          
           <input type="button" class = "button_style" style = "font-weight: bold" value="Otkaži" /><br/><br/>
           </div>
         </div>
