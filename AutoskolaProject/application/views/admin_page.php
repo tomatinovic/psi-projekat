@@ -120,11 +120,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
     <div class = "tab_id">
         <div class="tab">
-          <button class="tablinks" onclick="openTab(event, 'Zaposleni')">Zaposleni</button>
-          <button class="tablinks" onclick="openTab(event, 'Polaznici')">Polaznici</button>
-          <button class="tablinks" onclick="openTab(event, 'Korisnici')">Korisnici</button>
+          <button id="buttonZaposleni" class="tablinks" onclick="openTab(event, 'Zaposleni')">Zaposleni</button>
+          <button id="buttonPolaznici"class="tablinks" onclick="openTab(event, 'Polaznici')">Polaznici</button>
+          <button id="buttonKorisnici" class="tablinks" onclick="openTab(event, 'Korisnici')">Korisnici</button>
         </div>
-
+    
         <div id="Zaposleni" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Svi zaposleni</p>
           <table id="empTable" class = "table1">
@@ -133,84 +133,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Ime </th>
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
+                  
               </tr>
               
-              <?php
-                foreach ($employees as $emp) {
-                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
-                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
-                }
-              ?>
-              <script>
-                var idUser;
-            function show(name, surname, address, phone, jmbg, email, username, idUsr) {
-                idUser = idUsr;
-                document.getElementById("detailsNameSurname").innerHTML = name.toString().concat(' ').concat(surname.toString());
-                document.getElementById("detailsAddress").innerHTML = address.toString();
-                document.getElementById("detailsPhone").innerHTML = phone.toString();
-                document.getElementById("detailsJmbg").innerHTML = jmbg.toString();
-                document.getElementById("detailsEmail").innerHTML = email.toString();
-                document.getElementById("detailsUsername").innerHTML = username.toString();
-        
-                $(document).ready(function () {
-                createCookie("userId", idUsr, "10");
-            });
-                openFormDetails();
-            }
-            
-            function createCookie(name, value, days) {
-            var expires;
-            if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toGMTString();
-            } else {
-            expires = "";
-            }
-            document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
-            }
-            
-            function deleteUser(){
-                //alert('Will delete '+idUser);
-                
-                 if (window.XMLHttpRequest) {
-                    objekat = new XMLHttpRequest();
-                } else {
-                    objekat = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                objekat.open("GET", "admin/deleteUser?idUser=" + idUser, true);
-                objekat.send();
-                //var table = document.getElementById("Zaposleni");
-                //alert(table);
-                closeForm();
-                
-            }
-        </script>
+                <!--AJAX DODAJE ZAPOSLENE -->
               
           </table><br/>
           <label class = "paragraph"> Dodaj novog zaposlenog: </label>
-          <input type="button" class = "button_style" style = "font-weight: bold;" value="Dodaj" onclick="openFormReg()"/><br/><br/>
+          <input id="adminDodaj" type="button" class = "button_style" style = "font-weight: bold;" value="Dodaj" onclick="openFormReg()"/><br/><br/>
           
           <p class="paragraph"></p>
         </div>
 
         <div id="Polaznici" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Svi polaznici</p>
-          <table class = "table1">
+          <table id="adminStudentTable" class = "table1">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Ime </th>
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
-               <?php
-                foreach ($students as $emp) {
-                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
-                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
-                }
-              ?>
+      
           </table><br/>
         </div>
 
@@ -223,29 +167,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Detalji </th>
               </tr>
-              <?php
-                foreach ($regUsers as $emp) {
-                    echo "<tr><td>".$emp->idUser."</td><td>".$emp->name."</td><td>".$emp->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Detalji\"";
-                    echo "onclick=\"show('$emp->name','$emp->surname','$emp->address','$emp->phone','$emp->jmbg','$emp->email','$emp->username','$emp->idUser')\"/> </td>";
-                }
-              ?>
+              
+               <!--AJAX DODAJE POLAZNIKE -->
+        
           </table><br/>
         </div>
     </div>
     
   <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('admin/logout')?>">
-        <label class="title"> Dobrodošao/la <?php echo $admin->name ?> - ADMIN </label><br/><br/><br/>
-        <p id = "label1"> <?php echo $admin->name.' '.$admin->surname ?> </p> 
-        <p id = "label2"> <?php echo $admin->address ?> </p> 
-        <p id = "label3"> <?php echo $admin->phone ?> </p> 
-        <p id = "label4"> <?php echo $admin->jmbg ?> </p> 
-        <p id = "label5"> <?php echo $admin->email ?> </p>
-        <p id = "label6"> <?php echo $admin->username ?> </p>
-   
-        <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
-        <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
+    <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('admin/logout')?>">
+        <label id='labelWelcome' class="title"></label><br/><br/><br/>
+            <p id = "labelNameSurname"></p>
+            <p id = "labelAddress"></p>
+            <p id = "labelPhone"></p>
+            <p id = "labelJmbg"></p>
+            <p id = "labelEmail"></p>
+            <p id = "labelUsername"></p>
+ 
+       <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
+       <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
      <?php if(isset($msg)) {
@@ -254,51 +194,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
       echo "</div>"; }  ?>
       
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('admin/updateUser')?>">    
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
         <label class="title"> Dobrodošao/la <?php echo $admin->name ?> - ADMIN </label><br/><br/><br/>
-        <input type="text" name="changeNameSurname" id ="textbox1" value ="<?php echo $admin->name.' '.$admin->surname ?>" style="margin-bottom: 10px" /> 
-         <input type="text" name="changeAddress" id ="textbox2" value = "<?php echo $admin->address ?>" style="margin-bottom: 10px" /> 
-          <input type="text" name="changePhone" id ="textbox3" value = "<?php echo $admin->phone ?>" style="margin-bottom: 10px" /> 
-           <input type="text" name="changeJmbg" id ="textbox4" value = "<?php echo $admin->jmbg ?>" style="margin-bottom: 10px" /> 
-            <input type="text" name="changeEmail" id ="textbox5" value = "<?php echo $admin->email ?>" style="margin-bottom: 10px" /> 
-             <input type="text" name="changeUsername" id ="textbox6" value = "<?php echo $admin->username ?>" style="margin-bottom: 10px" />
+        <input type="text" name="changeNameSurname" id ="changeNameSurname" value ="" style="margin-bottom: 10px" /> 
+         <input type="text" name="changeAddress" id ="changeAddress" value = "" style="margin-bottom: 10px" /> 
+          <input type="text" name="changePhone" id ="changePhone" value = "" style="margin-bottom: 10px" /> 
+           <input type="text" name="changeJmbg" id ="changeJmbg" value = "" style="margin-bottom: 10px" /> 
+            <input type="text" name="changeEmail" id ="changeEmail" value = "" style="margin-bottom: 10px" /> 
+             <input type="text" name="changeUsername" id ="changeUsername" value = "" style="margin-bottom: 10px" />
    
-        <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
+        <input type="button" class = "button_style" id = "admin_confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
     </form>
   </div> 
   <div style="padding-top: 300px"></div>
   
   <div class="form-popup" id="myFormRegAdmin">
-      <form action="<?php echo site_url('admin/register') ?>" class="form-container-reg" method="post">
+      <form if="adminRegForm" class="form-container-reg" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Dodavanje zaposlenog </i></p>
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input type="text"  placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+              <td>  <input id="adminAddName" type="text"  placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input type="text" placeholder="Unesite prezime" name="surnameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+             <td>   <input id="adminAddSurname" type="text" placeholder="Unesite prezime" name="surnameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input type="text" placeholder="Unesite telefon" name="phoneRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>    <input id="adminAddPhone" type="text" placeholder="Unesite telefon" name="phoneRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input type="text" placeholder="Unesite adresu" name="addressRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>    <input id="adminAddAddress" type="text" placeholder="Unesite adresu" name="addressRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input type="text" placeholder="Unesite JMBG" name="jmbgRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input id="adminAddJmbg" type="text" placeholder="Unesite JMBG" name="jmbgRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input type="text" placeholder="Unesite email" name="emailRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input id="adminAddEmail" type="text" placeholder="Unesite email" name="emailRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
           <tr>
             <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input type="text" placeholder="Unesite korisničko ime" name="usernameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input id="adminAddUsername" type="text" placeholder="Unesite korisničko ime" name="usernameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input type="password" placeholder="Unesite lozinku" name="passwordRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input id="adminAddPassword" type="password" placeholder="Unesite lozinku" name="passwordRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
           </tr>
       </table>
-    <button type="submit" class="btn"> Potvrdi </button>
+    <button id="adminAddEmployee" type="button" class="btn"> Potvrdi </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
   </form>
 </div>
@@ -350,10 +290,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
   <script>
            
-       document.getElementById("changeData1").onclick = function() { 
-            document.getElementById("admin_form").style.display = "none";           
-            document.getElementById("admin_form1").style.display = "block";          
-      };
       
        document.getElementById("exit_button").onclick = function() { 
             document.getElementById("admin_form").style.display = "block";
@@ -384,5 +320,7 @@ document.getElementById("close").onclick = function() {
 };
       
   </script>
+  
+  <script src="<?php echo site_url('../public/js/admin.js'); ?>"></script>
 </body>
 </html>

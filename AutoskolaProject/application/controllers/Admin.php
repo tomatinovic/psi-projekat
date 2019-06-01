@@ -4,8 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends CI_Controller {
        private $admin;
        private $employees;
-       private $students;
-       private $regUsers;
     
        public function __construct() {
         parent::__construct();
@@ -15,18 +13,39 @@ class Admin extends CI_Controller {
         
         $idAdmin = $this->session->userdata('userId');
         $this->admin = $this->modelUser->getUserById($idAdmin);
-        $this->employees = $this->modelUser->getAllEmployees();
-        $this->students = $this->modelUser->getAllStudents();
-        $this->regUsers = $this->modelUser->getAllRegUsers();
         }
         
+        public function getAdmin(){
+            $idAdmin = $this->session->userdata('userId');
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getUserById($idAdmin));
+        }
+        
+        public function getUser(){
+            $idUser = htmlspecialchars($_POST['idUser']);
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getUserById($idUser));
+        }
+        
+        public function allEmployees(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllEmployees());
+        }
+        
+        public function allStudents(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllStudents());
+        }
+        
+        public function allUsers(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllRegUsers());
+        }
+        
+        
         public function index(){
-       // $data['vesti'] = $this->ModelVest->dohvatiVesti();
         $data['msg'] = NULL;
         $data['admin'] = $this->admin;
-        $data['employees'] = $this->employees;
-        $data['students'] = $this->students;
-        $data['regUsers'] = $this->regUsers;
         $this->load->view('admin_page', $data);  
         }
         
@@ -41,10 +60,7 @@ class Admin extends CI_Controller {
         if ($msg) {
             $data['msg'] = $msg;
         }
-        $data['employees'] = $this->employees;
         $data['admin'] = $this->admin;
-        $data['students'] = $this->students;
-        $data['regUsers'] = $this->regUsers;
         $this->showViews('admin_page',$data); }
         
         public function logout(){
@@ -52,32 +68,43 @@ class Admin extends CI_Controller {
             $this->load->view('welcome_message'); 
         }
         
+        
         public function updateUser(){
             
-            $changeNameSurname = $this->input->post('changeNameSurname');
-            $changeAddress = $this->input->post('changeAddress');
-            $changePhone = $this->input->post('changePhone');
-            $changeJmbg = $this->input->post('changeJmbg');
-            $changeEmail = $this->input->post('changeEmail');
-            $changeUsername = $this->input->post('changeUsername');
+            $name = htmlspecialchars($_POST['name']);
+            $surname = htmlspecialchars($_POST['surname']);
+            $phone = htmlspecialchars($_POST['phone']);
+            $address = htmlspecialchars($_POST['address']);
+            $jmbg = htmlspecialchars($_POST['jmbg']);
+            $email = htmlspecialchars($_POST['email']);
+            $username = htmlspecialchars($_POST['username']);
             
-            if ($changeNameSurname=="" || $changeAddress=="" || $changePhone=="" || $changeJmbg==""
-                    || $changeEmail=="" || $changeUsername==""){
-                $this->changeViewWithMessage("Sva polja moraju biti popunjena!");
+            $response = array(
+                    'code' => 1,
+                    'msg' => "",
+                    'user' => NULL
+                );
+            
+            if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username==""){
+                 $response['code'] = 0;
+                 $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
-            
-            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->admin->username ){
-                $this->changeViewWithMessage("Zauzeto korisnicko ime!");
+                    
+            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->admin->username ){
+                 $response['code'] = 0;
+                 $response['msg'] = "Zauzeto korisnicko ime!";
             }
-            else{
-                $trimmedNameSurname = trim($changeNameSurname);
-                $arr = explode(' ',trim($trimmedNameSurname));
-               
-                $this->modelUser->updateUser($this->admin->idUser, $arr[0], $arr[1], $changeAddress,
-                $changePhone, $changeJmbg, $changeEmail, $changeUsername);
+            else {
+                $this->modelUser->updateUser($this->admin->idUser, $name, $surname, $address,
+                $phone, $jmbg, $email, $username);
                 $this->admin = $this->modelUser->getUserById($this->admin->idUser);
-                $this->changeViewWithMessage("Uspesno!");
+                $response['user']= $this->admin;
+                
             }
+            
+            header("Content-Type: application/json");
+            echo json_encode($response);
             
         }
         
@@ -90,19 +117,25 @@ class Admin extends CI_Controller {
 
         }
         
-         public function register(){
-            
-            $name = $this->input->post('nameRegA');
-            $surname = $this->input->post('surnameRegA');
-            $phone = $this->input->post('phoneRegA');
-            $address = $this->input->post('addressRegA');
-            $jmbg = $this->input->post('jmbgRegA');
-            $email = $this->input->post('emailRegA');
-            $username = $this->input->post('usernameRegA');
-            $password = $this->input->post('passwordRegA');
-            
-            if($this->modelUser->checkUsernameExists($username)){
-                 $this->changeViewWithMessage("Korisnicko ime zauzeto!");
+        public function register(){
+                $name = htmlspecialchars($_POST['name']);
+                $surname = htmlspecialchars($_POST['surname']);
+                $phone = htmlspecialchars($_POST['phone']);
+                $address = htmlspecialchars($_POST['address']);
+                $jmbg = htmlspecialchars($_POST['jmbg']);
+                $email = htmlspecialchars($_POST['email']);
+                $username = htmlspecialchars($_POST['username']);
+                $password = htmlspecialchars($_POST['password']);
+                
+                $response = array(
+                    'code' => 1,
+                    'msg' => "",
+                    'user' => NULL
+                );
+                
+                if($this->modelUser->checkUsernameExists($username)){
+                 $response['code'] = 0;
+                 $response['msg'] = "Zauzeto korisnicko ime!";
             }
             else {
                    $data = array(  
@@ -116,14 +149,15 @@ class Admin extends CI_Controller {
                         'password' => $password,
                         'type' => 1
                         );  
-                   
                    $this->db->insert('users',$data);  
-            
             } 
-            $this->employees = $this->modelUser->getAllEmployees();
-            $this->changeViewWithMessage("Uspesno");
-        }
-    
-        
+            
+            header("Content-Type: application/json");
+            $newUser = json_encode($this->modelUser->getUserByUsername($username));
+            $response['user'] = json_decode($newUser);
+            echo json_encode($response);
+            
+            }
+     
         
 }
