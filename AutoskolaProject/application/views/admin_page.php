@@ -160,7 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div id="Korisnici" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Registrovani korisnici</p>
-          <table class = "table1">
+          <table id = "adminUserTable" class = "table1">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Ime </th>
@@ -188,11 +188,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-     <?php if(isset($msg)) {
-      echo '<div class="form-popup1 form-container" id="messages">';
-      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
-      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
-      echo "</div>"; }  ?>
+      <div class="form-popup1 form-container" id="messages" style="z-index: 1; display: none;  left: 5px !important; top: 5px !important;  transform: translate(50%, 50%); ">
+      <input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>
+      </div>
       
     <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
         <label class="title"> Dobrodošao/la <?php echo $admin->name ?> - ADMIN </label><br/><br/><br/>
@@ -215,27 +213,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <table>
           <tr>
               <td> <label style="font-family: Arial; font-size: 14px"> Ime: </label> </td>
-              <td>  <input id="adminAddName" type="text"  placeholder="Unesite ime" name="nameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+              <td>  <input id="adminAddName" type="text"  placeholder="Unesite ime" name="nameRegA"> </td>
              <td style="padding-left: 10px; padding-right: 20px"> <label style="font-family:Arial; font-size: 14px"> Prezime: </label> </td>
-             <td>   <input id="adminAddSurname" type="text" placeholder="Unesite prezime" name="surnameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+             <td>   <input id="adminAddSurname" type="text" placeholder="Unesite prezime" name="surnameRegA"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> Telefon: </label> </td>
-            <td>    <input id="adminAddPhone" type="text" placeholder="Unesite telefon" name="phoneRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>    <input id="adminAddPhone" type="text" placeholder="Unesite telefon" name="phoneRegA"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Adresa: </label> </td>
-            <td>    <input id="adminAddAddress" type="text" placeholder="Unesite adresu" name="addressRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>    <input id="adminAddAddress" type="text" placeholder="Unesite adresu" name="addressRegA"> </td><br/>
           </tr>
           <tr>
             <td>  <label style="font-family:Arial; font-size: 14px"> JMBG: </label> </td>
-            <td>      <input id="adminAddJmbg" type="text" placeholder="Unesite JMBG" name="jmbgRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input id="adminAddJmbg" type="text" placeholder="Unesite JMBG" name="jmbgRegA"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Email: </label> </td>
-            <td>      <input id="adminAddEmail" type="text" placeholder="Unesite email" name="emailRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input id="adminAddEmail" type="text" placeholder="Unesite email" name="emailRegA"> </td><br/>
           </tr>
           <tr>
             <td style="padding-right: 10px">  <label style="font-family:Arial; font-size: 14px"> Kor. ime: </label> </td>
-            <td>      <input id="adminAddUsername" type="text" placeholder="Unesite korisničko ime" name="usernameRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td>
+            <td>      <input id="adminAddUsername" type="text" placeholder="Unesite korisničko ime" name="usernameRegA"> </td>
             <td style="padding-left: 10px">  <label style="font-family:Arial; font-size: 14px"> Lozinka: </label> </td>
-            <td>      <input id="adminAddPassword" type="password" placeholder="Unesite lozinku" name="passwordRegA" required oninvalid="this.setCustomValidity('Ovo polje je obavezno')" oninput="this.setCustomValidity('')"> </td><br/>
+            <td>      <input id="adminAddPassword" type="password" placeholder="Unesite lozinku" name="passwordRegA"> </td><br/>
           </tr>
       </table>
     <button id="adminAddEmployee" type="button" class="btn"> Potvrdi </button>

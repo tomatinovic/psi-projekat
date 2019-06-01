@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-
-
-
 $(function (){
       
   var $table = $('#empTable');
   var $adminStudentTable = $('#adminStudentTable');
-  
+  var $adminUserTable = $('#adminUserTable');
   var $adminform = $('#admin_form');
+  var $messages = $('#messages');
   
   $.ajax({
       type: 'GET',
@@ -49,13 +47,17 @@ $(function (){
   });
            
   });
-  
-  
-        
+         
   $('#buttonZaposleni').on('click', function(){
       
       //da se ne bi appendovali elemnenti konstantno i pravili duplikati
       $('#empTable tr').remove();
+       $table.append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
       
       console.log('pritisnuto dugme');
       
@@ -77,15 +79,20 @@ $(function (){
           error: function(){
               console.log('fail');
           }
-      });
-      
-      
+      });         
   });
   
   $('#buttonPolaznici').on('click', function(){
       
       //da se ne bi appendovali elemnenti konstantno i pravili duplikati
       $('#adminStudentTable tr').remove();
+      
+       $adminStudentTable.append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
       
       console.log('pritisnuto dugme');
       
@@ -107,9 +114,42 @@ $(function (){
           error: function(){
               console.log('fail');
           }
-      });
+      });            
+  });
+  
+   $('#buttonKorisnici').on('click', function(){
       
+      //da se ne bi appendovali elemnenti konstantno i pravili duplikati
+      $('#adminUserTable tr').remove();
       
+           $adminUserTable.append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
+      
+      console.log('pritisnuto dugme');
+      
+      $.ajax({
+          type: 'GET',
+          url: 'admin/allUsers',
+          datatype: 'json',
+          success: function(users){
+              console.log('uspesno pozvan url');
+              $.each(users, function(i, user){
+                 $adminUserTable.append('<tr>\n\
+                <td class="table1">'+user.idUser+'</td>\n\
+                <td class="table1">'+user.name+'</td>\n\
+                <td class="table1">'+user.surname+'</td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                </tr>');
+              });
+          },
+          error: function(){
+              console.log('fail');
+          }
+      });     
   });
   
   
@@ -143,10 +183,13 @@ $(function (){
           data: employee,
           success: function(response){
               console.log('uspesno pozvan url');
-              if(response.code === 0){
-                  alert(response.msg);
+              if(document.getElementById("response") !== null) {
+                  document.getElementById("response").remove();
               }
-              else{
+              if(response.code === 0){
+                   document.getElementById("messages").style.display = "block";
+                   $messages.append('<label id = "response" style = "color: red; padding-left: 10px">'+response.msg+'</label><br>');             
+              } else{
                 $table.append('<tr>\n\
                 <td class="table1">'+response.user.idUser+'</td>\n\
                 <td class="table1">'+response.user.name+'</td>\n\
@@ -240,7 +283,75 @@ $(function (){
   $('#empTable').on('click', 'td', function() {
     var row_num = parseInt( $(this).parent().index() )+1;   
     var column_num = parseInt( $(this).index() ) + 1;
-    if (column_num == 4)
+    if (column_num === 4)
+    {
+        $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+        
+        var userId = {
+          idUser: $selectedId,  
+      }
+      
+       
+      $.ajax({
+          type: 'POST',
+          url: 'admin/getUser',
+          data: userId,
+          success: function(user){
+              
+              console.log(user.name);
+              
+              $('#detailsNameSurname').text(user.name + ' ' + user.surname);
+              $('#detailsAddress').text(user.address);
+              $('#detailsPhone').text(user.phone);
+              $('#detailsJmbg').text(user.jmbg);
+              $('#detailsEmail').text(user.email);
+              $('#detailsUsername').text(user.username);
+              
+              document.getElementById("myFormDetails").style.display = "block";
+          }
+      });
+        
+    }
+  });
+  
+  $('#adminStudentTable').on('click', 'td', function() {
+    var row_num = parseInt( $(this).parent().index() )+1;   
+    var column_num = parseInt( $(this).index() ) + 1;
+    if (column_num === 4)
+    {
+        $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+        
+        var userId = {
+          idUser: $selectedId,  
+      }
+      
+       
+      $.ajax({
+          type: 'POST',
+          url: 'admin/getUser',
+          data: userId,
+          success: function(user){
+              
+              console.log(user.name);
+              
+              $('#detailsNameSurname').text(user.name + ' ' + user.surname);
+              $('#detailsAddress').text(user.address);
+              $('#detailsPhone').text(user.phone);
+              $('#detailsJmbg').text(user.jmbg);
+              $('#detailsEmail').text(user.email);
+              $('#detailsUsername').text(user.username);
+              
+              document.getElementById("myFormDetails").style.display = "block";
+          }
+      });
+        
+    }
+  });
+  
+   $('#adminUserTable').on('click', 'td', function() {
+    var row_num = parseInt( $(this).parent().index() )+1;   
+    var column_num = parseInt( $(this).index() ) + 1;
+    if (column_num === 4)
     {
         $selectedId = parseInt($(this).closest('tr').find('td:first').text());
         

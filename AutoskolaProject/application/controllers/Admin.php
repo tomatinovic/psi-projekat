@@ -137,6 +137,11 @@ class Admin extends CI_Controller {
                  $response['code'] = 0;
                  $response['msg'] = "Zauzeto korisnicko ime!";
             }
+            else if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username=="" || $password==""){
+                 $response['code'] = 0;
+                 $response['msg'] = "Sva polja moraju biti popunjena!";
+                    }
             else {
                    $data = array(  
                         'name'     => $name,  
