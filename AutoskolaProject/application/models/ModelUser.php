@@ -18,6 +18,11 @@ class ModelUser extends CI_Model {
         return $query->row();
     }
     
+    public function getUserByUsername($username){
+        $query = $this->db->get_where('users', array('username' => $username));
+        return $query->row();
+    }
+    
     public function getUsersByUsernameAndPass($username, $password){
         $query = $this->db->get_where('users', array('username' => $username, 'password' => $password));
         return $query;
