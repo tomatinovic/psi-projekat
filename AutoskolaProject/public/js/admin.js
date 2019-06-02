@@ -11,6 +11,7 @@ $(function (){
   var $adminUserTable = $('#adminUserTable');
   var $adminform = $('#admin_form');
   var $messages = $('#messages');
+  var $global_user;
   
   $.ajax({
       type: 'GET',
@@ -126,7 +127,7 @@ $(function (){
                   <th class = "table1"> Broj </th>\n\
                   <th class = "table1"> Ime </th>\n\
                   <th class = "table1"> Prezime </th>\n\
-                  <th class = "table1"> Detalji </th>\n\
+                  <th class = "table1"> Aktivacija </th>\n\
               </tr>');
       
       console.log('pritisnuto dugme');
@@ -142,7 +143,7 @@ $(function (){
                 <td class="table1">'+user.idUser+'</td>\n\
                 <td class="table1">'+user.name+'</td>\n\
                 <td class="table1">'+user.surname+'</td>\n\
-                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Aktivacija" /></td>\n\
                 </tr>');
               });
           },
@@ -183,12 +184,13 @@ $(function (){
           data: employee,
           success: function(response){
               console.log('uspesno pozvan url');
-              if(document.getElementById("response") !== null) {
-                  document.getElementById("response").remove();
-              }
+          //    if(document.getElementById("response") !== null) {
+          //        document.getElementById("response").remove();
+          //    }
               if(response.code === 0){
-                   document.getElementById("messages").style.display = "block";
-                   $messages.append('<label id = "response" style = "color: red; padding-left: 10px">'+response.msg+'</label><br>');             
+                  alert(response.msg);
+          //         document.getElementById("messages").style.display = "block";
+          //         $messages.append('<label id = "response" style = "color: red; padding-left: 10px">'+response.msg+'</label><br>');             
               } else{
                 $table.append('<tr>\n\
                 <td class="table1">'+response.user.idUser+'</td>\n\
@@ -297,7 +299,7 @@ $(function (){
           url: 'admin/getUser',
           data: userId,
           success: function(user){
-              
+              $global_user = user;
               console.log(user.name);
               
               $('#detailsNameSurname').text(user.name + ' ' + user.surname);
@@ -331,7 +333,7 @@ $(function (){
           url: 'admin/getUser',
           data: userId,
           success: function(user){
-              
+              $global_user = user;
               console.log(user.name);
               
               $('#detailsNameSurname').text(user.name + ' ' + user.surname);
@@ -355,31 +357,109 @@ $(function (){
     {
         $selectedId = parseInt($(this).closest('tr').find('td:first').text());
         
-        var userId = {
-          idUser: $selectedId,  
-      }
+         var userId = {
+          idUser: $selectedId };
       
-       
-      $.ajax({
+        $.ajax({
           type: 'POST',
           url: 'admin/getUser',
           data: userId,
           success: function(user){
+             $global_user =  user;
               
-              console.log(user.name);
+         document.getElementById("myFormActivation").style.display = "block";
+      
+        
+    } 
+  }); 
+    }
+   });
+  
+  $('#activation_button').on('click', function() {
+      
+       var userId = {
+          idUser: $global_user.idUser };
+      
+        $.ajax({
+          type: 'POST',
+          url: 'admin/activateUser',
+          data: userId,
+          success: function(users){
               
-              $('#detailsNameSurname').text(user.name + ' ' + user.surname);
-              $('#detailsAddress').text(user.address);
-              $('#detailsPhone').text(user.phone);
-              $('#detailsJmbg').text(user.jmbg);
-              $('#detailsEmail').text(user.email);
-              $('#detailsUsername').text(user.username);
-              
-              document.getElementById("myFormDetails").style.display = "block";
+              $('#adminUserTable tr').remove();
+                 $('#adminUserTable').append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
+              $.each(users, function(i, user){
+                 $('#adminUserTable').append('<tr>\n\
+                <td class="table1">'+user.idUser+'</td>\n\
+                <td class="table1">'+user.name+'</td>\n\
+                <td class="table1">'+user.surname+'</td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                </tr>');
+              });                    
+              document.getElementById("myFormActivation").style.display = "none";
+          }
+      });
+  });
+  
+   $('#deleteButton').on('click', function() {
+      
+        var userId = {
+          idUser: $global_user.idUser,
+          typeUser: $global_user.type };
+             
+      $.ajax({
+          type: 'POST',
+          url: 'admin/deleteUser',
+          data: userId,
+          success: function(users){
+              console.log(userId.typeUser);
+              if (userId.typeUser == 1) {
+               $('#empTable tr').remove();
+                  $table.append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
+              $.each(users, function(i, user){
+                 $table.append('<tr>\n\
+                <td class="table1">'+user.idUser+'</td>\n\
+                <td class="table1">'+user.name+'</td>\n\
+                <td class="table1">'+user.surname+'</td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                </tr>');
+              });      }
+          else  {
+               $('#adminStudentTable tr').remove();
+                 $('#adminStudentTable').append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
+              $.each(users, function(i, user){
+                 $('#adminStudentTable').append('<tr>\n\
+                <td class="table1">'+user.idUser+'</td>\n\
+                <td class="table1">'+user.name+'</td>\n\
+                <td class="table1">'+user.surname+'</td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                </tr>');
+              });      }
+                  
+              document.getElementById("myFormDetails").style.display = "none";
+
+          }, 
+          error:function() {
+              console.log("greska");
           }
       });
         
-    }
+    
   });
 
 

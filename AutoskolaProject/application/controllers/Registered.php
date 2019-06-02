@@ -28,6 +28,17 @@ class Registered extends CI_Controller {
         private function showViews($mainPart, $data){
         $this->load->view($mainPart, $data);
     }
+    
+         public function getRegistered(){
+            $idEmployee = $this->session->userdata('userId');
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getUserById($idEmployee));
+        }
+    
+         public function getAllTheoryClasses(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllTheoryClasses());
+        }
         
         public function changeViewWithMessage($msg=NULL)
         {
@@ -47,30 +58,40 @@ class Registered extends CI_Controller {
         
         public function updateUser(){
             
-            $changeNameSurname = $this->input->post('changeNameSurname');
-            $changeAddress = $this->input->post('changeAddress');
-            $changePhone = $this->input->post('changePhone');
-            $changeJmbg = $this->input->post('changeJmbg');
-            $changeEmail = $this->input->post('changeEmail');
-            $changeUsername = $this->input->post('changeUsername');
+            $name = htmlspecialchars($_POST['name']);
+            $surname = htmlspecialchars($_POST['surname']);
+            $phone = htmlspecialchars($_POST['phone']);
+            $address = htmlspecialchars($_POST['address']);
+            $jmbg = htmlspecialchars($_POST['jmbg']);
+            $email = htmlspecialchars($_POST['email']);
+            $username = htmlspecialchars($_POST['username']);
             
-            if ($changeNameSurname=="" || $changeAddress=="" || $changePhone=="" || $changeJmbg==""
-                    || $changeEmail=="" || $changeUsername==""){
-                $this->changeViewWithMessage("Sva polja moraju biti popunjena!");
+            $response = array(
+                    'code' => 1,
+                    'msg' => "",
+                    'user' => NULL
+                );
+            
+            if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username==""){
+                 $response['code'] = 0;
+                 $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
-            
-            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->user->username ){
-                $this->changeViewWithMessage("Zauzeto korisnicko ime!");
+                    
+            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->user->username ){
+                 $response['code'] = 0;
+                 $response['msg'] = "Zauzeto korisnicko ime!";
             }
-            else{
-                $trimmedNameSurname = trim($changeNameSurname);
-                $arr = explode(' ',trim($trimmedNameSurname));
-               
-                $this->modelUser->updateUser($this->user->idUser, $arr[0], $arr[1], $changeAddress,
-                $changePhone, $changeJmbg, $changeEmail, $changeUsername);
+            else {
+                $this->modelUser->updateUser($this->user->idUser, $name, $surname, $address,
+                $phone, $jmbg, $email, $username);
                 $this->user = $this->modelUser->getUserById($this->user->idUser);
-                $this->changeViewWithMessage("Uspesno!");
+                $response['user']= $this->user;
+                
             }
+            
+            header("Content-Type: application/json");
+            echo json_encode($response);
             
         }
        

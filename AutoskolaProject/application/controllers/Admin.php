@@ -108,12 +108,26 @@ class Admin extends CI_Controller {
             
         }
         
-        public function deleteUser(){
-            $idUser = $_GET['idUser'];
+      public function deleteUser(){
+            $idUser = htmlspecialchars($_POST['idUser']);
+            $typeUser = htmlspecialchars($_POST['typeUser']);
             $this->db->delete('users', array('idUser' => $idUser));
-            $this->employees = $this->modelUser->getAllEmployees();
-            $data['employees'] = $this->employees;
-            $this->load->view('admin_page', $data);  
+            $peopleArray = array();
+      switch ($typeUser) {
+          case 1: {
+              $peopleArray = $this->modelUser->getAllEmployees();
+          } break;
+          case 2: {
+              $peopleArray = $this->modelUser->getAllStudents();
+          } break;
+          case 3: {
+               $peopleArray = $this->modelUser->getAllRegUsers();
+          } break;
+          default: break;
+      }
+            
+            header("Content-Type: application/json");
+            echo json_encode($peopleArray);
 
         }
         
@@ -163,6 +177,15 @@ class Admin extends CI_Controller {
             echo json_encode($response);
             
             }
+            
+            
+            public function activateUser(){
+                $idUser = htmlspecialchars($_POST['idUser']);
+                $this->modelUser->activateUser($idUser);
+                header("Content-Type: application/json");
+                echo json_encode($this->modelUser->getAllRegUsers());
+            }
+            
      
         
 }
