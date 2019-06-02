@@ -63,6 +63,12 @@ class ModelUser extends CI_Model {
         return $query->result();
     }
     
+    public function activateUser($idUser){
+        $this->db->set('type', 2);
+        $this->db->where('idUser', $idUser);
+        $this->db->update('users');
+    }
+    
     public function getAllRegUsers(){
         $query = $this->db->get_where('users', array('type' => 3));
         return $query->result();

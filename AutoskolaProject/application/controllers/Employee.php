@@ -22,7 +22,37 @@ class Employee extends CI_Controller {
         $this->dlessons = $this->modelUser->getDrivingLessonsForTeacher($this->employee);
         }
         
-        public function index(){
+         public function getEmployee(){
+            $idEmployee = $this->session->userdata('userId');
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getUserById($idEmployee));
+        }
+        
+        public function allStudents(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllStudents());
+        }
+        
+         public function getAllTheoryClasses(){
+         header("Content-Type: application/json");
+         echo json_encode($this->modelUser->getAllTheoryClasses());
+        }
+        
+        public function getMyStudents(){
+            $idEmployee = $this->session->userdata('userId');
+            $user = $this->modelUser->getUserById($idEmployee);
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getStudentsForUser($user));
+        }
+        
+        public function getDrivingLessons(){
+            $idEmployee = $this->session->userdata('userId');
+            $user = $this->modelUser->getUserById($idEmployee);
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getDrivingLessonsForTeacher($user));
+        }
+
+                public function index(){
         $data['msg'] = NULL;
         $data['employee'] = $this->employee;
         $data['allStudents'] = $this->allStudents;
@@ -57,30 +87,40 @@ class Employee extends CI_Controller {
         
         public function updateUser(){
             
-            $changeNameSurname = $this->input->post('changeNameSurname');
-            $changeAddress = $this->input->post('changeAddress');
-            $changePhone = $this->input->post('changePhone');
-            $changeJmbg = $this->input->post('changeJmbg');
-            $changeEmail = $this->input->post('changeEmail');
-            $changeUsername = $this->input->post('changeUsername');
+            $name = htmlspecialchars($_POST['name']);
+            $surname = htmlspecialchars($_POST['surname']);
+            $phone = htmlspecialchars($_POST['phone']);
+            $address = htmlspecialchars($_POST['address']);
+            $jmbg = htmlspecialchars($_POST['jmbg']);
+            $email = htmlspecialchars($_POST['email']);
+            $username = htmlspecialchars($_POST['username']);
             
-            if ($changeNameSurname=="" || $changeAddress=="" || $changePhone=="" || $changeJmbg==""
-                    || $changeEmail=="" || $changeUsername==""){
-                $this->changeViewWithMessage("Sva polja moraju biti popunjena!");
+            $response = array(
+                    'code' => 1,
+                    'msg' => "",
+                    'user' => NULL
+                );
+            
+            if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username==""){
+                 $response['code'] = 0;
+                 $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
-            
-            else if ($this->modelUser->checkUsernameExists($changeUsername) && $changeUsername!= $this->employee->username ){
-                $this->changeViewWithMessage("Zauzeto korisnicko ime!");
+                    
+            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->employee->username ){
+                 $response['code'] = 0;
+                 $response['msg'] = "Zauzeto korisnicko ime!";
             }
-            else{
-                $trimmedNameSurname = trim($changeNameSurname);
-                $arr = explode(' ',trim($trimmedNameSurname));
-               
-                $this->modelUser->updateUser($this->employee->idUser, $arr[0], $arr[1], $changeAddress,
-                $changePhone, $changeJmbg, $changeEmail, $changeUsername);
+            else {
+                $this->modelUser->updateUser($this->employee->idUser, $name, $surname, $address,
+                $phone, $jmbg, $email, $username);
                 $this->employee = $this->modelUser->getUserById($this->employee->idUser);
-                $this->changeViewWithMessage("Uspesno!");
+                $response['user']= $this->employee;
+                
             }
+            
+            header("Content-Type: application/json");
+            echo json_encode($response);
             
         }
        

@@ -173,78 +173,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <span class="paragraph" style="padding-left: 0px !important"><input type="button" id ="button5" class = "button_style" style = "font-weight: bold; width: 90px !important" value="Teorija"/></span>
           <span class="paragraph" style="padding-left: 0px !important"><input type="button" id ="button6" class = "button_style" style = "font-weight: bold; width: 90px !important" value="Vožnja"/></span><br/><br/>
           <div id = "classes1">
-          <table class = "table1">
+          <table class = "table1" id = "table1">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Ime </th>
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Preuzmi </th>
               </tr>
-              <?php
-                foreach ($allStudents as $std) {
-                    echo "<tr><td>".$std->idUser."</td><td>".$std->name."</td><td>".$std->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Preuzmi\" /> </td>";
-                }
-              ?>
           </table><br/>
           </div>
           
           <div id = "classes2" style="display:none">
-          <table class = "table1">
+          <table class = "table1" id = "table2">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Ime </th>
                   <th class = "table1"> Prezime </th>
                   <th class = "table1"> Odjava </th>
-              </tr>
-              <?php
-                foreach ($myStudents as $std) {
-                    echo "<tr><td>".$std->idUser."</td><td>".$std->name."</td><td>".$std->surname."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Odjava\" onclick=\"openFormCancelStudent()\" /> </td>";
-                }
-              ?>
-                   
+              </tr>                   
           </table><br/>                   
           </div>
           
           <div id = "classes3" style = "display:none">
-          <table class = "table1">
+          <table class = "table1" id = "table3">
               <tr>
+                  <th class = "table1"> Broj </th>
                   <th class = "table1"> Profesor </th>
                   <th class = "table1"> Dani </th>
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Promeni </th>
               </tr>
-              <?php
-                foreach ($tclasses as $class) {
-                    echo "<tr><td>".$class->name.' '.$class->surname."</td><td>".$class->day."</td><td>".$class->time."</td>";
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Promeni\" onclick=\"openFormChangeAppointment()\" /> </td>";
-                }
-              ?>
           </table><br/>
           </div>
           
           <div id = "classes4" style = "display:none">
-          <table class = "table1">
+          <table class = "table1" id = "table4">
               <tr>
                   <th class = "table1"> Broj </th>
                   <th class = "table1"> Polaznik </th>
                   <th class = "table1"> Datum </th>
                   <th class = "table1"> Vreme </th>
                   <th class = "table1"> Odrađen </th>
-              </tr>
-              
-              <?php
-                foreach ($dlessons as $class) {
-                    echo "<tr><td>".$class->idUser."</td><td>".$class->name.' '.$class->surname."</td><td>".$class->date."</td><td>".$class->time."</td>";
-                    if ($class->done == 0){
-                    echo "<td class = \"table1\"> <input type=\"button\" class ='button_style' style = \"font-weight: bold;\" value=\"Otkazi\" onclick=\"openFormChangeAppointment()\" /> </td>";}
-                    else {
-                    echo "<td class = \"table1\"> da </td>";    
-                    }
-                }
-              ?>
-      
+              </tr>             
           </table><br/>
           <label class = "paragraph"> Zakaži novi čas vožnje: </label>
           <input type="button" class = "button_style" style = "font-weight: bold" value="Zakaži" onclick="openFormNewAppointment()" /><br/><br/>
@@ -253,36 +223,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     
-     <?php if(isset($msg)) {
-      echo '<div class="form-popup1 form-container" id="messages">';
-      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
-      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
-      echo "</div>"; }  ?>
-    
   <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('employee/logout')?>">
-        <label class="title"> Dobrodošao/la <?php echo $employee->name ?> </label><br/><br/><br/>
-        <p id = "label1"> <?php echo $employee->name.' '.$employee->surname ?> </p> 
-        <p id = "label2"> <?php echo $employee->address ?> </p> 
-        <p id = "label3"> <?php echo $employee->phone ?> </p> 
-        <p id = "label4"> <?php echo $employee->jmbg ?> </p> 
-        <p id = "label5"> <?php echo $employee->email ?> </p>
-        <p id = "label6"> <?php echo $employee->username ?> </p>
-   
-        <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
-        <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
+    <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('employee/logout')?>">
+        <label id='labelWelcome' class="title"></label><br/><br/><br/>
+            <p id = "labelNameSurname"></p>
+            <p id = "labelAddress"></p>
+            <p id = "labelPhone"></p>
+            <p id = "labelJmbg"></p>
+            <p id = "labelEmail"></p>
+            <p id = "labelUsername"></p>
+ 
+       <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
+       <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('employee/updateUser')?>">    
-        <label class="title"> Dobrodošao/la IME </label><br/><br/><br/>
-        <input type="text" id ="textbox1" name="changeNameSurname" value ="<?php echo $employee->name.' '.$employee->surname ?>"  style="margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" name="changeAddress" value = "<?php echo $employee->address ?>" style="margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" name="changePhone" value = "<?php echo $employee->phone ?>" style="margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" name="changeJmbg" value = "<?php echo $employee->jmbg ?>" style="margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" name="changeEmail" value = "<?php echo $employee->email ?>" style="margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" name="changeUsername" value = "<?php echo $employee->username ?>" style="margin-bottom: 10px" />
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
+        <label class="title"> Dobrodošao/la <?php echo $employee->name ?> </label><br/><br/><br/>
+        <input type="text" id ="changeNameSurname" name="changeNameSurname"  value ="" style="margin-bottom: 10px" /> 
+         <input type="text" id ="changeAddress" name="changeAddress" value = "" style="margin-bottom: 10px" /> 
+          <input type="text" id ="changePhone" name="changePhone" value = "" style="margin-bottom: 10px" /> 
+           <input type="text" id ="changeJmbg" name="changeJmbg" value = "" style="margin-bottom: 10px" /> 
+            <input type="text" id ="changeEmail" name="changeEmail" value = "" style="margin-bottom: 10px" /> 
+             <input type="text" id ="changeUsername" name="changeUsername" value = "" style="margin-bottom: 10px" />
    
-        <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
+        <input type="button" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
     </form>
   </div> 
@@ -420,12 +384,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             document.getElementById("classes2_label").style.display = "none";
             document.getElementById("classes3").style.display = "none"; 
             document.getElementById("classes3_label").style.display = "none";
-      }; 
-      
-        document.getElementById("changeData").onclick = function() { 
-            document.getElementById("admin_form").style.display = "none";           
-            document.getElementById("admin_form1").style.display = "block";          
-      };
+      };     
       
        document.getElementById("exit_button").onclick = function() { 
             document.getElementById("admin_form").style.display = "block";
@@ -451,5 +410,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
       
   </script>
+   <script src="<?php echo site_url('../public/js/employee.js'); ?>"></script>
 </body>
 </html>

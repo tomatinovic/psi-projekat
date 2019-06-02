@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <button class="tablinks" onclick="openTab(event, 'O_nama')">O nama</button>
           <button class="tablinks" onclick="openTab(event, 'Informacije')">Informacije</button>
           <button class="tablinks" onclick="openTab(event, 'Materijali')">Materijali</button>
-          <button class="tablinks" onclick="openTab(event, 'Časovi')">Časovi</button>
+          <button class="tablinks" id ="casovi" onclick="openTab(event, 'Časovi')">Časovi</button>
         </div>
 
         <div id="O_nama" class="tabcontent">
@@ -99,53 +99,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div id="Časovi" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Časovi</p>
-          <table class = "table1">
+          <table class = "table1" id ="casovi1">
               <tr>
                   <th class = "table1"> Profesor </th>
                   <th class = "table1"> Dani </th>
                   <th class = "table1"> Vreme </th>
-              </tr>
-              
-              <?php
-                foreach ($tclasses as $class) {
-                    echo "<tr><td>".$class->name." ".$class->surname."</td><td>".$class->day."</td><td>".$class->time."</td>";
-                     }
-              ?>
-      
+              </tr>     
           </table><br/>
         </div>
     </div>
     
-     <?php if(isset($msg)) {
-      echo '<div class="form-popup1 form-container" id="messages">';
-      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
-      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
-      echo "</div>"; }  ?>
-    
    <div class = "register_class">
-      <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('registered/logout')?>">    
-        <label class="title"> Dobrodošao/la <?php echo $user->name ?> </label><br/><br/><br/>
-        <p id = "label1"> <?php echo $user->name.' '.$user->surname ?> </p> 
-        <p id = "label2"> <?php echo $user->address ?> </p> 
-        <p id = "label3"> <?php echo $user->phone ?> </p> 
-        <p id = "label4"> <?php echo $user->jmbg ?> </p> 
-        <p id = "label5"> <?php echo $user->email ?> </p>
-        <p id = "label6"> <?php echo $user->username ?> </p>
-   
-        <input type="button" class = "button_style" id ="changeData" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
-        <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
+    <form name="admin_form" id ="admin_form" method="post" class = "text_style" action="<?php echo site_url('registered/logout')?>">
+        <label id='labelWelcome' class="title"></label><br/><br/><br/>
+            <p id = "labelNameSurname"></p>
+            <p id = "labelAddress"></p>
+            <p id = "labelPhone"></p>
+            <p id = "labelJmbg"></p>
+            <p id = "labelEmail"></p>
+            <p id = "labelUsername"></p>
+ 
+       <input type="button" class = "button_style" id ="changeData1" style = "font-weight: bold; width: 150px !important" value="Promeni podatke"/><br/><br/>
+       <input type="submit" class = "button_style" id ="logout_button" style = "font-weight: bold; width: 150px !important" value="Odjava"/>
     </form>
 
-    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none" action="<?php echo site_url('registered/updateUser')?>">    
-       <label class="title"> Dobrodošao/la <?php echo $user->name ?> </label><br/><br/><br/>
-        <input type="text" id ="textbox1" name="changeNameSurname"  value ="<?php echo $user->name.' '.$user->surname ?>" style="margin-bottom: 10px" /> 
-         <input type="text" id ="textbox2" name="changeAddress" value = "<?php echo $user->address ?>" style="margin-bottom: 10px" /> 
-          <input type="text" id ="textbox3" name="changePhone" value = "<?php echo $user->phone ?>" style="margin-bottom: 10px" /> 
-           <input type="text" id ="textbox4" name="changeJmbg" value = "<?php echo $user->jmbg ?>" style="margin-bottom: 10px" /> 
-            <input type="text" id ="textbox5" name="changeEmail" value = "<?php echo $user->email ?>" style="margin-bottom: 10px" /> 
-             <input type="text" id ="textbox6" name="changeUsername" value = "<?php echo $user->username ?>" style="margin-bottom: 10px" />
+    <form name="admin_form1" id ="admin_form1" method="post" class = "text_style" style="display: none">    
+        <label class="title"> Dobrodošao/la <?php echo $user->name ?> </label><br/><br/><br/>
+        <input type="text" id ="changeNameSurname" name="changeNameSurname"  value ="" style="margin-bottom: 10px" /> 
+         <input type="text" id ="changeAddress" name="changeAddress" value = "" style="margin-bottom: 10px" /> 
+          <input type="text" id ="changePhone" name="changePhone" value = "" style="margin-bottom: 10px" /> 
+           <input type="text" id ="changeJmbg" name="changeJmbg" value = "" style="margin-bottom: 10px" /> 
+            <input type="text" id ="changeEmail" name="changeEmail" value = "" style="margin-bottom: 10px" /> 
+             <input type="text" id ="changeUsername" name="changeUsername" value = "" style="margin-bottom: 10px" />
    
-        <input type="submit" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
+        <input type="button" class = "button_style" id = "confirm_button" style = "font-weight: bold; width: 150px !important" value="Potvrdi"/><br/><br/>
         <input type="button" class = "button_style" id ="exit_button" style = "font-weight: bold; width: 150px !important" value="Odustani"/>
     </form>
   </div> 
@@ -180,16 +167,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             document.getElementById("kontakt_slika").style.display = "block"; 
       }; 
       
-       document.getElementById("changeData").onclick = function() { 
-            document.getElementById("admin_form").style.display = "none";           
-            document.getElementById("admin_form1").style.display = "block";          
-      };
-      
        document.getElementById("exit_button").onclick = function() { 
             document.getElementById("admin_form").style.display = "block";
             document.getElementById("admin_form1").style.display = "none";
       };
       
   </script>
+        <script src="<?php echo site_url('../public/js/user.js'); ?>"></script>
 </body>
 </html>

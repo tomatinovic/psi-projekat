@@ -271,7 +271,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <td> <label id="detailsUsername" style="font-family: Arial; font-size: 14px"><i> KORISNIČKO IME </i></label> </td>
           </tr>
       </table><br/>
-      <button type="button" class="btn" onclick="deleteUser()"> Obriši </button>
+      <button type="button" class="btn" id = "deleteButton"> Obriši </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Nazad </button>
   </form>
 </div>
@@ -280,7 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <form class="form-container-reg" method="post">
       <p style="font-family:Arial; font-size: 14px; font-weight: bold; text-align: center"><i> Aktivacija korisnika </i></p>
       <p style="font-family:Arial; font-size: 14px; text-align: center"><i> Da li ste sigurni da želite da aktivirate ovog korisnika? </i></p>
-    <button type="submit" class="btn"> Aktiviraj </button>
+    <button type="button" class="btn" id = "activation_button"> Aktiviraj </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
   </form>
 </div>
