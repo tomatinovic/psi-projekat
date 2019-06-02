@@ -24,6 +24,12 @@ class Student extends CI_Controller {
         $this->examDate = $this->modelUser->getStudentExamDate($this->student);
         }
         
+        public function getStudent(){
+            $idStudent = $this->session->userdata('userId');
+            header("Content-Type: application/json");
+            echo json_encode($this->modelUser->getUserById($idStudent));
+        }
+        
         public function index(){
         $data['msg'] = NULL;
         $data['student'] = $this->student;
