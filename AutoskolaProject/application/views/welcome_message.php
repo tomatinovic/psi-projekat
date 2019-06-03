@@ -5,8 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/css_file.css'); ?>">
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo site_url('../public/js/javascript_file.js'); ?>"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <title> Tomatinovic AS </title>
         
     <style>
@@ -313,5 +313,6 @@ function openFormReg() {
     document.getElementById("myFormReg").style.display = "block";
 }
 </script>
+
 </body>
 </html>
