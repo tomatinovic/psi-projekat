@@ -4,14 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends CI_Controller {
        private $admin;
        private $employees;
+       private $curUser;
     
        public function __construct() {
         parent::__construct();
-        $this->load->model("modelUser");  
+        $this->load->model("modelUser"); 
         
         if ($this->session->userdata('userId') == NULL) redirect ("Welcome");
         
         $idAdmin = $this->session->userdata('userId');
+        $this->curUser = $this->modelUser->getUserById($idAdmin);
         $this->admin = $this->modelUser->getUserById($idAdmin);
         }
         
@@ -85,13 +87,22 @@ class Admin extends CI_Controller {
                     'user' => NULL
                 );
             
-            if ($name=="" || $surname=="" || $phone=="" || $address==""
-                    || $jmbg=="" || $email=="" || $username==""){
+            $user = array(
+                'name' => $name,
+                'surname' => $surname,
+                'phone' => $phone,
+                'address' => $address,
+                'jmbg' => $jmbg,
+                'email'=> $email,
+                'username' => $username
+            );
+            
+            if (!validateUpdateUserEmpty($user)){
                  $response['code'] = 0;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
                     
-            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->admin->username ){
+            else if (!validateUpdateUsername($user, $this->modelUser, $this->curUser) ){
                  $response['code'] = 0;
                  $response['msg'] = "Zauzeto korisnicko ime!";
             }
@@ -99,8 +110,7 @@ class Admin extends CI_Controller {
                 $this->modelUser->updateUser($this->admin->idUser, $name, $surname, $address,
                 $phone, $jmbg, $email, $username);
                 $this->admin = $this->modelUser->getUserById($this->admin->idUser);
-                $response['user']= $this->admin;
-                
+                $response['user']= $this->admin;    
             }
             
             header("Content-Type: application/json");
