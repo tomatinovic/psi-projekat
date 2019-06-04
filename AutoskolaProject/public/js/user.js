@@ -63,7 +63,7 @@ $(function (){
         type: 'GET',
         url: 'registered/getRegistered',
         success: function(registred){
-          document.getElementById("labelWelcome").append('Dobrodošao/la'+registred.name);
+          document.getElementById("labelWelcome").append('Dobrodošao/la '+ registred.name);
           document.getElementById("labelNameSurname").append(registred.name + ' ' + registred.surname);
           document.getElementById("labelAddress").append(registred.address);
           document.getElementById("labelPhone").append(registred.phone);

@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
 
         <form name="admin_form1" id ="admin_form1" method="post" class = "text_style display_none">    
-            <label class="title"></label><br/><br/><br/>
+            <label class="title"> Dobrodošao/la <?php echo $user->name ?></label><br/><br/><br/>
             <input type="text" id ="changeNameSurname" name="changeNameSurname" class="margin_bottom_10" /> 
             <input type="text" id ="changeAddress" name="changeAddress" class="margin_bottom_10" /> 
             <input type="text" id ="changePhone" name="changePhone" class="margin_bottom_10" /> 
