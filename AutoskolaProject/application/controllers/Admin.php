@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
        private $admin;
-       private $employees;
        private $curUser;
     
        public function __construct() {
@@ -14,63 +13,54 @@ class Admin extends CI_Controller {
         
         $idAdmin = $this->session->userdata('userId');
         $this->curUser = $this->modelUser->getUserById($idAdmin);
-        $this->admin = $this->modelUser->getUserById($idAdmin);
         }
         
+        //Funkcija koja vraca trenutnog korisnika - admina
         public function getAdmin(){
             $idAdmin = $this->session->userdata('userId');
             header("Content-Type: application/json");
             echo json_encode($this->modelUser->getUserById($idAdmin));
         }
         
+        //Funkcija koja vraca korisnika sa prosledjenim ID-jem 
         public function getUser(){
             $idUser = htmlspecialchars($_POST['idUser']);
             header("Content-Type: application/json");
             echo json_encode($this->modelUser->getUserById($idUser));
         }
         
+        //Funkcija koja vraca sve zaposlene u vidu JSON niza
         public function allEmployees(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllEmployees());
         }
         
+        //Funkcija koja vraca sve studente
         public function allStudents(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllStudents());
         }
         
+        //Funkcija koja vraca sve registrovane korisnike
         public function allUsers(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllRegUsers());
         }
         
-        
+        //Otvaranje admin view strane
         public function index(){
         $data['msg'] = NULL;
-        $data['admin'] = $this->admin;
+        $data['admin'] = $this->curUser;
         $this->load->view('admin_page', $data);  
         }
-        
-        private function showViews($mainPart, $data){
-        $data['admin'] = $this->admin;
-        $this->load->view($mainPart, $data);
-    }
-        
-        public function changeViewWithMessage($msg=NULL)
-        {
-        $data=[];
-        if ($msg) {
-            $data['msg'] = $msg;
-        }
-        $data['admin'] = $this->admin;
-        $this->showViews('admin_page',$data); }
-        
+    
+        //Unistavanje svih sesija i povratak na pocetnu stranu
         public function logout(){
             $this->session->sess_destroy();
             $this->load->view('welcome_message'); 
         }
         
-        
+        //Funcija koja osvezava podatke o bazi o korisniku
         public function updateUser(){
             
             $name = htmlspecialchars($_POST['name']);
@@ -107,10 +97,10 @@ class Admin extends CI_Controller {
                  $response['msg'] = "Zauzeto korisnicko ime!";
             }
             else {
-                $this->modelUser->updateUser($this->admin->idUser, $name, $surname, $address,
+                $this->modelUser->updateUser($this->curUser->idUser, $name, $surname, $address,
                 $phone, $jmbg, $email, $username);
-                $this->admin = $this->modelUser->getUserById($this->admin->idUser);
-                $response['user']= $this->admin;    
+                $this->curUser = $this->modelUser->getUserById($this->curUser->idUser);
+                $response['user']= $this->curUser;    
             }
             
             header("Content-Type: application/json");
@@ -118,29 +108,31 @@ class Admin extends CI_Controller {
             
         }
         
+      //Funkcija za brisanje korisnika sa zadatim ID-jem i vracanje niza u zavisnosti od tipa obrisanog korisnika
       public function deleteUser(){
             $idUser = htmlspecialchars($_POST['idUser']);
             $typeUser = htmlspecialchars($_POST['typeUser']);
             $this->db->delete('users', array('idUser' => $idUser));
             $peopleArray = array();
-      switch ($typeUser) {
-          case 1: {
-              $peopleArray = $this->modelUser->getAllEmployees();
-          } break;
-          case 2: {
-              $peopleArray = $this->modelUser->getAllStudents();
-          } break;
-          case 3: {
-               $peopleArray = $this->modelUser->getAllRegUsers();
-          } break;
-          default: break;
-      }
+            switch ($typeUser) {
+                case 1: {
+                    $peopleArray = $this->modelUser->getAllEmployees();
+                } break;
+                case 2: {
+                    $peopleArray = $this->modelUser->getAllStudents();
+                } break;
+                case 3: {
+                     $peopleArray = $this->modelUser->getAllRegUsers();
+                } break;
+                default: break;
+                                }
             
             header("Content-Type: application/json");
             echo json_encode($peopleArray);
 
         }
         
+        //Funkcija za registraciju novog zaposlenog
         public function register(){
                 $name = htmlspecialchars($_POST['name']);
                 $surname = htmlspecialchars($_POST['surname']);
@@ -157,15 +149,25 @@ class Admin extends CI_Controller {
                     'user' => NULL
                 );
                 
-                if($this->modelUser->checkUsernameExists($username)){
-                 $response['code'] = 0;
-                 $response['msg'] = "Zauzeto korisnicko ime!";
-            }
-            else if ($name=="" || $surname=="" || $phone=="" || $address==""
-                    || $jmbg=="" || $email=="" || $username=="" || $password==""){
+                $user = array(
+                'name' => $name,
+                'surname' => $surname,
+                'phone' => $phone,
+                'address' => $address,
+                'jmbg' => $jmbg,
+                'email'=> $email,
+                'username' => $username, 
+                'password' => $password
+            );
+           
+            if (!validateRegisterEmployeeEmpty($user)){
                  $response['code'] = 0;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
+            else if($this->modelUser->checkUsernameExists($username)){
+                 $response['code'] = 0;
+                 $response['msg'] = "Zauzeto korisnicko ime!";
+            }
             else {
                    $data = array(  
                         'name'     => $name,  
@@ -189,6 +191,7 @@ class Admin extends CI_Controller {
             }
             
             
+            //Aktivacija registrovanih korisnika u studente
             public function activateUser(){
                 $idUser = htmlspecialchars($_POST['idUser']);
                 $this->modelUser->activateUser($idUser);
