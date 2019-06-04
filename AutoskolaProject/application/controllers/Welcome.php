@@ -1,4 +1,4 @@
-<?php
++<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
@@ -6,22 +6,14 @@ class Welcome extends CI_Controller {
        public function __construct() {
         parent::__construct();
         $this->load->model("modelUser");       
-        
-        //provera da li je korisnik mozda vec ulogovan
-        //if (($this->session->userdata('user')) != NULL) {
-          //  $user = $this->session->userdata('user');
-         //   $this->changeByUserType($user->type);
-       // }
+    
     }
 
 	public function index()
-	{
-		$this->load->view('welcome_message');
-	}
+	{$this->load->view('welcome_message');}
         
         private function showViews($mainPart, $data){
-        $this->load->view($mainPart, $data);
-    }
+        $this->load->view($mainPart, $data);  }
         
         
         public function changeViewWithMessage($msg=NULL)
@@ -98,15 +90,7 @@ class Welcome extends CI_Controller {
                 else{
                     $this->changeViewWithMessage($this->email->print_debugger());
                 }
-                
-            /*$this->email->from('dragfamily@gmail.com', 'Your Name');
-            $this->email->to($email);
-
-            $this->email->subject('Email Test');
-            $this->email->message('Probaaaaaaaaaaaaaaaaa');
-            $this->email->set_mailtype('html');
-
-            $this->email->send();*/}
+         }
             else {
                 $this->changeViewWithMessage("Pogresno korisnicko ime!");
             }           

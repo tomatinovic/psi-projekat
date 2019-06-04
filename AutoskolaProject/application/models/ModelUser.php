@@ -136,6 +136,85 @@ class ModelUser extends CI_Model {
         $query = $this->db->get_where('exam', array('idExam' => $exam->idExam));
         return $query->row();
     }
+    
+    
+    public function checkIsStudentTaken($user){
+        $query = $this->db->get_where('teaching', array('idStudent' => $user->idUser));
+        if ($query->num_rows() >= 1) {return TRUE;}
+        else {return FALSE;}
+    }
+    
+    public function takeStudent($user, $teacher){
+        $query = $this->db->get_where('teaching', array('idStudent' => $user->idUser));
+        if ($query->num_rows() >= 1) {
+            $teacher->updateTeaching($teacher->idUser, $user->idUser);
+        }
+        else {
+             $data = array(  
+                        'name'     => $teacher->idUser,  
+                        'surname' => $user->idUser
+                        );  
+            $this->db->insert('teaching',$data);
+        }
+    }
+    
+    public function updateTeaching($idTeacher, $idStudent){
+        $this->db->set('idTeacher', $idTeacher);
+        $this->db->where('idStudent', $idStudent);
+        $this->db->update('teaching'); 
+    }
+    
+     public function leaveStudent($user, $teacher){
+           $this->db->delete('teaching', array('idTeacher' => $teacher->idUser,'idStudent' => $user->idUser ));
+    }
+    
+    public function changeTCLass($idTClass, $days, $time){
+        $this->db->set('day', $days);
+        $this->db->set('time', $time);
+        $this->db->where('idTClass', $idTClass);
+        $this->db->update('theoryclass'); 
+    }
+    
+    public function checkStudentForUser($user, $name, $surname){
+        if (!$this->checkExiatsUserByNameAndSurname($name, $surname)) return FALSE;
+        $student = $this->getUserByNameAndSurname($name, $surname);
+        if (!$this->checkIsTeacher($user, $student))return FALSE;
+        return TRUE;
+    }
+    
+    public function checkExiatsUserByNameAndSurname($name, $surname){
+        $query = $this->db->get_where('users', array('name' => $name, 'surname' => $surname));
+        if ($query->num_rows() >= 1) return TRUE;
+        else return FALSE;
+    }
+    
+     public function getUserByNameAndSurname($name, $surname){
+        $query = $this->db->get_where('users', array('name' => $name, 'surname' => $surname));
+        return $query->row();
+    }
+    
+    public function checkIsTeacher($teacher, $student){
+        $query = $this->db->get_where('teaching', array('idTeacher' => $teacher->idUser, 'idStudent' => $student->idUser));
+        if ($query->num_rows() >= 1) return TRUE;
+        else return FALSE;
+    }
+    
+    public function addDLesson($teacher, $name, $surname, $date, $time){
+        $student = $this->getUserByNameAndSurname($name, $surname);
+        $data = array(  
+                        'idTeacher'     => $teacher->idUser,  
+                        'idStudent' => $student->idUser,
+                        'date' => $date,
+                        'time' => $time,
+                        'done' => 0
+                        );  
+            $this->db->insert('drivinglessons',$data);
+    }
+    
+    
+    public function deleteDClass($idDClass){
+           $this->db->delete('drivinglessons', array('idLesson' => $idDClass ));
+    }
 
  
 }
