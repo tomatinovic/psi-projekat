@@ -390,4 +390,76 @@ document.getElementById("button6").onclick = function() {
     document.getElementById("classes2_label").style.display = "none";
     document.getElementById("classes3").style.display = "none"; 
     document.getElementById("classes3_label").style.display = "none";
-};     
+};    
+
+// Funkcija za preuzimanje polaznika
+
+$('#table1').on('click', 'td', function() {
+      var column_num = parseInt( $(this).index() ) + 1;
+      if (column_num === 4) {
+          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+
+          var idUser = {
+            idUser: $selectedId,  
+          }
+
+        $.ajax({
+            type: 'POST',
+            url: 'employee/takeStudent',
+            data: idUser,
+            success: function(response){              
+                console.log('uspesno pozvan url');
+                if(response.code === 0){
+                    alert(response.msg);
+                }
+            },
+            error: function(){
+              console.log('fail');
+            }
+        });
+      }
+});
+
+// Funkcija za odjavu polaznika
+
+$('#table2').on('click', 'td', function() {
+    
+    var column_num = parseInt( $(this).index() ) + 1;
+    if (column_num === 4) {
+          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+
+          var idUser = {
+            idUser: $selectedId,  
+          }
+    
+        $.ajax({
+                type: 'POST',
+                url: 'employee/leaveStudent',
+                data: idUser,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                    }
+                    $('#table2 tr').remove();
+                    $('#table2').append('<tr>\n\
+                        <th class = "table1"> Broj </th>\n\
+                        <th class = "table1"> Ime </th>\n\
+                        <th class = "table1"> Prezime </th>\n\
+                        <th class = "table1"> Odjava </th>\n\
+                        </tr>');
+                    $.each(response.students, function(i, student){
+                    $('#table2').append('<tr>\n\
+                        <td class="table1">'+student.idUser+'</td>\n\
+                        <td class="table1">'+student.name+'</td>\n\
+                        <td class="table1">'+student.surname+'</td>\n\
+                        <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Odjava" /></td>\n\
+                        </tr>');
+                    });
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });
+    }
+});

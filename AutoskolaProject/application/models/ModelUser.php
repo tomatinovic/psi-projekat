@@ -151,12 +151,12 @@ class ModelUser extends CI_Model {
     public function takeStudent($user, $teacher){
         $query = $this->db->get_where('teaching', array('idStudent' => $user->idUser));
         if ($query->num_rows() >= 1) {
-            $teacher->updateTeaching($teacher->idUser, $user->idUser);
+            $this->updateTeaching($teacher->idUser, $user->idUser);
         }
         else {
              $data = array(  
-                        'name'     => $teacher->idUser,  
-                        'surname' => $user->idUser
+                        'idTeacher' => $teacher->idUser,  
+                        'idStudent' => $user->idUser
                         );  
             $this->db->insert('teaching',$data);
         }

@@ -141,9 +141,10 @@ class Employee extends CI_Controller {
 
             $response = array(
                         'code' => 0,
-                        'msg' => "Uspesno!"
+                        'msg' => "Uspesno!",
+                        'students' => NULL
                     );
-            
+            $response['students'] = $this->modelUser->getStudentsForUser($this->curUser);
             header("Content-Type: application/json");
             echo json_encode($response);
         }
@@ -166,7 +167,7 @@ class Employee extends CI_Controller {
             );
              
              if (!validateChangeTClassEmpty($class)){
-                 $response['code'] = 0;
+                 $response['code'] = 1;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
              }
              else{
@@ -199,11 +200,11 @@ class Employee extends CI_Controller {
             );
              
              if (!validateAddDClassEmpty($class)){
-                 $response['code'] = 0;
+                 $response['code'] = 1;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
              }
              else if (!$this->modelUser->checkStudentForUser($this->curUser, $name, $surname)){
-                 $response['code'] = 0;
+                 $response['code'] = 1;
                  $response['msg'] = "Nije pronadjen vas student po zadatom imenu i prezimenu";
              }
              else{
