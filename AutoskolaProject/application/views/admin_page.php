@@ -5,108 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/css_file.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/admin.css'); ?>">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo site_url('../public/js/javascript_file.js'); ?>"></script>
-    <title> Tomatinovic AS </title>
-        
-    <style>
-        * {box-sizing: border-box;}
-        
-        .register_class {
-            margin-left: 70%;
-            width: 20%;
-            border-style: solid;
-            border-width: 5px 5px 5px 5px;
-            background-color: #C0C0C0;
-        }
-        
-        table.table1 {
-            font-family: Arial;
-            border-collapse: collapse;
-            width: 80%;
-            margin-left: 20px;
-        }
-
-        th.table1, td.table1 {
-            font-family: Arial;
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-         .form-popup {
-          display: none;
-          position: fixed;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          border: 3px solid #f1f1f1;
-          z-index: 9;
-        }
-        
-        .form-container-reg {
-            max-width: 100%;
-            padding: 10px;
-            background-color: lightgray;
-        }
-        
-         .form-container {
-          max-width: 300px;
-          padding: 10px;
-          background-color: lightgray;
-        }
-        
-        .form-popup1 {
-          display: block;
-          position: fixed;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          border: 3px solid #f1f1f1;
-          z-index: 9;
-        }
-        
-        /* Full-width input fields */
-        .form-container-reg input[type=text], .form-container-reg input[type=password] {
-          width: 100%;
-          height: 10px;
-          padding: 15px;
-          margin: 5px 0 22px 0;
-          border: none;
-          background: #f1f1f1;
-          border-radius: 5px;
-        }
-
-        /* When the inputs get focus, do something */
-        .form-container-reg input[type=text]:focus, .form-container-reg input[type=password]:focus {
-          background-color: #ddd;
-          outline: none;
-        }
-
-        /* Set a style for the submit/login button */
-        .form-container-reg .btn {
-          background-color: black;
-          border-radius: 5px;
-          color: white;
-          padding: 16px 20px;
-          border: none;
-          cursor: pointer;
-          width: 100%;
-          margin-bottom:10px;
-          opacity: 0.8;
-        }
-
-        /* Add a red background color to the cancel button */
-        .form-container-reg .cancel {
-          background-color: red;
-        }
-
-        /* Add some hover effects to buttons */
-        .form-container-reg .btn:hover, .open-button:hover {
-          opacity: 1;
-        }
-    </style>
-	
+    <title> Tomatinovic AS </title>	
 </head>
 <body>           
     <div class="row">
@@ -285,10 +187,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </form>
 </div>
   
-        
   <script>
-           
-      
+     var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById('Zaposleni').style.display = "block";
+        event.currentTarget.className += " active"; 
+  </script>
+        
+  <script>      
        document.getElementById("exit_button").onclick = function() { 
             document.getElementById("admin_form").style.display = "block";
             document.getElementById("admin_form1").style.display = "none";

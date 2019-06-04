@@ -13,6 +13,36 @@ $(function (){
   var $messages = $('#messages');
   var $global_user;
   
+   $('#empTable tr').remove();
+       $table.append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
+                  <th class = "table1"> Ime </th>\n\
+                  <th class = "table1"> Prezime </th>\n\
+                  <th class = "table1"> Detalji </th>\n\
+              </tr>');
+      
+      console.log('pritisnuto dugme');
+      
+      $.ajax({
+          type: 'GET',
+          url: 'admin/allEmployees',
+          datatype: 'json',
+          success: function(employees){
+              console.log('uspesno pozvan url');
+              $.each(employees, function(i, employee){
+                 $table.append('<tr>\n\
+                <td class="table1">'+employee.idUser+'</td>\n\
+                <td class="table1">'+employee.name+'</td>\n\
+                <td class="table1">'+employee.surname+'</td>\n\
+                <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Detalji" /></td>\n\
+                </tr>');
+              });
+          },
+          error: function(){
+              console.log('fail');
+          }
+      });         
+  
   $.ajax({
       type: 'GET',
       url: 'admin/getAdmin',
