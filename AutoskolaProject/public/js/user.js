@@ -4,43 +4,98 @@
  * and open the template in the editor.
  */
 
+// Funkcija koja na klik tab-a menja tab content
+
+function openTab(evt, tabName) {   
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";    
+}
+
+// Menjanje tab content-a klikom na dugme Zaposleni
+
+document.getElementById("button1").onclick = function() {    
+    document.getElementById("zaposleni_div").style.display = "block";
+    document.getElementById("kontakt_div").style.display = "none";       
+}; 
+
+// Menjanje tab content-a klikom na dugme Kontakt
+
+document.getElementById("button2").onclick = function() {    
+    document.getElementById("zaposleni_div").style.display = "none";           
+    document.getElementById("kontakt_div").style.display = "block";       
+};
+
+// Odustajanje od izmene osnovnih informacija o registrovanom korisniku
+
+document.getElementById("exit_button").onclick = function() { 
+    document.getElementById("admin_form").style.display = "block";
+    document.getElementById("admin_form1").style.display = "none";
+};
+
 $(function (){
     
-       
-  $.ajax({
-      type: 'GET',
-      url: 'registered/getRegistered',
-      success: function(registred){
-        document.getElementById("labelWelcome").append('Dobrodošao/la'+registred.name);
-        document.getElementById("labelNameSurname").append(registred.name + ' ' + registred.surname);
-        document.getElementById("labelAddress").append(registred.address);
-        document.getElementById("labelPhone").append(registred.phone);
-        document.getElementById("labelJmbg").append(registred.jmbg);
-        document.getElementById("labelEmail").append(registred.email);
-        document.getElementById("labelUsername").append(registred.username);
-      }
-  });
-  
-  $('#changeData1').on('click', function(){
+    // Otvoren prvi tab prilikom učitavanja stranice
     
-       $.ajax({
-      type: 'GET',
-      url: 'registered/getRegistered',
-      success: function(registred){
-            document.getElementById("changeNameSurname").value= registred.name + ' ' + registred.surname;
-            document.getElementById("changeAddress").value=registred.address;
-            document.getElementById("changePhone").value=registred.phone;
-            document.getElementById("changeJmbg").value=registred.jmbg;
-            document.getElementById("changeEmail").value=registred.email;
-            document.getElementById("changeUsername").value=registred.username;
-         
-            document.getElementById("admin_form").style.display = "none";           
-            document.getElementById("admin_form1").style.display = "block";  
-      }
-  });
-           
-  });
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById('O_nama').style.display = "block";
+    event.currentTarget.className += " active";
+    
+    // Prikaz osnovnih informacija o registrovanom korisniku
+       
+    $.ajax({
+        type: 'GET',
+        url: 'registered/getRegistered',
+        success: function(registred){
+          document.getElementById("labelWelcome").append('Dobrodošao/la'+registred.name);
+          document.getElementById("labelNameSurname").append(registred.name + ' ' + registred.surname);
+          document.getElementById("labelAddress").append(registred.address);
+          document.getElementById("labelPhone").append(registred.phone);
+          document.getElementById("labelJmbg").append(registred.jmbg);
+          document.getElementById("labelEmail").append(registred.email);
+          document.getElementById("labelUsername").append(registred.username);
+        }
     });
+    
+    // Izmena osnovnih informacija o registrovanom korisniku -> prikaz texbox-ova
+  
+    $('#changeData1').on('click', function(){
+
+        $.ajax({
+            type: 'GET',
+            url: 'registered/getRegistered',
+            success: function(registred){
+                  document.getElementById("changeNameSurname").value= registred.name + ' ' + registred.surname;
+                  document.getElementById("changeAddress").value=registred.address;
+                  document.getElementById("changePhone").value=registred.phone;
+                  document.getElementById("changeJmbg").value=registred.jmbg;
+                  document.getElementById("changeEmail").value=registred.email;
+                  document.getElementById("changeUsername").value=registred.username;
+
+                  document.getElementById("admin_form").style.display = "none";           
+                  document.getElementById("admin_form1").style.display = "block";  
+            }
+        });
+    });
+});
+
+// Izmena osnovnih informacija o registrovanom korisniku
 
 $('#confirm_button').on('click', function(){
         
@@ -93,15 +148,15 @@ $('#confirm_button').on('click', function(){
               document.getElementById("admin_form").style.display = "block";
               document.getElementById("admin_form1").style.display = "none";
               
-              }
-              
+              }              
           },
           error: function(){
               console.log('fail');
           }
-      });
-      
+      });      
   });
+  
+// Tabelarni prikaz svih termina časova teorije
 
 $('#casovi').on('click', function(){
       
@@ -133,4 +188,4 @@ $('#casovi').on('click', function(){
               console.log('fail');
           }
       });         
-  });
+});

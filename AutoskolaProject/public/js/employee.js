@@ -99,7 +99,7 @@ $(function (){
         }
     });
     
-    // Izmena osnovnih informacija o adminu -> prikaz texbox-ova
+    // Izmena osnovnih informacija o zaposlenom -> prikaz texbox-ova
   
     $('#changeData1').on('click', function(){
 
