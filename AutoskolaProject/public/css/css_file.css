@@ -20,11 +20,72 @@ body {
 .block1 {
   width: 20%;
   float: left;
+  margin-top:20px; 
+  margin-left: 50px; 
+  margin-bottom: 100px;
 }
 
-.block2 {
+.block2 { 
   width: 80%; 
   padding-top: 70px !important;
+  margin-top: 20px; 
+  margin-bottom: 160px; 
+  font-family: Arial; 
+  font-size: 48px; 
+  color: white; 
+  font-weight: bold;
+  text-align: center !important;
+}
+
+.zaposleni {
+  padding-left: 50px; 
+  padding-right: 50px; 
+  text-align: justify; 
+  text-justify: inter-word; 
+  font-family: Arial; 
+  font-size: 14px;
+}
+
+.display_none {
+    display:none;
+}
+
+.bold_letters {
+    font-weight: bold;
+}
+
+.margin_bottom_10 {
+    margin-bottom: 10px;
+}
+
+.tab_naslov {
+    padding-left: 50px; 
+    font-family: Arial; 
+    font-size: 20px;
+}
+
+.prijava {
+    font-family: Arial; 
+    font-size: 14px; 
+    text-align: center;
+}
+
+.registracija {
+    font-family: Arial; 
+    font-size: 14px; 
+}
+
+.in_center {
+    text-align: center;
+}
+
+.image_contact {
+    text-align: left; 
+    padding-right: 50px; 
+    padding-left: 50px; 
+    padding-top: 30px; 
+    padding-bottom: 30px; 
+    max-width: 100%;
 }
 
 .tab {
