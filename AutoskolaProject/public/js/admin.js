@@ -318,7 +318,7 @@ $(function (){
         });
     });
    
-     // Izmena osnovnih informacija o adminu
+    // Izmena osnovnih informacija o adminu
 
     $('#admin_confirm_button').on('click', function(){
 
