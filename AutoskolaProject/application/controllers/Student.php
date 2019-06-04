@@ -2,7 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Student extends CI_Controller {
-        private $curUser;
+        private $student;
+        private $tclasses;
+        private $myGroup;
+        private $dlessons;
+        private $allExams;
+        private $examDate;
 
         public function __construct() {
         parent::__construct();
@@ -11,23 +16,25 @@ class Student extends CI_Controller {
         if ($this->session->userdata('userId') == NULL) redirect ("Welcome");
         
         $idStudent = $this->session->userdata('userId');
-        $this->curUser = $this->modelUser->getUserById($idStudent);
+        $this->student = $this->modelUser->getUserById($idStudent);
+        $this->tclasses = $this->modelUser->getAllTheoryClasses();
+        $this->myGroup = $this->modelUser->getTheoryGroupForUser($this->student);
+        $this->dlessons = $this->modelUser->getDrivingLessonsForStudent($this->student);
+        $this->allExams = $this->modelUser->getAllExams();
+        $this->examDate = $this->modelUser->getStudentExamDate($this->student);
         }
         
-        //Funkcija za dohvatanje trenutnog korisnika - polaznika
         public function getStudent(){
             $idStudent = $this->session->userdata('userId');
             header("Content-Type: application/json");
             echo json_encode($this->modelUser->getUserById($idStudent));
         }
         
-        //Funkcija za dohvatanje svih teorijskih casova
         public function getAllTheoryClasses(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllTheoryClasses());
         }
         
-        //Funkcija za dohvatanje grupe za trenutnog studenta
         public function getStudentGroup(){
             $idStudent = $this->session->userdata('userId');
             $user = $this->modelUser->getUserById($idStudent);
@@ -35,7 +42,6 @@ class Student extends CI_Controller {
             echo json_encode($this->modelUser->getTheoryGroupForUser($user));
         }
         
-        //Funkcija za dohvatanje casova voznje za trenutnog studenta
         public function getStudentDrivingLessons(){
             $idStudent = $this->session->userdata('userId');
             $user = $this->modelUser->getUserById($idStudent);
@@ -43,13 +49,11 @@ class Student extends CI_Controller {
             echo json_encode($this->modelUser->getDrivingLessonsForStudent($user));
         }
         
-        //Funcija za dohvatanje svih termina ispita
         public function getAllExams(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllExams());
         }
         
-        //Funkcija za dohvatanje odabranog termina ispita za studenta
         public function getStudentExamDate(){
             $idStudent = $this->session->userdata('userId');
             $user = $this->modelUser->getUserById($idStudent);
@@ -57,22 +61,42 @@ class Student extends CI_Controller {
             echo json_encode($this->modelUser->getStudentExamDate($user));
         }
         
-        //Prikazivanje stranice studenta/polaznika
         public function index(){
         $data['msg'] = NULL;
-        $data['student'] = $this->curUser;
+        $data['student'] = $this->student;
+        $data['tclasses'] = $this->tclasses;
+        $data['myGroup'] = $this->myGroup;
+        $data['dlessons'] = $this->dlessons;
+        $data['allExams'] = $this->allExams;
+        $data['examDate'] = $this->examDate;
 
         $this->load->view('register_confirm_page', $data);  
         }
         
-        //Unistavanje sesija i povratak na pocetnu stranicu
+        private function showViews($mainPart, $data){
+        $this->load->view($mainPart, $data);
+    }
+        
+        public function changeViewWithMessage($msg=NULL)
+        {
+        $data=[];
+        if ($msg) {
+            $data['msg'] = $msg;
+        }
+        $data['student'] = $this->student;
+        $data['tclasses'] = $this->tclasses;
+        $data['myGroup'] = $this->myGroup;
+        $data['dlessons'] = $this->dlessons;
+        $data['allExams'] = $this->allExams;
+        $data['examDate'] = $this->examDate;
+        $this->showViews('register_confirm_page',$data); }
+        
         public function logout(){
             $this->session->sess_destroy();
             $this->load->view('welcome_message'); 
         }
         
-        //Funcija koja osvezava podatke o bazi o korisniku
-         public function updateUser(){
+       public function updateUser(){
             
             $name = htmlspecialchars($_POST['name']);
             $surname = htmlspecialchars($_POST['surname']);
@@ -88,30 +112,22 @@ class Student extends CI_Controller {
                     'user' => NULL
                 );
             
-            $user = array(
-                'name' => $name,
-                'surname' => $surname,
-                'phone' => $phone,
-                'address' => $address,
-                'jmbg' => $jmbg,
-                'email'=> $email,
-                'username' => $username
-            );
-            
-            if (!validateUpdateUserEmpty($user)){
+            if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username==""){
                  $response['code'] = 0;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
                     
-            else if (!validateUpdateUsername($user, $this->modelUser, $this->curUser) ){
+            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->student->username ){
                  $response['code'] = 0;
                  $response['msg'] = "Zauzeto korisnicko ime!";
             }
             else {
-                $this->modelUser->updateUser($this->curUser->idUser, $name, $surname, $address,
+                $this->modelUser->updateUser($this->student->idUser, $name, $surname, $address,
                 $phone, $jmbg, $email, $username);
-                $this->curUser = $this->modelUser->getUserById($this->curUser->idUser);
-                $response['user']= $this->curUser;    
+                $this->student = $this->modelUser->getUserById($this->student->idUser);
+                $response['user']= $this->student;
+                
             }
             
             header("Content-Type: application/json");

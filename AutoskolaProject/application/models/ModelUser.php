@@ -117,14 +117,12 @@ class ModelUser extends CI_Model {
     
     public function getTheoryGroupForUser($user){
          $groupId = $this->getGroupForUser($user); 
-         if ($groupId != NULL){
          $string = "SELECT users.idUser, users.name, users.surname, theoryclass.day, theoryclass.time, theoryclass.idTClass".
                  " FROM theoryclass".
                  " INNER JOIN users ON theoryclass.idTeacher=users.idUser".
                  " WHERE theoryclass.idTClass=".$groupId->idTClass;
           $query = $this->db->query($string);
-         return $query->row();}
-         return NULL;
+          return $query->row();
     }
     
     public function getAllExams(){
@@ -135,10 +133,8 @@ class ModelUser extends CI_Model {
     public function getStudentExamDate($user){
         $query = $this->db->get_where('examlist', array('idStudent' => $user->idUser));
         $exam = $query->row();
-        if ($exam != NULL){
         $query = $this->db->get_where('exam', array('idExam' => $exam->idExam));
-        return $query->row();}
-        return NULL;
+        return $query->row();
     }
     
     
