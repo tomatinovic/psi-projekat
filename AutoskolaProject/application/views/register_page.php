@@ -5,37 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/css_file.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo site_url('../public/css/user.css'); ?>">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo site_url('../public/js/javascript_file.js'); ?>"></script>
-    <title> Tomatinovic AS </title>
-        
-    <style>
-        * {box-sizing: border-box;}
-        
-        .register_class {
-            margin-left: 70%;
-            width: 20%;
-            border-style: solid;
-            border-width: 5px 5px 5px 5px;
-            background-color: #C0C0C0;
-        }
-        
-         table.table1 {
-            font-family: Arial;
-            border-collapse: collapse;
-            width: 80%;
-            margin-left: 20px;
-        }
-
-        th.table1, td.table1 {
-            font-family: Arial;
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-    </style>
-	
+    <title> Tomatinovic AS </title>	
 </head>
 <body>           
     <div class="row">
@@ -68,18 +41,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Informacije</p>
           <span class="paragraph"><input type="button" class = "button_style" id ="button1" style = "font-weight: bold" value="Zaposleni" onclick="showText('text1', 'text2', 'text3')"/></span>
           <span class="paragraph" style="padding-left: 0px !important"><input type="button" id ="button2" class = "button_style" style = "font-weight: bold" value="Kontakt"/></span>
-          <p id = "text1" style = "font-weight: bold; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Zaposleni:  </p>
-          <p id = "text2" style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Luka Stefanović - već 10 godina radi kao instruktor vožnje. Veoma je dobar u radu sa ljudima i ima sve najbolje preporuke. </p>
-          <p id = "text3" style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Marija Radenković - već 10 godina radi kao instruktor vožnje. Veoma je dobra u radu sa ljudima i ima sve najbolje preporuke. </p>
-          
-         
-          <p class = "paragraph" id = "kontakt1" style = "font-weight: bold; display: none"> Kontakt:  </p>
-          <p class = "paragraph" id = "kontakt2" style = "display: none"> Ulica: Beogradska 11a </p>
-          <p class = "paragraph" id = "kontakt3" style = "display: none"> email: tomatinovic.as@gmail.com </p>
-          <p class = "paragraph" id = "kontakt4" style = "display: none"> Telefon: 064/12-333-45 </p>
-          <p class = "paragraph" id = "kontakt5" style = "display: none"> Radno vreme: 09h - 17h, nedelja je neradan dan </p>
-            <img id = "kontakt_slika" style="text-align: left; display: none; padding-left: 50px; padding-top: 30px; padding-bottom: 30px" src="<?php echo site_url('../public/images/mapa.png'); ?>" />
-        </div>
+          <div id ="zaposleni_div">
+          <p style = "font-weight: bold; padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Zaposleni:  </p>
+          <p style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Luka Stefanović - već 10 godina radi kao instruktor vožnje. Veoma je dobar u radu sa ljudima i ima sve najbolje preporuke. </p>
+          <p style = "padding-left: 50px; padding-right: 50px; text-align: justify; text-justify: inter-word; font-family: Arial; font-size: 14px"> Marija Radenković - već 10 godina radi kao instruktor vožnje. Veoma je dobra u radu sa ljudima i ima sve najbolje preporuke. </p>
+          </div>
+          <div id ="kontakt_div" style="display:none">
+          <p class = "paragraph" style = "font-weight: bold"> Kontakt:  </p>
+          <p class = "paragraph"> Ulica: Beogradska 11a </p>
+          <p class = "paragraph"> email: tomatinovic.as@gmail.com </p>
+          <p class = "paragraph"> Telefon: 064/12-333-45 </p>
+          <p class = "paragraph"> Radno vreme: 09h - 17h, nedelja je neradan dan </p>
+            <img style="text-align: left; padding-right: 50px; padding-left: 50px; padding-top: 30px; padding-bottom: 30px; max-width: 100%" src="<?php echo site_url('../public/images/mapa.png'); ?>" />
+          </div>
+          </div>
 
         <div id="Materijali" class="tabcontent">
           <p style="padding-left: 50px; font-family: Arial; font-size: 20px">Materijali</p>
@@ -138,33 +113,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div> 
   <div style="padding-top: 300px"></div>
   
+  <script>
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById('O_nama').style.display = "block";
+        event.currentTarget.className += " active";
+</script>
+  
         
   <script>
       
-      document.getElementById("button1").onclick = function() { 
-            document.getElementById("text1").style.display = "block";
-            document.getElementById("text2").style.display = "block"; 
-            document.getElementById("text3").style.display = "block";
-            
-            document.getElementById("kontakt1").style.display = "none"; 
-            document.getElementById("kontakt2").style.display = "none"; 
-            document.getElementById("kontakt3").style.display = "none"; 
-            document.getElementById("kontakt4").style.display = "none"; 
-            document.getElementById("kontakt5").style.display = "none";
-            document.getElementById("kontakt_slika").style.display = "none"; 
+       document.getElementById("button1").onclick = function() { 
+            document.getElementById("zaposleni_div").style.display = "block";
+            document.getElementById("kontakt_div").style.display = "none"; 
       }; 
       
        document.getElementById("button2").onclick = function() { 
-            document.getElementById("text1").style.display = "none";
-            document.getElementById("text2").style.display = "none"; 
-            document.getElementById("text3").style.display = "none";
-            
-            document.getElementById("kontakt1").style.display = "block"; 
-            document.getElementById("kontakt2").style.display = "block"; 
-            document.getElementById("kontakt3").style.display = "block"; 
-            document.getElementById("kontakt4").style.display = "block"; 
-            document.getElementById("kontakt5").style.display = "block";
-            document.getElementById("kontakt_slika").style.display = "block"; 
+            document.getElementById("zaposleni_div").style.display = "none";           
+            document.getElementById("kontakt_div").style.display = "block"; 
       }; 
       
        document.getElementById("exit_button").onclick = function() { 

@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+// Funkcija koja na klik tab-a menja tab content
+
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
