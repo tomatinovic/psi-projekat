@@ -4,42 +4,125 @@
  * and open the template in the editor.
  */
 
+// Funkcija koja na klik tab-a menja tab content
+
+function openTab(evt, tabName) {   
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";    
+}
+
+// Menjanje tab content-a klikom na dugme Zaposleni
+
+document.getElementById("button1").onclick = function() {    
+    document.getElementById("zaposleni_div").style.display = "block";
+    document.getElementById("kontakt_div").style.display = "none";       
+}; 
+
+// Menjanje tab content-a klikom na dugme Kontakt
+
+document.getElementById("button2").onclick = function() {    
+    document.getElementById("zaposleni_div").style.display = "none";           
+    document.getElementById("kontakt_div").style.display = "block";       
+};
+
+// Odustajanje od izmene osnovnih informacija o polazniku
+
+document.getElementById("exit_button").onclick = function() { 
+    document.getElementById("admin_form").style.display = "block";
+    document.getElementById("admin_form1").style.display = "none";
+};
+
+// Zatvaranje dijaloga za promenu grupe / otkazivanja časa / prijavu za polaganje
+
+function closeForm() {
+    document.getElementById("myFormChangeGroup").style.display = "none";
+    document.getElementById("myFormCancel").style.display = "none";
+    document.getElementById("myFormAppointment").style.display = "none";          
+}
+
+// Prikaz dijaloga za promenu grupe za časove teorije
+
+function openFormChangeGroup() {
+    document.getElementById("myFormChangeGroup").style.display = "block";
+}
+
+// Prikaz dijaloga za otkazivanje časa vožnje
+
+function openFormCancel() {
+    document.getElementById("myFormCancel").style.display = "block";
+}
+
+// Prikaz dijaloga za prijavu za polaganje vozačkog ispita
+
+function openFormAppointment() {
+    document.getElementById("myFormAppointment").style.display = "block";
+}
+
+
 $(function (){
-       
-  $.ajax({
-      type: 'GET',
-      url: 'student/getStudent',
-      success: function(student){
-        document.getElementById("labelWelcome").append('Dobrodošao/la'+student.name);
-        document.getElementById("labelNameSurname").append(student.name + ' ' + student.surname);
-        document.getElementById("labelAddress").append(student.address);
-        document.getElementById("labelPhone").append(student.phone);
-        document.getElementById("labelJmbg").append(student.jmbg);
-        document.getElementById("labelEmail").append(student.email);
-        document.getElementById("labelUsername").append(student.username);
-      }
-  });
-  
-  $('#changeData1').on('click', function(){
     
-       $.ajax({
-      type: 'GET',
-      url: 'student/getStudent',
-      success: function(student){
-            document.getElementById("changeNameSurname").value= student.name + ' ' + student.surname;
-            document.getElementById("changeAddress").value=student.address;
-            document.getElementById("changePhone").value=student.phone;
-            document.getElementById("changeJmbg").value=student.jmbg;
-            document.getElementById("changeEmail").value=student.email;
-            document.getElementById("changeUsername").value=student.username;
-         
-            document.getElementById("admin_form").style.display = "none";           
-            document.getElementById("admin_form1").style.display = "block";  
-      }
-  });
-           
-  });
+    // Otvoren prvi tab prilikom učitavanja stranice
+    
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById('O_nama').style.display = "block";
+    event.currentTarget.className += " active";
+    
+    // Prikaz osnovnih informacija o polazniku
+       
+    $.ajax({
+        type: 'GET',
+        url: 'student/getStudent',
+        success: function(student){
+          document.getElementById("labelWelcome").append('Dobrodošao/la'+student.name);
+          document.getElementById("labelNameSurname").append(student.name + ' ' + student.surname);
+          document.getElementById("labelAddress").append(student.address);
+          document.getElementById("labelPhone").append(student.phone);
+          document.getElementById("labelJmbg").append(student.jmbg);
+          document.getElementById("labelEmail").append(student.email);
+          document.getElementById("labelUsername").append(student.username);
+        }
     });
+    
+    // Izmena osnovnih informacija o polazniku -> prikaz texbox-ova
+  
+    $('#changeData1').on('click', function(){
+
+        $.ajax({
+            type: 'GET',
+            url: 'student/getStudent',
+            success: function(student){
+                  document.getElementById("changeNameSurname").value= student.name + ' ' + student.surname;
+                  document.getElementById("changeAddress").value=student.address;
+                  document.getElementById("changePhone").value=student.phone;
+                  document.getElementById("changeJmbg").value=student.jmbg;
+                  document.getElementById("changeEmail").value=student.email;
+                  document.getElementById("changeUsername").value=student.username;
+
+                  document.getElementById("admin_form").style.display = "none";           
+                  document.getElementById("admin_form1").style.display = "block";  
+            }
+        });          
+    });
+});
+
+// Izmena osnovnih informacija o polazniku
 
 $('#confirm_button').on('click', function(){
         
@@ -98,11 +181,12 @@ $('#confirm_button').on('click', function(){
           error: function(){
               console.log('fail');
           }
-      });
-      
-  });
+      });     
+});
+
+// Tabelarni prikaz svih grupa za časove teorije
   
-  $('#button3, #casovi').on('click', function(){
+$('#button3, #casovi').on('click', function(){
       
       //da se ne bi appendovali elemnenti konstantno i pravili duplikati
       $('#table1 tr').remove();
@@ -134,7 +218,9 @@ $('#confirm_button').on('click', function(){
               console.log('fail');
           }
       });         
-  });
+});
+
+// Tabelarni prikaz svih zakazanih i odrađenih časova vožnje za prijavljenog korisnika
 
 $('#button4').on('click', function(){
       
@@ -174,9 +260,10 @@ $('#button4').on('click', function(){
           error: function(){
               console.log('fail');
           }
-      }); 
-           
-  });
+      });          
+});
+
+// Tabelarni prikaz termina polaganja vožnje na koje prijavljeni korisnik može da se prijavi
   
   $('#button5').on('click', function(){
       
@@ -210,6 +297,41 @@ $('#button4').on('click', function(){
           error: function(){
               console.log('fail');
           }
-      }); 
-           
-  });
+      });           
+});
+
+// Prikaz tabele sa svim grupama za teorijske časove na klik dugmeta "Grupe"
+
+document.getElementById("button3").onclick = function() { 
+    document.getElementById("classes1").style.display = "block";
+    document.getElementById("classes1_label").style.display = "block"; 
+
+    document.getElementById("classes2").style.display = "none"; 
+    document.getElementById("classes2_label").style.display = "none"; 
+    document.getElementById("classes3").style.display = "none"; 
+    document.getElementById("classes3_label").style.display = "none"; 
+}; 
+
+// Prikaz tabele sa časovima vožnje za prijavljenog polaznika na klik dugmeta "Termini vožnje"
+
+document.getElementById("button4").onclick = function() { 
+    document.getElementById("classes2").style.display = "block";
+    document.getElementById("classes2_label").style.display = "block"; 
+
+    document.getElementById("classes1").style.display = "none"; 
+    document.getElementById("classes1_label").style.display = "none";
+    document.getElementById("classes3").style.display = "none"; 
+    document.getElementById("classes3_label").style.display = "none"; 
+}; 
+
+// Prikaz tabele sa terminima polaganja vožnje na klik dugmeta "Polaganje"
+
+document.getElementById("button5").onclick = function() { 
+    document.getElementById("classes3").style.display = "block";
+    document.getElementById("classes3_label").style.display = "block"; 
+
+    document.getElementById("classes1").style.display = "none"; 
+    document.getElementById("classes1_label").style.display = "none";
+    document.getElementById("classes2").style.display = "none"; 
+    document.getElementById("classes2_label").style.display = "none"; 
+}; 

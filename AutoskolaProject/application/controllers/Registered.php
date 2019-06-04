@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Registered extends CI_Controller {
-        private $curUser;
+        private $user;
+        private $tclasses;
  
         public function __construct() {
         parent::__construct();
@@ -11,39 +12,51 @@ class Registered extends CI_Controller {
         if ($this->session->userdata('userId') == NULL) redirect ("Welcome");
         
         $idUser = $this->session->userdata('userId');
-        $this->curUser = $this->modelUser->getUserById($idUser);
+        $this->user = $this->modelUser->getUserById($idUser);
+        $this->tclasses = $this->modelUser->getAllTheoryClasses();
 
         }
         
-        //Otvaranje prikaza register_page
         public function index(){
         $data['msg'] = NULL;
-        $data['user'] = $this->curUser;
+        $data['user'] = $this->user;
+        $data['tclasses'] = $this->tclasses;
 
         $this->load->view('register_page', $data);  
         }
-       
-        //Dohvatanje trenutnog korisnika - registrovanog korisnika
-        public function getRegistered(){
+        
+        private function showViews($mainPart, $data){
+        $this->load->view($mainPart, $data);
+    }
+    
+         public function getRegistered(){
             $idEmployee = $this->session->userdata('userId');
             header("Content-Type: application/json");
             echo json_encode($this->modelUser->getUserById($idEmployee));
         }
     
-        //Dohvatanje svih casova teorije
-        public function getAllTheoryClasses(){
+         public function getAllTheoryClasses(){
          header("Content-Type: application/json");
          echo json_encode($this->modelUser->getAllTheoryClasses());
         }
+        
+        public function changeViewWithMessage($msg=NULL)
+        {
+        $data=[];
+        if ($msg) {
+            $data['msg'] = $msg;
+        }
+        $data['user'] = $this->user;
+        $data['tclasses'] = $this->tclasses;
   
-        //Unistavanje sesija i povratak na pocetnu stranu
+        $this->showViews('register_page',$data); }
+        
         public function logout(){
             $this->session->sess_destroy();
             $this->load->view('welcome_message'); 
         }
         
-        //Funcija koja osvezava podatke o bazi o korisniku
-         public function updateUser(){
+        public function updateUser(){
             
             $name = htmlspecialchars($_POST['name']);
             $surname = htmlspecialchars($_POST['surname']);
@@ -59,30 +72,22 @@ class Registered extends CI_Controller {
                     'user' => NULL
                 );
             
-            $user = array(
-                'name' => $name,
-                'surname' => $surname,
-                'phone' => $phone,
-                'address' => $address,
-                'jmbg' => $jmbg,
-                'email'=> $email,
-                'username' => $username
-            );
-            
-            if (!validateUpdateUserEmpty($user)){
+            if ($name=="" || $surname=="" || $phone=="" || $address==""
+                    || $jmbg=="" || $email=="" || $username==""){
                  $response['code'] = 0;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
                     }
                     
-            else if (!validateUpdateUsername($user, $this->modelUser, $this->curUser) ){
+            else if ($this->modelUser->checkUsernameExists($username) && $username!= $this->user->username ){
                  $response['code'] = 0;
                  $response['msg'] = "Zauzeto korisnicko ime!";
             }
             else {
-                $this->modelUser->updateUser($this->curUser->idUser, $name, $surname, $address,
+                $this->modelUser->updateUser($this->user->idUser, $name, $surname, $address,
                 $phone, $jmbg, $email, $username);
-                $this->curUser = $this->modelUser->getUserById($this->curUser->idUser);
-                $response['user']= $this->curUser;    
+                $this->user = $this->modelUser->getUserById($this->user->idUser);
+                $response['user']= $this->user;
+                
             }
             
             header("Content-Type: application/json");
