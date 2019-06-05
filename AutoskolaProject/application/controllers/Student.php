@@ -220,9 +220,7 @@ class Student extends CI_Controller {
         } }
         
         //Funkcija otkazivanja ispita
-        public function removeExamDate(){
-            $idExam = htmlspecialchars($_POST['idExam']);
-            
+        public function removeExamDate(){            
             $response = array(
                         'code' => 0,
                         'msg' => "Uspesno!",
@@ -237,6 +235,7 @@ class Student extends CI_Controller {
                 
             }
             else {
+                 $response['code'] = 1;
                  $response['msg'] = "Za pocetak odaberite termin polaganja!";
             }
             
