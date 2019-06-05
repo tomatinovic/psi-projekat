@@ -131,8 +131,8 @@ class Student extends CI_Controller {
             $response['msg'] = "Molimo upisite broj grupe koju birate!";
         }
         else{
-            $this->db->modelUser->changeGroup($this->curUser, $idTClass);
-            $response['group'] = $this->getStudentGroup();
+            $this->modelUser->changeGroup($this->curUser, $idTClass);
+            $response['group'] = $this->modelUser->getTheoryGroupForUser($this->curUser);
         }
         header("Content-Type: application/json");
         echo json_encode($response);
