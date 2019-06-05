@@ -160,8 +160,8 @@ class Student extends CI_Controller {
                  $response['msg'] = "Sva polja moraju biti popunjena!";
              }
              else{
-                 $teacher = $this->modelUser->getUserById($this->modelUser->getTeacherIdForStudent($this->curUser));
-                 $this->modelUser->addDLesson($teacher, $this->curUser->name, $this->curUser->surname, $days, $time);
+                 $teacher = $this->modelUser->getUserById($this->modelUser->getTeacherIdForStudent($this->curUser)->idTeacher);
+                 $this->modelUser->addDLesson($teacher, $this->curUser->name, $this->curUser->surname, $date, $time);
                  $response['classes'] = $this->modelUser->getDrivingLessonsForStudent($this->curUser);
              }
             
@@ -220,7 +220,9 @@ class Student extends CI_Controller {
         } }
         
         //Funkcija otkazivanja ispita
-        public function removeExamDate(){            
+        public function removeExamDate(){
+            $idExam = htmlspecialchars($_POST['idExam']);
+            
             $response = array(
                         'code' => 0,
                         'msg' => "Uspesno!",
@@ -235,7 +237,6 @@ class Student extends CI_Controller {
                 
             }
             else {
-                 $response['code'] = 1;
                  $response['msg'] = "Za pocetak odaberite termin polaganja!";
             }
             
