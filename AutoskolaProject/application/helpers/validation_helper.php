@@ -60,3 +60,15 @@ if ( ! function_exists('validateAddDClassEmpty'))
         return true;
     }   
 }
+
+//Validacija da li su sva polja popunjena kod zakazivanja novog casa
+if ( ! function_exists('validateDateTimeEmpty'))
+{
+    function validateDateTimeEmpty($class)
+    {
+        if ($class['date']=='' || $class['time']==''){
+            return false;
+        }
+        return true;
+    }   
+}
