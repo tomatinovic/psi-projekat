@@ -84,6 +84,11 @@ class ModelUser extends CI_Model {
        return $students;
     }
     
+    public function getTeacherIdForStudent($student){
+       $query = $this->db->get_where('teaching', array('idStudent' => $student->idUser));
+       return $query->row();
+    }
+    
     public function getAllTheoryClasses(){
         $string = "SELECT users.name, users.surname, theoryclass.day, theoryclass.time, theoryclass.idTClass".
                  " FROM theoryclass".
@@ -137,6 +142,13 @@ class ModelUser extends CI_Model {
         return $query->row();
     }
     
+    public function getExamById($idExam){
+        $query = $this->db->get_where('exam', array('idExam' => $idExam));
+        return $query->row();
+    }
+    
+
+
     
     public function checkIsStudentTaken($user){
         $query = $this->db->get_where('teaching', array('idStudent' => $user->idUser));
@@ -214,6 +226,64 @@ class ModelUser extends CI_Model {
     
     public function deleteDClass($idDClass){
            $this->db->delete('drivinglessons', array('idLesson' => $idDClass ));
+    }
+    
+    public function changeGroup($student, $idTClass){
+        $query = $this->db->get_where('assignedgroup', array('idStudent' => $student->idUser));
+        if ($query->num_rows() >=1){
+            $this->db->set('idTClass', $idTClass);
+            $this->db->where('idStudent', $student->idUser);
+            $this->db->update('assignedgroup'); 
+        
+        }
+        else {
+            $data = array(  
+                        'idTClass'     => $idTClass,  
+                        'idStudent' => $student->idUser
+                        );  
+            $this->db->insert('assignedgroup',$data);
+        }
+        
+    }
+    
+    
+    public function changeUpdateExamDate($student, $exam){
+        $query = $this->db->get_where('examlist', array('idStudent' => $student->idUser));
+        if ($query->num_rows() >=1){
+            $oldExam = $this->getExamById($query->row()->idExam);
+            $this->increseFreeSpaceExam($oldExam);
+            $this->db->set('idExam', $exam->idExam);
+            $this->db->where('idStudent', $student->idUser);
+            $this->db->update('examlist'); 
+            $this->decreseFreeSpaceExam($exam);
+            
+        }
+        else {
+            $data = array(  
+                        'idExam'     => $exam->idExam,  
+                        'idStudent' => $student->idUser
+                        );  
+            $this->db->insert('examlist',$data);
+            $this->decreseFreeSpaceExam($exam);
+        }
+    
+    }
+    
+    public function decreseFreeSpaceExam($exam){
+        $this->db->set('free', $exam->free - 1);
+        $this->db->where('idExam', $exam->idExam);
+        $this->db->update('exam'); 
+    }
+    
+    public function increseFreeSpaceExam($exam){
+        $this->db->set('free', $exam->free + 1);
+        $this->db->where('idExam', $exam->idExam);
+        $this->db->update('exam'); 
+    }
+    
+    public function removeSxheduledExam($exam){
+        $this->db->delete('examlist', array('idExam' => $exam->idExam));
+        $this->increseFreeSpaceExam($exam);
     }
 
  

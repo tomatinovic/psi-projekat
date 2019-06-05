@@ -91,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </tr>
             </table><br/>
             <label class = "paragraph"> Moja grupa: </label>
-            <label class = "paragraph" style = "padding-left: 0px !important"> <?php echo $myGroup->idTClass." - ".$myGroup->name." ".$myGroup->surname.", ".$myGroup->day.", ".$myGroup->time ?></label>
+            <label class = "paragraph" style = "padding-left: 0px !important"></label>
             <input type="button" class = "button_style bold_letters" style = "width: 150px !important" value="Promeni grupu" onclick="openFormChangeGroup()" /><br/><br/>
           </div>
           
@@ -118,6 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </table><br/>
             <label class = "paragraph"> Vaš odabrani termin polaganja: </label>
 
+            <!--
             <?php
               if ($examDate != NULL) {
                   echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">".$examDate->date.'  '.$examDate->time."</label>";
@@ -126,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">Niste odabrali termin polaganja</label>";
               }
             ?>
-
+             -->
             <input type="button" class = "button_style bold_letters" value="Otkaži" /><br/><br/>
           </div>
         </div>
@@ -147,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
 
         <form name="admin_form1" id ="admin_form1" method="post" class = "text_style display_none">    
-            <label class="title"> Dobrodošao/la <?php echo $student->name ?> </label><br/><br/><br/>
+            <label class="title"> Dobrodošao/la  </label><br/><br/><br/>
             <input type="text" id ="changeNameSurname" name="changeNameSurname"  class="margin_bottom_10" /> 
             <input type="text" id ="changeAddress" name="changeAddress" class="margin_bottom_10" /> 
             <input type="text" id ="changePhone" name="changePhone" class="margin_bottom_10" /> 

@@ -208,7 +208,7 @@ class Employee extends CI_Controller {
                  $response['msg'] = "Nije pronadjen vas student po zadatom imenu i prezimenu";
              }
              else{
-                 $this->modelUser->addDLesson($idTClass, $days, $time);
+                 $this->modelUser->addDLesson($this->curUser, $name, $surname, $days, $time);
                  $response['classes'] = $this->modelUser->getDrivingLessonsForTeacher($this->curUser);
              }
             
