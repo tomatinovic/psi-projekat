@@ -54,7 +54,7 @@ if ( ! function_exists('validateAddDClassEmpty'))
 {
     function validateAddDClassEmpty($class)
     {
-        if ($class['nameSurname']=='' || $class['date']=='' || $class['time']==''){
+        if ($class['name']=='' || $class['surname']=='' || $class['date']=='' || $class['time']==''){
             return false;
         }
         return true;

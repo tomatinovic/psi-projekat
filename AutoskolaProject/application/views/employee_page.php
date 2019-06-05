@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </tr>             
             </table><br/>
             <label class = "paragraph"> Zakaži novi čas vožnje: </label>
-            <input type="button" class = "button_style bold_letters" value="Zakaži" onclick="openFormNewAppointment()" /><br/><br/>
+            <input type="button" id = "zakazi_cas1" class = "button_style bold_letters" value="Zakaži" onclick="openFormNewAppointment()" /><br/><br/>
           </div>
           
         </div>
@@ -161,35 +161,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <input type="button" class = "button_style bold_letters" id ="exit_button" style = "width: 150px !important" value="Odustani"/>
         </form>
     </div> 
-    
-    <div class="form-popup" id="myFormCancelStudent">
-        <form class="form-container-reg" method="post">
-            <p class="prijava bold_letters"><i> Odjava korisnika </i></p>
-            <table>
-                <tr>
-                    <td><label class="registracija"> Razlog: </label></td>
-                    <td><textarea rows="4" cols="50" style="margin-bottom: 10px; height: 50px !important" id="textarea"></textarea></td>
-                </tr>            
-            </table><br/>
-            <button type="submit" class="btn"> Pošalji </button>
-            <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
-        </form>
-    </div>
        
     <div class="form-popup" id="myFormChangeAppointment">
         <form class="form-container-reg" method="post">
             <p class="prijava bold_letters"><i> Promena termina </i></p>
             <table>
                 <tr>
-                    <td><label class="registracija"> Razlog: </label></td>
-                    <td><textarea rows="4" cols="50" style="margin-bottom: 10px; height: 50px !important" id="textarea"></textarea></td>
+                    <td><label class="registracija"> Datum: </label></td>
+                    <td><input type="text" id ="date1" name="date1" class="margin_bottom_10" placeholder="Format: dan/dan" /> </td>
                 </tr>    
                 <tr>
-                    <td><label class="registracija"> Novi termin: </label></td>
-                    <td><input type = "time" /></td>
+                    <td><label class="registracija"> Vreme: </label></td>
+                    <td><input type="text" id ="time1" name="time1" class="margin_bottom_10" placeholder="Format: hh:mm - hh:mm" /> </td>
                 </tr>         
             </table><br/>
-            <button type="submit" class="btn"> Promeni </button>
+            <button type="button" id="promeni_grupu" class="btn"> Promeni </button>
             <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
         </form>
     </div>
@@ -199,22 +185,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <p class="prijava bold_letters"><i> Zakazivanje termina </i></p>
             <table>
                 <tr>
-                    <td><label class="registracija"> Polaznik: </label></td>
-                    <td><select style="border-radius: 5px">
-                              <option value="option1"> Ime i prezime1 </option>
-                              <option value="option2"> Ime i prezime2 </option>
-                        </select></td>
+                    <td><label class="registracija"> Ime polaznika: </label></td>
+                    <td><input type="text" id ="polaznik_name" name="polaznikName" class="margin_bottom_10" placeholder="Ime" /> </td>
+                </tr>
+                <tr>
+                    <td><label class="registracija"> Prezime polaznika: </label></td>
+                    <td><input type="text" id ="polaznik_surname" name="polaznikName" class="margin_bottom_10" placeholder="Prezime" /> </td>
                 </tr>
                 <tr>
                     <td><label class="registracija"> Datum: </label></td>
-                    <td><input type = "date" class="margin_bottom_10" /></td>
+                    <td><input type = "text" id ="datum" name="datum" class="margin_bottom_10" placeholder="Format: dd.mm.yyyy." /></td>
                 </tr>
                 <tr>
                     <td><label class="registracija"> Vreme: </label></td>
-                    <td><input type = "time" class="margin_bottom_10"/></td>
+                    <td><input type = "text" id ="vreme" name="vreme" class="margin_bottom_10" placeholder="Format: hh:mm"/></td>
                 </tr>         
             </table><br/>
-            <button type="submit" class="btn"> Zakaži </button>
+            <button type="button" id ="zakazi_cas" class="btn"> Zakaži </button>
             <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
         </form>
     </div>
