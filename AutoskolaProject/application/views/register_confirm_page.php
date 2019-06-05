@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <th class = "table1"> Vreme </th>
                 </tr>
             </table><br/>
-            <label class = "paragraph"> Moja grupa: </label>
+            <label id='myGroupLabel' class = "paragraph"> Moja grupa: </label>
             <label class = "paragraph" style = "padding-left: 0px !important"></label>
             <input type="button" class = "button_style bold_letters" style = "width: 150px !important" value="Promeni grupu" onclick="openFormChangeGroup()" /><br/><br/>
           </div>
@@ -162,19 +162,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div> 
     
     <div class="form-popup" id="myFormChangeGroup">
-        <form class="form-container-reg" method="post">
+        <form id='formChangeGroup' class="form-container-reg" method="post">
             <p class="prijava bold_letters"><i> Promena grupe </i></p>
             <table>
                 <tr>
-                    <td><label class="registracija"> Razlog: </label></td>
-                    <td><textarea rows="4" cols="50" style="margin-bottom: 10px; height: 50px !important" id="textarea"></textarea></td>
-                </tr>
-                <tr>
-                    <td><label class="registracija"> Nova grupa: </label></td>
-                    <td><input type="text" class="margin_bottom_10" /></td>
+                    <td><label class="registracija"> Broj nove grupe: </label></td>
+                    <td><input type="text" id='studentClassNum' class="margin_bottom_10" /></td>
                 </tr>         
             </table><br/>
-            <button type="submit" class="btn"> Pošalji </button>
+            <button type="button" id='studentSendBtn' class="btn"> Pošalji </button>
             <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
         </form>
     </div>

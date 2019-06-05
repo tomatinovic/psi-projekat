@@ -97,6 +97,16 @@ $(function (){
           document.getElementById("labelJmbg").append(student.jmbg);
           document.getElementById("labelEmail").append(student.email);
           document.getElementById("labelUsername").append(student.username);
+          
+        }
+    });
+    
+    
+    $.ajax({
+        type: 'GET',
+        url: 'student/getStudentGroup',
+        success: function(group){
+          $('#myGroupLabel').text( group.name +" "+group.surname+", "+ group.day + " , " + group.time  );
         }
     });
     
@@ -120,6 +130,37 @@ $(function (){
             }
         });          
     });
+    
+    
+     $('#studentSendBtn').on('click', function(){
+     
+     var $studentClassNumber = $('#studentClassNum');
+     
+     var idClass = {
+            idTClass: $studentClassNumber.val(),     
+        }
+        
+        $.ajax({
+          type: 'POST',
+          url: 'student/changeGroup',
+          data: idClass,
+          success: function(response){
+              if(response.code === 0){
+                    alert(response.msg);
+                }
+                else{
+                  
+                  $('#myGroupLabel').text( response.group.name +" "+response.group.surname+", "+ response.group.day + " , " + response.group.time  );
+                  document.getElementById("myFormChangeGroup").style.display = "none";  
+                    
+          }},
+          error: function(){
+              console.log('fail');
+          }
+     });
+     
+ });
+    
 });
 
 // Izmena osnovnih informacija o polazniku
@@ -299,6 +340,9 @@ $('#button4').on('click', function(){
           }
       });           
 });
+
+
+
 
 // Prikaz tabele sa svim grupama za teorijske časove na klik dugmeta "Grupe"
 
