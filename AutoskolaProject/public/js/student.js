@@ -97,6 +97,7 @@ $(function (){
           document.getElementById("labelJmbg").append(student.jmbg);
           document.getElementById("labelEmail").append(student.email);
           document.getElementById("labelUsername").append(student.username);
+          console.log("aaaa");
           
         }
     });
@@ -107,14 +108,7 @@ $(function (){
         url: 'student/getStudentGroup',
         success: function(group){
           $('#myGroupLabel').text( group.name +" "+group.surname+", "+ group.day + " , " + group.time  );
-        }
-    });
-    
-    $.ajax({
-        type: 'GET',
-        url: 'student/getStudentExamDate',
-        success: function(exam){
-          $('#examLabel').text( "Vaš odabrani termin polaganja je termin broj : " + exam.idExam  );
+              console.log("bbbb");
         }
     });
     
@@ -319,7 +313,6 @@ $('#button4').on('click', function(){
       //da se ne bi appendovali elemnenti konstantno i pravili duplikati
       $('#table3 tr').remove();
         $('#table3').append('<tr>\n\
-                  <th class = "table1"> Broj </th>\n\
                   <th class = "table1"> Datum </th>\n\
                   <th class = "table1"> Vreme </th>\n\
                   <th class = "table1"> Preostalo mesta </th>\n\
@@ -336,7 +329,6 @@ $('#button4').on('click', function(){
               console.log('uspesno pozvan url');
               $.each(groups, function(i, group){
                  $('#table3').append('<tr>\n\
-                <td class="table1">'+group.idExam+'</td>\n\
                 <td class="table1">'+group.date+'</td>\n\
                 <td class="table1">'+group.time+'</td>\n\
                 <td class="table1">'+group.free+'</td>\n\
@@ -352,92 +344,6 @@ $('#button4').on('click', function(){
 });
 
 
- 
-    $('#table3').on('click', 'td', function() {
-      var row_num = parseInt( $(this).parent().index() )+1;   
-      var column_num = parseInt( $(this).index() ) + 1;
-      if (column_num === 6)
-      {
-          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
-
-          var userId = {
-            idExam: $selectedId,  
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: 'student/registerForExam',
-            data: userId,
-            success: function(response){
-                if(response.code === 1){
-                  alert(response.msg);
-                }
-                else{
-                    alert(response.msg);
-                    $('#table3 tr').remove();
-                    $('#table3').append('<tr>\n\
-                              <th class = "table1"> Broj </th>\n\
-                              <th class = "table1"> Datum </th>\n\
-                              <th class = "table1"> Vreme </th>\n\
-                              <th class = "table1"> Preostalo mesta </th>\n\
-                              <th class = "table1"> Prijava </th>\n\
-                          </tr>');
-                    $.each(response.exams, function(i, group){
-                    $('#table3').append('<tr>\n\
-                   <td class="table1">'+group.idExam+'</td>\n\
-                   <td class="table1">'+group.date+'</td>\n\
-                   <td class="table1">'+group.time+'</td>\n\
-                   <td class="table1">'+group.free+'</td>\n\
-                   <td class="table1">'+group.time+'</td>\n\
-                   <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Prijava" /></td>\n\
-                   </tr>');
-                 });
-                   $('#examLabel').text( "Vaš odabrani termin polaganja je termin broj : " +response.myExam.idExam  ); 
-                }
-
-            }
-        });
-      }
-    });
-
-
-$('#cancelExam').on('click', function(){
-      
-         $.ajax({
-          type: 'GET',
-          url: 'student/removeExamDate',
-          datatype: 'json',
-          success: function(response){
-              if(response.code === 1){
-                  alert(response.msg);
-                }
-                else{
-                  alert(response.msg);
-                  $('#table3 tr').remove();
-                    $('#table3').append('<tr>\n\
-                              <th class = "table1"> Broj </th>\n\
-                              <th class = "table1"> Datum </th>\n\
-                              <th class = "table1"> Vreme </th>\n\
-                              <th class = "table1"> Preostalo mesta </th>\n\
-                              <th class = "table1"> Prijava </th>\n\
-                          </tr>');
-                    $.each(response.exams, function(i, group){
-                    $('#table3').append('<tr>\n\
-                   <td class="table1">'+group.idExam+'</td>\n\
-                   <td class="table1">'+group.date+'</td>\n\
-                   <td class="table1">'+group.time+'</td>\n\
-                   <td class="table1">'+group.free+'</td>\n\
-                   <td class="table1">'+group.time+'</td>\n\
-                   <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Prijava" /></td>\n\
-                   </tr>');
-                 });
-                  $('#examLabel').text( "Vaš odabrani termin polaganja je termin broj : ");
-          }},
-          error: function(){
-              console.log('fail');
-          }
-      });           
-});
 
 
 // Prikaz tabele sa svim grupama za teorijske časove na klik dugmeta "Grupe"
@@ -475,3 +381,108 @@ document.getElementById("button5").onclick = function() {
     document.getElementById("classes2").style.display = "none"; 
     document.getElementById("classes2_label").style.display = "none"; 
 }; 
+
+// Funkcija za otkazivanje termina vožnje
+
+$('#table2').on('click', 'td', function() {
+    var column_num = parseInt( $(this).index() ) + 1;
+     console.log(column_num);
+    if (column_num === 4) {
+          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+
+          var idDClass = {
+            idDClass: $selectedId,  
+          }
+    
+        $.ajax({
+                type: 'POST',
+                url: 'student/removeDClass',
+                data: idDClass,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                    }
+                    $('#table2 tr').remove();
+                    $('#table2').append('<tr>\n\
+                    <th class = "table1"> Broj </th>\n\
+                    <th class = "table1"> Datum </th>\n\
+                    <th class = "table1"> Vreme </th>\n\
+                    <th class = "table1"> Odrađen </th>\n\
+                    </tr>');
+                     $.each(response.classes, function(i, classs){
+                  
+                 var $addRow;
+                      if (classs.done == 0){
+                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi"/> </td>';
+                }
+                   else {
+                  $addRow = '<td class = "table1"> da </td>';   
+                    }   
+                $('#table2').append('<tr>\n\
+                <td class="table1">'+classs.idLesson+'</td>\n\
+                <td class="table1">'+classs.date+'</td>\n\
+                <td class="table1">'+classs.time+'</td>'+$addRow+'</tr>');
+           
+              });
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });
+    }
+});
+
+// Funkcija za zakazivanje časa vožnje
+
+$('#zakazi_cas').on('click', function(){
+    var $datePolaznik = $('#datum');
+    var $timePolaznik = $('#vreme');
+    
+    
+    var data = {
+            date: $datePolaznik.val(),  
+            time: $timePolaznik.val(),  
+          }
+    
+    $.ajax({
+                type: 'POST',
+                url: 'student/addDClass',
+                data: data,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                        
+                          $('#table2 tr').remove();
+                    $('#table2').append('<tr>\n\
+                    <th class = "table1"> Broj </th>\n\
+                    <th class = "table1"> Datum </th>\n\
+                    <th class = "table1"> Vreme </th>\n\
+                    <th class = "table1"> Odrađen </th>\n\
+                    </tr>');
+                     $.each(response.classes, function(i, classs){
+                  
+                 var $addRow;
+                      if (classs.done == 0){
+                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi"/> </td>';
+                }
+                   else {
+                  $addRow = '<td class = "table1"> da </td>';   
+                    }   
+                $('#table2').append('<tr>\n\
+                <td class="table1">'+classs.idLesson+'</td>\n\
+                <td class="table1">'+classs.date+'</td>\n\
+                <td class="table1">'+classs.time+'</td>'+$addRow+'</tr>');
+           
+              });
+                        document.getElementById("myFormAppointment").style.display = "none"; 
+                    } else if (response.code === 1) {
+                        alert(response.msg);
+                    }                 
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });               
+});
