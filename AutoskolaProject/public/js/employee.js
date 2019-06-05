@@ -44,7 +44,6 @@ document.getElementById("button2").onclick = function() {
 // Zatvaranje dijaloga za odjavu polaznika / promenu termina / zakazivanje termina
 
 function closeForm() {
-    document.getElementById("myFormCancelStudent").style.display = "none";
     document.getElementById("myFormChangeAppointment").style.display = "none";  
     document.getElementById("myFormNewAppointment").style.display = "none";
 }
@@ -72,6 +71,7 @@ $(function (){
     // Otvoren prvi tab prilikom učitavanja stranice
     
     var i, tabcontent, tablinks;
+    var $global_var;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
@@ -317,7 +317,7 @@ $('#button6').on('click', function(){
               $.each(classes, function(i, classs){
                   var $addRow;
                       if (classs.done == 0){
-                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi" onclick="openFormChangeAppointment()" /> </td>';
+                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi" /> </td>';
                 }
                    else {
                   $addRow = '<td class = "table1"> da </td>';   
@@ -462,4 +462,187 @@ $('#table2').on('click', 'td', function() {
                 }
         });
     }
+});
+
+// Funkcija za otkazivanje časova vožnje
+
+$('#table4').on('click', 'td', function() {
+    console.log("aaaa");
+    var column_num = parseInt( $(this).index() ) + 1;
+     console.log(column_num);
+    if (column_num === 5) {
+          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+
+          var idDClass = {
+            idDClass: $selectedId,  
+          }
+    
+        $.ajax({
+                type: 'POST',
+                url: 'employee/removeDClass',
+                data: idDClass,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                    }
+                    $('#table4 tr').remove();
+                    $('#table4').append('<tr>\n\
+                        <th class = "table1"> Broj </th>\n\
+                        <th class = "table1"> Polaznik </th>\n\
+                        <th class = "table1"> Datum </th>\n\
+                        <th class = "table1"> Vreme </th>\n\
+                        <th class = "table1"> Odrađen </th>\n\
+                        </tr>');
+                     $.each(response.classes, function(i, classs){
+                  var $addRow;
+                      if (classs.done == 0){
+                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi" /> </td>';
+                }
+                   else {
+                  $addRow = '<td class = "table1"> da </td>';   
+                    }   
+                  
+                 $('#table4').append('<tr>\n\
+                <td class="table1">'+classs.idLesson+'</td>\n\
+                <td class="table1">'+classs.name+' '+classs.surname+'</td>\n\
+                <td class="table1">'+classs.date+'</td>\n\
+                <td class="table1">'+classs.time+'</td>'+$addRow+'</tr>');                                            
+              });
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });
+    }
+});
+
+// Funkcija za zakazivanje novog časa vožnje
+
+$('#zakazi_cas').on('click', function(){
+    var $namePolaznik = $('#polaznik_name');
+    var $surnamePolaznik = $('#polaznik_surname');
+    var $datePolaznik = $('#datum');
+    var $timePolaznik = $('#vreme');
+    
+    
+    var data = {
+            name: $namePolaznik.val(),  
+            surname: $surnamePolaznik.val(),  
+            date: $datePolaznik.val(),  
+            time: $timePolaznik.val(),  
+          }
+    
+    $.ajax({
+                type: 'POST',
+                url: 'employee/addDClass',
+                data: data,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                        
+                         $('#table4 tr').remove();
+                         $('#table4').append('<tr>\n\
+                        <th class = "table1"> Broj </th>\n\
+                        <th class = "table1"> Polaznik </th>\n\
+                        <th class = "table1"> Datum </th>\n\
+                        <th class = "table1"> Vreme </th>\n\
+                        <th class = "table1"> Odrađen </th>\n\
+                        </tr>');
+                     $.each(response.classes, function(i, classs){
+                  var $addRow;
+                      if (classs.done == 0){
+                   $addRow ='<td class = "table1"> <input type="button" class ="button_style" style = "font-weight: bold;" value="Otkazi" /> </td>';
+                }
+                   else {
+                  $addRow = '<td class = "table1"> da </td>';   
+                    }   
+                  
+                 $('#table4').append('<tr>\n\
+                <td class="table1">'+classs.idLesson+'</td>\n\
+                <td class="table1">'+classs.name+' '+classs.surname+'</td>\n\
+                <td class="table1">'+classs.date+'</td>\n\
+                <td class="table1">'+classs.time+'</td>'+$addRow+'</tr>');                                            
+              });
+                        document.getElementById("myFormNewAppointment").style.display = "none"; 
+                    } else if (response.code === 1) {
+                        alert(response.msg);
+                    }                 
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });               
+});
+
+// Funkcija za otvaranje dijaloga za promeni termina časova teorije
+
+$('#table3').on('click', 'td', function() {
+     var column_num = parseInt( $(this).index() ) + 1;
+     if (column_num === 5) {
+         $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+            $global_var = $selectedId;
+        var userId = {
+           idUser: $selectedId };
+
+        $.ajax({
+           type: 'POST',
+           url: 'employee/getEmployee',
+           data: userId,
+           success: function(user){
+              document.getElementById("myFormChangeAppointment").style.display = "block";
+           } 
+        }); 
+     }
+});
+
+// Promena grupe za čаsove teorije
+
+$('#promeni_grupu').on('click', function(){
+    var $datePolaznik = $('#date1');
+    var $timePolaznik = $('#time1');
+    
+    
+    var data = {
+            idTClass: $global_var,
+            days: $datePolaznik.val(),  
+            time: $timePolaznik.val(),  
+          }
+    
+    $.ajax({
+                type: 'POST',
+                url: 'employee/changeTClasses',
+                data: data,
+                success: function(response){              
+                    console.log('uspesno pozvan url');
+                    if(response.code === 0){
+                        alert(response.msg);
+                        
+                        $('#table3 tr').remove();
+                        $('#table3').append('<tr>\n\
+                                  <th class = "table1"> Broj </th>\n\
+                                  <th class = "table1"> Profesor </th>\n\
+                                  <th class = "table1"> Dani </th>\n\
+                                  <th class = "table1"> Vreme </th>\n\
+                                  <th class = "table1"> Promeni </th>\n\
+                              </tr>');
+                    $.each(response.classes, function(i, classs){
+                    $('#table3').append('<tr>\n\
+                   <td class="table1">'+classs.idTClass+'</td>\n\
+                   <td class="table1">'+classs.name+' '+classs.surname+'</td>\n\
+                   <td class="table1">'+classs.day+'</td>\n\
+                   <td class="table1">'+classs.time+'</td>\n\
+                   <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Promeni" /></td>\n\
+                   </tr>');
+              });
+                        document.getElementById("myFormChangeAppointment").style.display = "none"; 
+                    } else if (response.code === 1) {
+                        alert(response.msg);
+                    }                 
+                },
+                error: function(){
+                    console.log('fail');
+                }
+        });               
 });
