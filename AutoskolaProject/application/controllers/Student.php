@@ -159,6 +159,10 @@ class Student extends CI_Controller {
                  $response['code'] = 1;
                  $response['msg'] = "Sva polja moraju biti popunjena!";
              }
+             else if($this->modelUser->getTeacherIdForStudent($this->curUser) == null){
+                 $response['code'] = 1;
+                 $response['msg'] = "Jos uvek niste dodeljeni instruktoru!";
+             }
              else{
                  $teacher = $this->modelUser->getUserById($this->modelUser->getTeacherIdForStudent($this->curUser)->idTeacher);
                  $this->modelUser->addDLesson($teacher, $this->curUser->name, $this->curUser->surname, $date, $time);
@@ -196,10 +200,10 @@ class Student extends CI_Controller {
                         'myExam' => NULL
                     );
             
-            if($idExam == ""){
-                $response['code'] = 1;
-                $response['msg'] = "Sva polja moraju biti popunjena!";
-            }
+            if($this->modelUser->getTeacherIdForStudent($this->curUser) == null){
+                 $response['code'] = 1;
+                 $response['msg'] = "Jos uvek niste dodeljeni instruktoru!";
+             }
             else {
                 $exam = $this->modelUser->getExamById($idExam);
                 if ($exam->free == 0){
@@ -217,12 +221,13 @@ class Student extends CI_Controller {
             header("Content-Type: application/json");
             echo json_encode($response);
             
-        } }
+        }
+        header("Content-Type: application/json");
+            echo json_encode($response);
+        }
         
         //Funkcija otkazivanja ispita
-        public function removeExamDate(){
-            $idExam = htmlspecialchars($_POST['idExam']);
-            
+        public function removeExamDate(){            
             $response = array(
                         'code' => 0,
                         'msg' => "Uspesno!",
@@ -237,6 +242,7 @@ class Student extends CI_Controller {
                 
             }
             else {
+                 $response['code'] = 1;
                  $response['msg'] = "Za pocetak odaberite termin polaganja!";
             }
             
