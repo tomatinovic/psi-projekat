@@ -116,19 +116,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <th class = "table1"> Prijava </th>
                 </tr>
             </table><br/>
-            <label class = "paragraph"> Vaš odabrani termin polaganja: </label>
+            <label id='examLabel' class = "paragraph"> Vaš odabrani termin polaganja: </label>
 
-            <!--
-            <?php
-              if ($examDate != NULL) {
-                  echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">".$examDate->date.'  '.$examDate->time."</label>";
-              }
-              else {
-                  echo "<label class = \"paragraph\" style = \"padding-left: 0px !important\">Niste odabrali termin polaganja</label>";
-              }
-            ?>
-             -->
-            <input type="button" class = "button_style bold_letters" value="Otkaži" /><br/><br/>
+            <input id='cancelExam' type="button" class = "button_style bold_letters" value="Otkaži" /><br/><br/>
           </div>
         </div>
     </div>
@@ -199,6 +189,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </table><br/>
             <button type="button" id="zakazi_cas" class="btn"> Zakaži </button>
             <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
+        </form>
+    </div>
+    
+    <div class="form-popup-msg" id="myFormMsgs">
+        <form class="form-container-reg" method="post">
+            <p class="prijava bold_letters"><i> Poruka  </i></p>
+            <label id='msgLabel' class = "paragraph"> </label>
+            <button type="button" id="closeMsgBtn" class="btnMsg"> Ok </button>
         </form>
     </div>
     

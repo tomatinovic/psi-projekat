@@ -112,6 +112,15 @@ $(function (){
         }
     });
     
+    $.ajax({
+        type: 'GET',
+        url: 'student/getStudentExamDate',
+        success: function(exam){
+            if (exam != null) { $('#examLabel').text( "Vaš odabrani termin polaganja je termin broj : " + exam.idExam  );}
+            else {$('#examLabel').text( "Niste odabrali termin polaganja" );}
+         
+        }
+    });
     // Izmena osnovnih informacija o polazniku -> prikaz texbox-ova
   
     $('#changeData1').on('click', function(){
@@ -148,7 +157,9 @@ $(function (){
           data: idClass,
           success: function(response){
               if(response.code === 0){
-                    alert(response.msg);
+                    //alert(response.msg);
+                    document.getElementById("myFormMsgs").style.display = "block";
+                     $('#msgLabel').text(response.msg);
                 }
                 else{
                   
@@ -196,7 +207,9 @@ $('#confirm_button').on('click', function(){
           success: function(response){
               console.log('uspesno pozvan url');
               if(response.code === 0){
-                  alert(response.msg);
+                  //alert(response.msg);
+                  document.getElementById("myFormMsgs").style.display = "block";
+                  $('#msgLabel').text(response.msg);
               }
               else{
                   
@@ -313,6 +326,7 @@ $('#button4').on('click', function(){
       //da se ne bi appendovali elemnenti konstantno i pravili duplikati
       $('#table3 tr').remove();
         $('#table3').append('<tr>\n\
+                  <th class = "table1"> Broj </th>\n\
                   <th class = "table1"> Datum </th>\n\
                   <th class = "table1"> Vreme </th>\n\
                   <th class = "table1"> Preostalo mesta </th>\n\
@@ -329,6 +343,7 @@ $('#button4').on('click', function(){
               console.log('uspesno pozvan url');
               $.each(groups, function(i, group){
                  $('#table3').append('<tr>\n\
+                <td class="table1">'+group.idExam+'</td>\n\
                 <td class="table1">'+group.date+'</td>\n\
                 <td class="table1">'+group.time+'</td>\n\
                 <td class="table1">'+group.free+'</td>\n\
@@ -337,6 +352,103 @@ $('#button4').on('click', function(){
                 </tr>');
               });
           },
+          error: function(){
+              console.log('fail');
+          }
+      });           
+});
+
+ 
+    $('#table3').on('click', 'td', function() {
+      var row_num = parseInt( $(this).parent().index() )+1;   
+      var column_num = parseInt( $(this).index() ) + 1;
+      if (column_num === 6)
+      {
+          $selectedId = parseInt($(this).closest('tr').find('td:first').text());
+
+          var userId = {
+            idExam: $selectedId,  
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'student/registerForExam',
+            data: userId,
+            success: function(response){
+                console.log("aaa");
+                if(response.code === 1){
+                  //alert(response.msg);
+                  console.log("USAOO");
+                  document.getElementById("myFormMsgs").style.display = "block";
+                  $('#msgLabel').text(response.msg);
+                }
+                else{
+                    //alert(response.msg);
+                    document.getElementById("myFormMsgs").style.display = "block";
+                    $('#msgLabel').text(response.msg);
+                    $('#table3 tr').remove();
+                    $('#table3').append('<tr>\n\
+                              <th class = "table1"> Broj </th>\n\
+                              <th class = "table1"> Datum </th>\n\
+                              <th class = "table1"> Vreme </th>\n\
+                              <th class = "table1"> Preostalo mesta </th>\n\
+                              <th class = "table1"> Prijava </th>\n\
+                          </tr>');
+                    $.each(response.exams, function(i, group){
+                    $('#table3').append('<tr>\n\
+                   <td class="table1">'+group.idExam+'</td>\n\
+                   <td class="table1">'+group.date+'</td>\n\
+                   <td class="table1">'+group.time+'</td>\n\
+                   <td class="table1">'+group.free+'</td>\n\
+                   <td class="table1">'+group.time+'</td>\n\
+                   <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Prijava" /></td>\n\
+                   </tr>');
+                 });
+                   $('#examLabel').text( "Vaš odabrani termin polaganja je termin broj : " +response.myExam.idExam  ); 
+                }
+
+            }
+        });
+      }
+    });
+
+
+$('#cancelExam').on('click', function(){
+      
+         $.ajax({
+          type: 'GET',
+          url: 'student/removeExamDate',
+          datatype: 'json',
+          success: function(response){
+              if(response.code === 1){
+                  //alert(response.msg);
+                  document.getElementById("myFormMsgs").style.display = "block";
+                  $('#msgLabel').text(response.msg);
+                }
+                else{
+                  //alert(response.msg);
+                  document.getElementById("myFormMsgs").style.display = "block";
+                  $('#msgLabel').text(response.msg);
+                  $('#table3 tr').remove();
+                    $('#table3').append('<tr>\n\
+                              <th class = "table1"> Broj </th>\n\
+                              <th class = "table1"> Datum </th>\n\
+                              <th class = "table1"> Vreme </th>\n\
+                              <th class = "table1"> Preostalo mesta </th>\n\
+                              <th class = "table1"> Prijava </th>\n\
+                          </tr>');
+                    $.each(response.exams, function(i, group){
+                    $('#table3').append('<tr>\n\
+                   <td class="table1">'+group.idExam+'</td>\n\
+                   <td class="table1">'+group.date+'</td>\n\
+                   <td class="table1">'+group.time+'</td>\n\
+                   <td class="table1">'+group.free+'</td>\n\
+                   <td class="table1">'+group.time+'</td>\n\
+                   <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Prijava" /></td>\n\
+                   </tr>');
+                 });
+                  $('#examLabel').text( "Niste odabrali termin polaganja");
+          }},
           error: function(){
               console.log('fail');
           }
@@ -356,6 +468,10 @@ document.getElementById("button3").onclick = function() {
     document.getElementById("classes2_label").style.display = "none"; 
     document.getElementById("classes3").style.display = "none"; 
     document.getElementById("classes3_label").style.display = "none"; 
+}; 
+
+document.getElementById("closeMsgBtn").onclick = function() { 
+    document.getElementById("myFormMsgs").style.display = "none";
 }; 
 
 // Prikaz tabele sa časovima vožnje za prijavljenog polaznika na klik dugmeta "Termini vožnje"
@@ -401,7 +517,9 @@ $('#table2').on('click', 'td', function() {
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
+                       // alert(response.msg);
+                       document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
                     }
                     $('#table2 tr').remove();
                     $('#table2').append('<tr>\n\
@@ -452,8 +570,9 @@ $('#zakazi_cas').on('click', function(){
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
-                        
+                       // alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                        $('#msgLabel').text(response.msg);
                           $('#table2 tr').remove();
                     $('#table2').append('<tr>\n\
                     <th class = "table1"> Broj </th>\n\
@@ -478,7 +597,9 @@ $('#zakazi_cas').on('click', function(){
               });
                         document.getElementById("myFormAppointment").style.display = "none"; 
                     } else if (response.code === 1) {
-                        alert(response.msg);
+                       // alert(response.msg);
+                       document.getElementById("myFormMsgs").style.display = "block";
+                         $('#msgLabel').text(response.msg);
                     }                 
                 },
                 error: function(){
