@@ -27,6 +27,10 @@ document.getElementById("exit_button").onclick = function() {
     document.getElementById("admin_form1").style.display = "none";
 };
 
+document.getElementById("closeMsgBtn").onclick = function() { 
+    document.getElementById("myFormMsgs").style.display = "none";
+}; 
+
 // Menjanje tab content-a klikom na dugme Zaposleni
 
 document.getElementById("button1").onclick = function() {    
@@ -152,7 +156,9 @@ $('#confirm_button').on('click', function(){
         success: function(response){
             console.log('uspesno pozvan url');
             if(response.code === 0){
-                alert(response.msg);
+                document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
             }
             else{
 
@@ -410,7 +416,9 @@ $('#table1').on('click', 'td', function() {
             success: function(response){              
                 console.log('uspesno pozvan url');
                 if(response.code === 0){
-                    alert(response.msg);
+                    document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                 }
             },
             error: function(){
@@ -439,7 +447,9 @@ $('#table2').on('click', 'td', function() {
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                     }
                     $('#table2 tr').remove();
                     $('#table2').append('<tr>\n\
@@ -484,7 +494,9 @@ $('#table4').on('click', 'td', function() {
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                     }
                     $('#table4 tr').remove();
                     $('#table4').append('<tr>\n\
@@ -540,7 +552,9 @@ $('#zakazi_cas').on('click', function(){
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
+                       document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                         
                          $('#table4 tr').remove();
                          $('#table4').append('<tr>\n\
@@ -567,7 +581,9 @@ $('#zakazi_cas').on('click', function(){
               });
                         document.getElementById("myFormNewAppointment").style.display = "none"; 
                     } else if (response.code === 1) {
-                        alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
                     }                 
                 },
                 error: function(){
@@ -617,7 +633,9 @@ $('#promeni_grupu').on('click', function(){
                 success: function(response){              
                     console.log('uspesno pozvan url');
                     if(response.code === 0){
-                        alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                         
                         $('#table3 tr').remove();
                         $('#table3').append('<tr>\n\
@@ -638,7 +656,9 @@ $('#promeni_grupu').on('click', function(){
               });
                         document.getElementById("myFormChangeAppointment").style.display = "none"; 
                     } else if (response.code === 1) {
-                        alert(response.msg);
+                        document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
                     }                 
                 },
                 error: function(){

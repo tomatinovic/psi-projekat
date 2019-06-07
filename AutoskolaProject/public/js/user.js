@@ -34,6 +34,10 @@ document.getElementById("button2").onclick = function() {
     document.getElementById("kontakt_div").style.display = "block";       
 };
 
+document.getElementById("closeMsgBtn").onclick = function() { 
+    document.getElementById("myFormMsgs").style.display = "none";
+}; 
+
 // Odustajanje od izmene osnovnih informacija o registrovanom korisniku
 
 document.getElementById("exit_button").onclick = function() { 
@@ -126,7 +130,9 @@ $('#confirm_button').on('click', function(){
           success: function(response){
               console.log('uspesno pozvan url');
               if(response.code === 0){
-                  alert(response.msg);
+                  document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
               }
               else{
                   

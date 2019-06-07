@@ -97,7 +97,6 @@ $(function (){
           document.getElementById("labelJmbg").append(student.jmbg);
           document.getElementById("labelEmail").append(student.email);
           document.getElementById("labelUsername").append(student.username);
-          console.log("aaaa");
           
         }
     });
@@ -108,7 +107,6 @@ $(function (){
         url: 'student/getStudentGroup',
         success: function(group){
           $('#myGroupLabel').text( group.name +" "+group.surname+", "+ group.day + " , " + group.time  );
-              console.log("bbbb");
         }
     });
     
@@ -160,6 +158,7 @@ $(function (){
                     //alert(response.msg);
                     document.getElementById("myFormMsgs").style.display = "block";
                      $('#msgLabel').text(response.msg);
+                     $('#poruka').text("Greska");
                 }
                 else{
                   
@@ -205,11 +204,11 @@ $('#confirm_button').on('click', function(){
           url: 'student/updateUser',
           data: updateUser,
           success: function(response){
-              console.log('uspesno pozvan url');
               if(response.code === 0){
                   //alert(response.msg);
                   document.getElementById("myFormMsgs").style.display = "block";
                   $('#msgLabel').text(response.msg);
+                  $('#poruka').text("Greska");
               }
               else{
                   
@@ -260,7 +259,6 @@ $('#button3, #casovi').on('click', function(){
           url: 'student/getAllTheoryClasses',
           datatype: 'json',
           success: function(groups){
-              console.log('uspesno pozvan url');
               $.each(groups, function(i, group){
                  $('#table1').append('<tr>\n\
                 <td class="table1">'+group.idTClass+'</td>\n\
@@ -296,7 +294,6 @@ $('#button4').on('click', function(){
           url: 'student/getStudentDrivingLessons',
           datatype: 'json',
           success: function(groups){
-              console.log('uspesno pozvan url');
               $.each(groups, function(i, group){
                   
                  var $addRow;
@@ -340,7 +337,6 @@ $('#button4').on('click', function(){
           url: 'student/getAllExams',
           datatype: 'json',
           success: function(groups){
-              console.log('uspesno pozvan url');
               $.each(groups, function(i, group){
                  $('#table3').append('<tr>\n\
                 <td class="table1">'+group.idExam+'</td>\n\
@@ -364,6 +360,7 @@ $('#button4').on('click', function(){
       var column_num = parseInt( $(this).index() ) + 1;
       if (column_num === 6)
       {
+          console.log("dugmeee");
           $selectedId = parseInt($(this).closest('tr').find('td:first').text());
 
           var userId = {
@@ -375,17 +372,17 @@ $('#button4').on('click', function(){
             url: 'student/registerForExam',
             data: userId,
             success: function(response){
-                console.log("aaa");
                 if(response.code === 1){
                   //alert(response.msg);
-                  console.log("USAOO");
                   document.getElementById("myFormMsgs").style.display = "block";
                   $('#msgLabel').text(response.msg);
+                  $('#poruka').text("Greska");
                 }
                 else{
                     //alert(response.msg);
                     document.getElementById("myFormMsgs").style.display = "block";
                     $('#msgLabel').text(response.msg);
+                    $('#poruka').text("Poruka");
                     $('#table3 tr').remove();
                     $('#table3').append('<tr>\n\
                               <th class = "table1"> Broj </th>\n\
@@ -424,11 +421,13 @@ $('#cancelExam').on('click', function(){
                   //alert(response.msg);
                   document.getElementById("myFormMsgs").style.display = "block";
                   $('#msgLabel').text(response.msg);
+                  $('#poruka').text("Greska");
                 }
                 else{
                   //alert(response.msg);
                   document.getElementById("myFormMsgs").style.display = "block";
                   $('#msgLabel').text(response.msg);
+                  $('#poruka').text("Poruka");
                   $('#table3 tr').remove();
                     $('#table3').append('<tr>\n\
                               <th class = "table1"> Broj </th>\n\
@@ -520,6 +519,7 @@ $('#table2').on('click', 'td', function() {
                        // alert(response.msg);
                        document.getElementById("myFormMsgs").style.display = "block";
                        $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Poruka");
                     }
                     $('#table2 tr').remove();
                     $('#table2').append('<tr>\n\
@@ -573,6 +573,7 @@ $('#zakazi_cas').on('click', function(){
                        // alert(response.msg);
                         document.getElementById("myFormMsgs").style.display = "block";
                         $('#msgLabel').text(response.msg);
+                         $('#poruka').text("Poruka");
                           $('#table2 tr').remove();
                     $('#table2').append('<tr>\n\
                     <th class = "table1"> Broj </th>\n\
@@ -600,6 +601,7 @@ $('#zakazi_cas').on('click', function(){
                        // alert(response.msg);
                        document.getElementById("myFormMsgs").style.display = "block";
                          $('#msgLabel').text(response.msg);
+                          $('#poruka').text("Greska");
                     }                 
                 },
                 error: function(){

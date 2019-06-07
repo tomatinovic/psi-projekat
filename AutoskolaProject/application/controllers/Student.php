@@ -199,7 +199,7 @@ class Student extends CI_Controller {
                         'exams' => NULL,
                         'myExam' => NULL
                     );
-            
+          
             if($this->modelUser->getTeacherIdForStudent($this->curUser) == null){
                  $response['code'] = 1;
                  $response['msg'] = "Jos uvek niste dodeljeni instruktoru!";
@@ -218,11 +218,8 @@ class Student extends CI_Controller {
                     $response['myExam'] = $myExam;
             }
             
-            header("Content-Type: application/json");
-            echo json_encode($response);
-            
-        }
-        header("Content-Type: application/json");
+       }
+           header("Content-Type: application/json");
             echo json_encode($response);
         }
         
