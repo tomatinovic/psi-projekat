@@ -75,12 +75,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
     <div class = "login_class">
-      
-      <?php if(isset($msg)) {
-      echo '<div class="form-popup1 form-container" id="messages">';
-      echo '<input type = "button" id = "close" style = "font-weight: bold; width: 30px; height: 30px" value="X"/>';
-      echo "<label style = 'color: red; padding-left: 10px'>$msg</label><br>";
-      echo "</div>"; }  ?>
+        
+        <?php if(isset($msg)) {
+      echo '<div class="form-popup1" id="messages">';
+      echo '<form class="form-container-reg" method="post">';
+      echo '<p id="poruka" class="prijava bold_letters"><i> Poruka  </i></p>';
+      echo '<table>';
+      echo '<tr>';
+      echo "<td><label id='msgLabel' class = 'registracija'>$msg</label></td>";
+      echo '</tr>';
+      echo '</table><br/>';
+      echo '<input type="button" id="close" class="btn" value = "Ok"></button>';
+      echo '</form>';
+      echo '</div>'; }  ?>
+
       
       <form name="loginform" method="post" class = "text_style" action="<?php echo site_url('welcome/login') ?>">
         <label class="title" id = "label_prijava"> Prijava </label><br/><br/><br/>

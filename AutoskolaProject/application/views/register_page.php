@@ -114,8 +114,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
     </div>
     
-    <div style="padding-top: 300px"></div>
-    
     <div class="form-popup" id="myFormMsgs">
         <form class="form-container-reg" method="post">
             <p id='poruka' class="prijava bold_letters"><i> Poruka  </i></p>
@@ -127,6 +125,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <button type="button" id="closeMsgBtn" class="btn"> Ok </button>
         </form>
     </div>
+    
+    <div style="padding-top: 300px"></div>
+    
+
         
     <script src="<?php echo site_url('../public/js/user.js'); ?>"></script>
     
