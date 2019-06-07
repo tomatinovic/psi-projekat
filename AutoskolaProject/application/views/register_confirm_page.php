@@ -192,11 +192,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
     </div>
     
-    <div class="form-popup-msg" id="myFormMsgs">
+    <div class="form-popup" id="myFormMsgs">
         <form class="form-container-reg" method="post">
-            <p class="prijava bold_letters"><i> Poruka  </i></p>
-            <label id='msgLabel' class = "paragraph"> </label>
-            <button type="button" id="closeMsgBtn" class="btnMsg"> Ok </button>
+            <p id='poruka' class="prijava bold_letters"><i> Poruka  </i></p>
+            <table>
+                <tr>
+                    <td><label id="msgLabel" class = "registracija"></label></td>
+                </tr>
+            </table><br/>
+            <button type="button" id="closeMsgBtn" class="btn"> Ok </button>
         </form>
     </div>
     

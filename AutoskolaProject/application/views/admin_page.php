@@ -186,6 +186,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <button type="button" class="btn cancel" onclick="closeForm()"> Odustani </button>
         </form>
     </div>
+    
+     <div class="form-popup" id="myFormMsgs">
+        <form class="form-container-reg" method="post">
+            <p id='poruka' class="prijava bold_letters"><i> Poruka  </i></p>
+            <table>
+                <tr>
+                    <td><label id="msgLabel" class = "registracija"></label></td>
+                </tr>
+            </table><br/>
+            <button type="button" id="closeMsgBtn" class="btn"> Ok </button>
+        </form>
+    </div>
   
     <script src="<?php echo site_url('../public/js/admin.js'); ?>"></script>
     

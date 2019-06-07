@@ -28,6 +28,10 @@ document.getElementById("exit_button").onclick = function() {
     document.getElementById("admin_form1").style.display = "none";
 };
 
+document.getElementById("closeMsgBtn").onclick = function() { 
+    document.getElementById("myFormMsgs").style.display = "none";
+}; 
+
 // Zatvaranje dijaloga za detalje / aktivaciju / registraciju zaposlenog
 
 function closeForm() {
@@ -290,7 +294,10 @@ $(function (){
             //        document.getElementById("response").remove();
             //    }
                 if(response.code === 0){
-                    alert(response.msg);
+                    //alert(response.msg);
+                    document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
             //         document.getElementById("messages").style.display = "block";
             //         $messages.append('<label id = "response" style = "color: red; padding-left: 10px">'+response.msg+'</label><br>');             
                 } else{
@@ -349,7 +356,10 @@ $(function (){
             success: function(response){
                 console.log('uspesno pozvan url');
                 if(response.code === 0){
-                    alert(response.msg);
+                    //alert(response.msg);
+                    document.getElementById("myFormMsgs").style.display = "block";
+                       $('#msgLabel').text(response.msg);
+                       $('#poruka').text("Greska");
                 }
                 else{
 

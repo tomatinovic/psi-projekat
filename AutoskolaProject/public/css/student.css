@@ -59,6 +59,7 @@ th.table1, td.table1 {
     max-height: 100%;
     padding: 10px;
     background-color: lightgray;
+    min-width: 200px;
 }
 
 

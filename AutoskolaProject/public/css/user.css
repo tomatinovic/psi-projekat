@@ -25,6 +25,38 @@ and open the template in the editor.
     margin-left: 20px;
 }
 
+.form-popup-msg {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  height: 200px;
+  width: 450px;
+}
+
+.form-container-reg {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 10px;
+    background-color: lightgray;
+    min-width: 200px;
+}
+
+.form-container-reg .btn {
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
 th.table1, td.table1 {
     font-family: Arial;
     padding: 8px;
