@@ -121,7 +121,7 @@ class Welcome extends CI_Controller {
                         'email' => $email,
                         'username' => $username,
                         'password' => $password,
-                        'type' => 0
+                        'type' => 3
                         );  
                    
                    $this->db->insert('users',$data);  

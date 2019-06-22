@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 30, 2019 at 08:34 PM
--- Server version: 5.7.19
--- PHP Version: 5.6.31
+-- Generation Time: Jun 22, 2019 at 11:47 PM
+-- Server version: 5.7.26
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `free` int(30) NOT NULL,
   PRIMARY KEY (`idExam`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `exam`
@@ -103,10 +103,11 @@ CREATE TABLE IF NOT EXISTS `exam` (
 
 INSERT INTO `exam` (`idExam`, `date`, `time`, `free`) VALUES
 (1, '31.05.2019.', '10:00', 30),
-(2, '07.06.2019.', '09:00', 25),
+(2, '07.06.2019.', '09:00', 26),
 (3, '11.06.2019.', '11:30', 30),
 (4, '11.06.2019.', '12:30', 25),
-(5, '20.06.2019.', '08:30', 30);
+(5, '20.06.2019.', '08:30', 30),
+(6, '23.06.2019.', '12:30', 0);
 
 -- --------------------------------------------------------
 
@@ -122,16 +123,14 @@ CREATE TABLE IF NOT EXISTS `examlist` (
   PRIMARY KEY (`idList`),
   KEY `exExamList` (`idExam`),
   KEY `exStudentUser` (`idStudent`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `examlist`
 --
 
 INSERT INTO `examlist` (`idList`, `idExam`, `idStudent`) VALUES
-(1, 2, 3),
-(2, 3, 19),
-(3, 5, 24);
+(2, 3, 19);
 
 -- --------------------------------------------------------
 
