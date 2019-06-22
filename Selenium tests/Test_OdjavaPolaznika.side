@@ -1,0 +1,134 @@
+{
+  "id": "8b851c63-8ceb-4a10-9d7f-321f5c1d4d01",
+  "version": "2.0",
+  "name": "Test_OdjavaPolaznika",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "67cd5164-24ac-428a-b13a-64c3daee89a2",
+    "name": "Test_OdjavaPolaznika",
+    "commands": [{
+      "id": "98cc92ab-896e-483b-ac69-a083adc96d3f",
+      "comment": "",
+      "command": "open",
+      "target": "/AutoskolaProject/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f1aece8-781f-48c3-9953-c543757a2d4c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2c3a6c1a-ccd0-4c73-ba33-f9926e27f35c",
+      "comment": "",
+      "command": "click",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "199d46fd-52f0-4f01-817c-02f5e6c8dbac",
+      "comment": "",
+      "command": "type",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "saska"
+    }, {
+      "id": "3248aa0f-a2aa-4da8-bf90-8bff846ef6f8",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "saska123"
+    }, {
+      "id": "ca5c5fdc-7c8f-485c-ba13-7913be5874db",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "5142b259-6796-40ee-9261-ca0fe6fcf9c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tablinks:nth-child(4)",
+      "targets": [
+        ["css=.tablinks:nth-child(4)", "css:finder"],
+        ["xpath=//button[@onclick=\"openTab(event, 'Časovi')\"]", "xpath:attributes"],
+        ["xpath=//button[4]", "xpath:position"],
+        ["xpath=//button[contains(.,'Časovi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e958a1d-4483-468f-b0c0-52c8ebcb9ef0",
+      "comment": "",
+      "command": "click",
+      "target": "id=button4",
+      "targets": [
+        ["id=button4", "id"],
+        ["css=#button4", "css:finder"],
+        ["xpath=//input[@id='button4']", "xpath:attributes"],
+        ["xpath=//div[@id='Časovi']/span[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/span[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab9fbcf4-2930-43d6-b9cf-7d5feab027e9",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .button_style",
+      "targets": [
+        ["css=tr:nth-child(3) .button_style", "css:finder"],
+        ["xpath=(//input[@value='Odjava'])[2]", "xpath:attributes"],
+        ["xpath=//table[@id='table2']/tbody/tr[3]/td[4]/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "013044ca-19ea-468c-9fec-ac3375edd526",
+      "comment": "",
+      "command": "click",
+      "target": "id=closeMsgBtn",
+      "targets": [
+        ["id=closeMsgBtn", "id"],
+        ["css=#closeMsgBtn", "css:finder"],
+        ["xpath=//button[@id='closeMsgBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormMsgs']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "d8976f3a-fb92-48d9-86ae-8ffdb7f59cdf",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["67cd5164-24ac-428a-b13a-64c3daee89a2"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}

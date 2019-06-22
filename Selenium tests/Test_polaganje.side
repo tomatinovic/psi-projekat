@@ -1,0 +1,189 @@
+{
+  "id": "6d5ce9c1-52a9-4824-976a-e52dbf2845bd",
+  "version": "2.0",
+  "name": "Test_polaganje",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "e2ce0587-64c1-4871-834f-e54fbee5e221",
+    "name": "Test_polaganje",
+    "commands": [{
+      "id": "671fd2dd-ffbd-4348-9fd1-c018677883b9",
+      "comment": "",
+      "command": "open",
+      "target": "/AutoskolaProject/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6c76dff8-f238-401e-90ba-00c738ee04ed",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1366x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64031add-cbc4-48f8-8127-fc249db836aa",
+      "comment": "",
+      "command": "click",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a7fbff6-25e7-4242-95a0-30541d7e1dca",
+      "comment": "",
+      "command": "type",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "darko"
+    }, {
+      "id": "9d0fd80a-4010-4634-b350-cca336291a63",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "darko123"
+    }, {
+      "id": "bca3294e-01c1-4623-86dd-e9d242525946",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "1f60a113-65f7-4c90-adc5-2a039a11c7fe",
+      "comment": "",
+      "command": "click",
+      "target": "id=casovi",
+      "targets": [
+        ["id=casovi", "id"],
+        ["css=#casovi", "css:finder"],
+        ["xpath=//button[@id='casovi']", "xpath:attributes"],
+        ["xpath=//button[4]", "xpath:position"],
+        ["xpath=//button[contains(.,'Časovi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eeb0a677-a2ea-4750-9f77-9c73a1e1d005",
+      "comment": "",
+      "command": "click",
+      "target": "id=button5",
+      "targets": [
+        ["id=button5", "id"],
+        ["css=#button5", "css:finder"],
+        ["xpath=//input[@id='button5']", "xpath:attributes"],
+        ["xpath=//div[@id='Časovi']/span[3]/input", "xpath:idRelative"],
+        ["xpath=//span[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4640ec42-65df-4502-83b2-0550cc14416e",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancelExam",
+      "targets": [
+        ["id=cancelExam", "id"],
+        ["css=#cancelExam", "css:finder"],
+        ["xpath=//input[@id='cancelExam']", "xpath:attributes"],
+        ["xpath=//div[@id='classes3']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "41f9300b-a346-44b6-9792-0e1ad4bfe301",
+      "comment": "",
+      "command": "click",
+      "target": "id=closeMsgBtn",
+      "targets": [
+        ["id=closeMsgBtn", "id"],
+        ["css=#closeMsgBtn", "css:finder"],
+        ["xpath=//button[@id='closeMsgBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormMsgs']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d62dc75-5271-4487-bbb3-e8f891fea1df",
+      "comment": "",
+      "command": "click",
+      "target": "id=cancelExam",
+      "targets": [
+        ["id=cancelExam", "id"],
+        ["css=#cancelExam", "css:finder"],
+        ["xpath=//input[@id='cancelExam']", "xpath:attributes"],
+        ["xpath=//div[@id='classes3']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c8ec2de8-facd-4422-a00c-f11fd86b18cb",
+      "comment": "",
+      "command": "click",
+      "target": "id=closeMsgBtn",
+      "targets": [
+        ["id=closeMsgBtn", "id"],
+        ["css=#closeMsgBtn", "css:finder"],
+        ["xpath=//button[@id='closeMsgBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormMsgs']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4272fd58-f2c4-4367-be5b-8d95f277ef10",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .button_style",
+      "targets": [
+        ["css=tr:nth-child(2) .button_style", "css:finder"],
+        ["xpath=//input[@value='Prijava']", "xpath:attributes"],
+        ["xpath=//table[@id='table3']/tbody/tr[2]/td[6]/input", "xpath:idRelative"],
+        ["xpath=//td[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "76fb2887-60cd-48ca-a132-2f8ef1757a35",
+      "comment": "",
+      "command": "click",
+      "target": "id=closeMsgBtn",
+      "targets": [
+        ["id=closeMsgBtn", "id"],
+        ["css=#closeMsgBtn", "css:finder"],
+        ["xpath=//button[@id='closeMsgBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormMsgs']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1667ed38-7e44-4069-b736-724a3e0c8428",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e2ce0587-64c1-4871-834f-e54fbee5e221"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}

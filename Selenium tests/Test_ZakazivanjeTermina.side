@@ -1,0 +1,246 @@
+{
+  "id": "2a79feea-c698-4afe-9da5-23c3110fc31a",
+  "version": "2.0",
+  "name": "Test_ZakazivanjeTermina",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "6fb48377-c146-49fd-b58f-42348273b454",
+    "name": "Test_ZakazivanjeTermina",
+    "commands": [{
+      "id": "165dce0e-db2e-4dca-acf9-435197fa7185",
+      "comment": "",
+      "command": "open",
+      "target": "/AutoskolaProject/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fe23111b-6b7a-4e1b-8aaa-7b4986708aa0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "74533404-224d-4bac-9db2-c9f6e6e98cb8",
+      "comment": "",
+      "command": "click",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ef3cfbf-17b1-4532-8389-761a96cd17a8",
+      "comment": "",
+      "command": "type",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "saska"
+    }, {
+      "id": "944af4bc-f367-485b-87b5-203bacd99a78",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "saska123"
+    }, {
+      "id": "36446441-10f0-4bd5-bebb-5f45cefc5f6a",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "302f7094-a602-4726-b1e3-ddfc192521d2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tablinks:nth-child(4)",
+      "targets": [
+        ["css=.tablinks:nth-child(4)", "css:finder"],
+        ["xpath=//button[@onclick=\"openTab(event, 'Časovi')\"]", "xpath:attributes"],
+        ["xpath=//button[4]", "xpath:position"],
+        ["xpath=//button[contains(.,'Časovi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ade53e0-73f4-45c6-a208-488ca4ea7765",
+      "comment": "",
+      "command": "click",
+      "target": "id=button6",
+      "targets": [
+        ["id=button6", "id"],
+        ["css=#button6", "css:finder"],
+        ["xpath=//input[@id='button6']", "xpath:attributes"],
+        ["xpath=//div[@id='Časovi']/span[4]/input", "xpath:idRelative"],
+        ["xpath=//span[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "77908307-6c85-41f9-85e4-511d4176054a",
+      "comment": "",
+      "command": "click",
+      "target": "id=zakazi_cas1",
+      "targets": [
+        ["id=zakazi_cas1", "id"],
+        ["css=#zakazi_cas1", "css:finder"],
+        ["xpath=//input[@id='zakazi_cas1']", "xpath:attributes"],
+        ["xpath=//div[@id='classes4']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da6362a2-a0e4-4a74-a249-c8bc7e68f434",
+      "comment": "",
+      "command": "click",
+      "target": "id=polaznik_name",
+      "targets": [
+        ["id=polaznik_name", "id"],
+        ["name=polaznikName", "name"],
+        ["css=#polaznik_name", "css:finder"],
+        ["xpath=//input[@id='polaznik_name']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/form/table/tbody/tr/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "78e5c738-d62c-45eb-8bc2-ca92f8d6c630",
+      "comment": "",
+      "command": "type",
+      "target": "id=polaznik_name",
+      "targets": [
+        ["id=polaznik_name", "id"],
+        ["name=polaznikName", "name"],
+        ["css=#polaznik_name", "css:finder"],
+        ["xpath=//input[@id='polaznik_name']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/form/table/tbody/tr/td[2]/input", "xpath:position"]
+      ],
+      "value": "Darko"
+    }, {
+      "id": "4931853a-5ed6-4cb3-bc7a-4675fdd76a8c",
+      "comment": "",
+      "command": "type",
+      "target": "id=polaznik_surname",
+      "targets": [
+        ["id=polaznik_surname", "id"],
+        ["css=#polaznik_surname", "css:finder"],
+        ["xpath=//input[@id='polaznik_surname']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/form/table/tbody/tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "Ardalic"
+    }, {
+      "id": "3f9295d3-25ad-4dcb-a466-20a77f651671",
+      "comment": "",
+      "command": "click",
+      "target": "id=datum",
+      "targets": [
+        ["id=datum", "id"],
+        ["name=datum", "name"],
+        ["css=#datum", "css:finder"],
+        ["xpath=//input[@id='datum']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr[3]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d4645e6-6ee0-4227-9351-28c2a01042ad",
+      "comment": "",
+      "command": "type",
+      "target": "id=datum",
+      "targets": [
+        ["id=datum", "id"],
+        ["name=datum", "name"],
+        ["css=#datum", "css:finder"],
+        ["xpath=//input[@id='datum']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr[3]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td[2]/input", "xpath:position"]
+      ],
+      "value": "25.07.2019."
+    }, {
+      "id": "b5ac51b1-6ad2-4336-8627-d9c3c73e3f32",
+      "comment": "",
+      "command": "click",
+      "target": "id=vreme",
+      "targets": [
+        ["id=vreme", "id"],
+        ["name=vreme", "name"],
+        ["css=#vreme", "css:finder"],
+        ["xpath=//input[@id='vreme']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d6435ee-460b-4dc4-90f0-716d5d6b5562",
+      "comment": "",
+      "command": "type",
+      "target": "id=vreme",
+      "targets": [
+        ["id=vreme", "id"],
+        ["name=vreme", "name"],
+        ["css=#vreme", "css:finder"],
+        ["xpath=//input[@id='vreme']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/table/tbody/tr[4]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": "11:30"
+    }, {
+      "id": "be82c03b-45f8-4ca8-ac1d-1340530ba1e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=zakazi_cas",
+      "targets": [
+        ["id=zakazi_cas", "id"],
+        ["css=#zakazi_cas", "css:finder"],
+        ["xpath=//button[@id='zakazi_cas']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormNewAppointment']/form/button", "xpath:idRelative"],
+        ["xpath=//div[5]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Zakaži')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "40ae74af-5fc0-4c03-9b1e-c3e3e7e65640",
+      "comment": "",
+      "command": "click",
+      "target": "id=closeMsgBtn",
+      "targets": [
+        ["id=closeMsgBtn", "id"],
+        ["css=#closeMsgBtn", "css:finder"],
+        ["xpath=//button[@id='closeMsgBtn']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormMsgs']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "71b3a435-4ab5-4c37-a831-cc76fd3d4797",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["6fb48377-c146-49fd-b58f-42348273b454"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}
