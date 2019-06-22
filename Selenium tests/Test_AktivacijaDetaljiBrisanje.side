@@ -1,0 +1,186 @@
+{
+  "id": "e902e34a-065d-4f25-b5e0-3ac66b575bcc",
+  "version": "2.0",
+  "name": "Test_AktivacijaDetaljiBrisanje",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "40eb48b9-8159-47d5-9bd8-ce3679cfcc3a",
+    "name": "Test_AktivacijaDetaljiBrisanje",
+    "commands": [{
+      "id": "c9feff57-5aca-4d74-8eb3-c7ca08a82f0b",
+      "comment": "",
+      "command": "open",
+      "target": "/AutoskolaProject/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2df0e329-d45f-480c-b6a1-b0431d8ed7d9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9553b3e-12e1-4592-b842-44252bf8bf0a",
+      "comment": "",
+      "command": "click",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7fc3f5c7-375a-4923-8dec-59cf04a665d8",
+      "comment": "",
+      "command": "type",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "tacka"
+    }, {
+      "id": "9e2e2b86-9399-4d4d-b270-347d92745266",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "tacka123"
+    }, {
+      "id": "c11f8c31-abb3-438e-b3de-d581e2a1a1c5",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "cbd5c7d3-a757-49bf-bac2-bac67f61cbb0",
+      "comment": "",
+      "command": "click",
+      "target": "id=buttonKorisnici",
+      "targets": [
+        ["id=buttonKorisnici", "id"],
+        ["css=#buttonKorisnici", "css:finder"],
+        ["xpath=//button[@id='buttonKorisnici']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Korisnici')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "93641190-7da6-439e-bc5d-b1081772ccaf",
+      "comment": "",
+      "command": "click",
+      "target": "css=#adminUserTable tr:nth-child(4) .button_style",
+      "targets": [
+        ["css=#adminUserTable tr:nth-child(4) .button_style", "css:finder"],
+        ["xpath=(//input[@value='Aktivacija'])[3]", "xpath:attributes"],
+        ["xpath=//table[@id='adminUserTable']/tbody/tr[4]/td[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/table/tbody/tr[4]/td[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7afdfe8-5d03-481b-8068-c48ffdd9a1a2",
+      "comment": "",
+      "command": "click",
+      "target": "id=activation_button",
+      "targets": [
+        ["id=activation_button", "id"],
+        ["css=#activation_button", "css:finder"],
+        ["xpath=//button[@id='activation_button']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormActivation']/form/button", "xpath:idRelative"],
+        ["xpath=//div[7]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Aktiviraj')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "333e3427-bdd5-40ad-a83f-b584cac0a2a7",
+      "comment": "",
+      "command": "click",
+      "target": "id=buttonPolaznici",
+      "targets": [
+        ["id=buttonPolaznici", "id"],
+        ["css=#buttonPolaznici", "css:finder"],
+        ["xpath=//button[@id='buttonPolaznici']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Polaznici')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba7b1e4c-5c86-49ff-b889-043c42d69b18",
+      "comment": "",
+      "command": "click",
+      "target": "css=#adminStudentTable tr:nth-child(2) .button_style",
+      "targets": [
+        ["css=#adminStudentTable tr:nth-child(2) .button_style", "css:finder"],
+        ["xpath=(//input[@value='Detalji'])[4]", "xpath:attributes"],
+        ["xpath=//table[@id='adminStudentTable']/tbody/tr[2]/td[4]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/table/tbody/tr[2]/td[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9fad98a-2092-42c9-9702-a481917067f5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(5)",
+      "targets": [
+        ["css=.btn:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='myFormDetails']/form/button[2]", "xpath:idRelative"],
+        ["xpath=//div[6]/form/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Nazad')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2eb00109-2caf-407e-a23c-1251d9fada4b",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(6) .button_style",
+      "targets": [
+        ["css=tr:nth-child(6) .button_style", "css:finder"],
+        ["xpath=(//input[@value='Detalji'])[8]", "xpath:attributes"],
+        ["xpath=//table[@id='adminStudentTable']/tbody/tr[6]/td[4]/input", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "100aa3d5-4f3a-491e-bab1-c89a1b4eea72",
+      "comment": "",
+      "command": "click",
+      "target": "id=deleteButton",
+      "targets": [
+        ["id=deleteButton", "id"],
+        ["css=#deleteButton", "css:finder"],
+        ["xpath=//button[@id='deleteButton']", "xpath:attributes"],
+        ["xpath=//div[@id='myFormDetails']/form/button", "xpath:idRelative"],
+        ["xpath=//div[6]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Obriši')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "b9638c7a-ae11-49bd-86b9-a0b3d74a5e54",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["40eb48b9-8159-47d5-9bd8-ce3679cfcc3a"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}

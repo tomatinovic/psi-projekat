@@ -1,0 +1,125 @@
+{
+  "id": "2c73ca9c-826a-450e-a8b2-c06c6b9100a1",
+  "version": "2.0",
+  "name": "Test_odjava",
+  "url": "http://localhost",
+  "tests": [{
+    "id": "9d4e901d-5945-4166-89fd-a42cca9f83cd",
+    "name": "Test_odjava",
+    "commands": [{
+      "id": "093a69d1-5126-4d74-92db-6a0123191b92",
+      "comment": "",
+      "command": "open",
+      "target": "/AutoskolaProject/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66de4fd0-057b-4a7d-82b1-1fa90aab0e7a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1366x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f079aae-063a-46f4-b164-871294c08c9b",
+      "comment": "",
+      "command": "click",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb22a532-f6f9-4f9c-9d10-48d4468b0ba2",
+      "comment": "",
+      "command": "type",
+      "target": "name=username",
+      "targets": [
+        ["name=username", "name"],
+        ["css=input:nth-child(7)", "css:finder"],
+        ["xpath=//input[@name='username']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "tacka"
+    }, {
+      "id": "e4dba4a6-e700-4c0d-a7ac-b809e62373cf",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(12)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "tacka123"
+    }, {
+      "id": "88b52c6d-8077-43b6-bb3e-2e5ee22ca0b1",
+      "comment": "",
+      "command": "click",
+      "target": "id=login_button",
+      "targets": [
+        ["id=login_button", "id"],
+        ["css=#login_button", "css:finder"],
+        ["xpath=//input[@id='login_button']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d6ac17a-6fb6-440d-9107-b184abd6c8f0",
+      "comment": "",
+      "command": "click",
+      "target": "id=logout_button",
+      "targets": [
+        ["id=logout_button", "id"],
+        ["css=#logout_button", "css:finder"],
+        ["xpath=//input[@id='logout_button']", "xpath:attributes"],
+        ["xpath=//form[@id='admin_form']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b47f03d5-a2a3-4ee1-80f0-81419cae6cb7",
+      "comment": "",
+      "command": "click",
+      "target": "id=forgot_pass",
+      "targets": [
+        ["id=forgot_pass", "id"],
+        ["linkText=Zaboravili ste lozinku?", "linkText"],
+        ["css=#forgot_pass", "css:finder"],
+        ["xpath=//a[contains(text(),'Zaboravili ste lozinku?')]", "xpath:link"],
+        ["xpath=//a[@id='forgot_pass']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//form/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Zaboravili ste lozinku?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "df616dc8-83cf-42ba-8798-78d31d224780",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-container > .cancel",
+      "targets": [
+        ["css=.form-container > .cancel", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='myForm']/form/button[2]", "xpath:idRelative"],
+        ["xpath=//form/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Odustani')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "f453bd0a-f3e2-48c5-b81d-6ae55edbe003",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["9d4e901d-5945-4166-89fd-a42cca9f83cd"]
+  }],
+  "urls": ["http://localhost/"],
+  "plugins": []
+}
