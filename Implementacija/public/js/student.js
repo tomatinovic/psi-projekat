@@ -343,7 +343,6 @@ $('#button4').on('click', function(){
                 <td class="table1">'+group.date+'</td>\n\
                 <td class="table1">'+group.time+'</td>\n\
                 <td class="table1">'+group.free+'</td>\n\
-                <td class="table1">'+group.time+'</td>\n\
                 <td class="table1"><input type="button" class =\'button_style\' style = "font-weight: bold;" value="Prijava" /></td>\n\
                 </tr>');
               });
